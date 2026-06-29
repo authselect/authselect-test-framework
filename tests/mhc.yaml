@@ -1,0 +1,7 @@
+provisioned_topologies:
+- local
+domains:
+- id: sssd
+  hosts:
+  - hostname: client.test
+    role: client

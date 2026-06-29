@@ -1,0 +1,2499 @@
+"""IPA multihost role."""
+
+from __future__ import annotations
+
+import os
+import re
+import shlex
+import time
+import uuid
+from itertools import groupby
+from textwrap import dedent
+from typing import Any, Optional
+
+from pytest_mh import MultihostHost
+from pytest_mh.cli import CLIBuilder, CLIBuilderArgs
+from pytest_mh.conn import ProcessError, ProcessResult
+from pytest_mh.utils.fs import LinuxFileSystem
+
+from ..hosts.ipa import IPAHost
+from ..misc import (
+    attrs_include_value,
+    attrs_parse,
+    delimiter_parse,
+    to_list,
+    to_list_of_strings,
+    to_list_without_none,
+)
+from ..misc.globals import test_venv_bin
+from ..utils.sssd import SSSDUtils
+from .base import BaseLinuxRole, BaseObject
+from .client import Client
+from .generic import (
+    GenericCertificateAuthority,
+    GenericGroup,
+    GenericNetgroup,
+    GenericNetgroupMember,
+    GenericPasswordPolicy,
+    GenericProvider,
+    GenericSudoRule,
+    GenericUser,
+    GroupMemberField,
+    SudoRuleCommandField,
+    SudoRuleHostField,
+    SudoRuleRunAsGroupField,
+    SudoRuleRunAsUserField,
+    SudoRuleUserField,
+)
+
+__all__ = [
+    "IPA",
+    "IPAObject",
+    "IPAPasswordPolicy",
+    "IPAUser",
+    "IPASubID",
+    "IPAGroup",
+    "IPASudoRule",
+    "IPACertificateAuthority",
+]
+
+
+class IPA(BaseLinuxRole[IPAHost], GenericProvider):
+    """
+    IPA role.
+
+    Provides unified Python API for managing objects in the IPA server.
+
+    .. code-block:: python
+        :caption: Creating user and group
+
+        @pytest.mark.topology(Profile.SSSD)
+        def test_example(ipa: IPA):
+            u = ipa.user('tuser').add()
+            g = ipa.group('tgroup').add()
+            g.add_member(u)
+
+    .. note::
+
+        The role object is instantiated automatically as a dynamic pytest
+        fixture by the multihost plugin. You should not create the object
+        manually.
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+        self.domain: str = self.host.domain
+        """
+        IPA domain name.
+        """
+
+        self.realm: str = self.host.realm
+        """
+        Kerberos realm.
+        """
+
+        self.name: str = "ipa"
+        """
+        Provider role identifier (``ipa``).
+        """
+
+        self.hostname: str = self.host.hostname
+        """
+        Provider hostname.
+        """
+
+        self.sssd: SSSDUtils = SSSDUtils(self.host, self.fs, self.svc, self.authselect, load_config=True)
+        """
+        Managing and configuring SSSD.
+        """
+
+        self._password_policy: IPAPasswordPolicy = IPAPasswordPolicy(self)
+        """
+        Manage password policy.
+        """
+
+        self._ca = IPACertificateAuthority(self.host, self.fs)
+        """
+        IPA Certificate Authority management.
+
+        Provides certificate operations:
+        - Request certificates for services/users
+        - Revoke certificates with configurable reasons
+        - Manage certificate holds
+        - Retrieve certificate details
+
+        Example:
+            cert, key, csr = ipa.ca.request(principal="HTTP/client.ipa.test")
+            ipa.ca.revoke_hold(cert)
+            ipa.ca.revoke(cert, reason="key_compromise")
+        """
+
+    @property
+    def password_policy(self) -> IPAPasswordPolicy:
+        """
+        Domain password policy management.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example(client: Client, ipa: IPA):
+                # Enable password complexity
+                ipa.password_policy.complexity(enable=True)
+
+                # Set 3 login attempts and 30 lockout duration
+                ipa.password_policy.lockout(attempts=3, duration=30)
+        """
+        return self._password_policy
+
+    @property
+    def ca(self) -> IPACertificateAuthority:
+        """
+        IPA Certificate Authority management.
+
+        Provides certificate operations:
+        - Request certificates for services/users
+        - Revoke certificates with configurable reasons
+        - Manage certificate holds
+        - Retrieve certificate details
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example(client: Client, ipa: IPA):
+                # Request certificate
+                cert, key, csr = ipa.ca.request(principal="HTTP/client.ipa.test")
+
+                # Revoke certificate
+                ipa.ca.revoke(cert, reason="key_compromise")
+
+                # Place on hold
+                ipa.ca.revoke_hold(cert)
+
+                # Remove hold
+                ipa.ca.revoke_hold_remove(cert)
+        """
+        return self._ca
+
+    @property
+    def naming_context(self) -> str:
+        """
+        Naming context.
+        """
+        ipa_default = self.fs.read("/etc/ipa/default.conf")
+        _ipa_default = ipa_default.strip().splitlines()
+        for i in _ipa_default:
+            if "basedn" in i:
+                return str(i.split("=", 1)[1])
+
+        raise ValueError("basedn not found in /etc/ipa/default.conf!")
+
+    def setup(self) -> None:
+        """
+        Obtain IPA admin Kerberos TGT.
+        """
+        super().setup()
+
+        # Restart SSSD so it is opened with new database files.
+        self.sssd.stop()
+        self.sssd.clear(db=True, memcache=True, logs=True, config=False)
+        self.sssd.start()
+
+        # Obtain admin TGT
+        self.host.kinit()
+
+    def fqn(self, name: str) -> str:
+        """
+        Return fully qualified name in form name@domain.
+
+        :param name: Username.
+        :type name: str
+        :return: Fully qualified name.
+        :rtype: str
+        """
+        return f"{name}@{self.domain}"
+
+    @staticmethod
+    def ipa_search(
+        role: IPA,
+        command: str,
+        criteria: str | None = None,
+        attr: str = "cn",
+        all: bool = False,
+    ) -> list[str]:
+        """
+        Perform a generic IPA search command and extract attribute values.
+
+        :param role: IPA role object.
+        :type role: IPA
+        :param command: IPA command to run (e.g., 'hostgroup-find').
+        :type command: str
+        :param criteria: Optional search filter string.
+        :type criteria: str or None, optional
+        :param attr: Attribute name to extract from each entry.
+        :type attr: str, optional
+        :param all: Prints all attributes, default is False.
+        :type all: bool, optional
+        :return: List of extracted attribute values.
+        :rtype: list[str]
+        """
+        cmd = ["ipa", command]
+        if all:
+            cmd.append("--all")
+        if criteria:
+            cmd.append(criteria)
+        result = role.host.conn.exec(cmd)
+
+        names: list[str] = []
+        blocks = (
+            list(group) for key, group in groupby(result.stdout_lines, key=lambda line: line.strip() == "") if not key
+        )
+
+        for block in blocks:
+            attrs = attrs_parse(block)
+            values = attrs.get(attr, [])
+            for value in values:
+                if isinstance(value, list):
+                    names.extend(value)
+                else:
+                    names.append(value)
+        return names
+
+    def user(self, name: str) -> IPAUser:
+        """
+        Get user object.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example(client: Client, ipa: IPA):
+                # Create user
+                ipa.user('user-1').add()
+
+                # Start SSSD
+                client.sssd.start()
+
+                # Call `id user-1` and assert the result
+                result = client.tools.id('user-1')
+                assert result is not None
+                assert result.user.name == 'user-1'
+                assert result.group.name == 'user-1'
+
+        :param name: Username.
+        :type name: str
+        :return: New user object.
+        :rtype: IPAUser
+        """
+        return IPAUser(self, name)
+
+    def group(self, name: str) -> IPAGroup:
+        """
+        Get group object.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example_group(client: Client, ipa: IPA):
+                # Create user
+                user = ipa.user('user-1').add()
+
+                # Create secondary group and add user as a member
+                ipa.group('group-1').add().add_member(user)
+
+                # Start SSSD
+                client.sssd.start()
+
+                # Call `id user-1` and assert the result
+                result = client.tools.id('user-1')
+                assert result is not None
+                assert result.user.name == 'user-1'
+                assert result.group.name == 'user-1'
+                assert result.memberof('group-1')
+
+        :param name: Group name.
+        :type name: str
+        :return: New group object.
+        :rtype: IPAGroup
+        """
+        return IPAGroup(self, name)
+
+    def netgroup(self, name: str) -> IPANetgroup:
+        """
+        Get netgroup object.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example_netgroup(client: Client, ipa: IPA):
+                # Create user
+                user = ipa.user("user-1").add()
+
+                # Create two netgroups
+                ng1 = ipa.netgroup("ng-1").add()
+                ng2 = ipa.netgroup("ng-2").add()
+
+                # Add user and ng2 as members to ng1
+                ng1.add_member(user=user)
+                ng1.add_member(ng=ng2)
+
+                # Add host as member to ng2
+                ng2.add_member(host="client")
+
+                # Start SSSD
+                client.sssd.start()
+
+                # Call `getent netgroup ng-1` and assert the results
+                result = client.tools.getent.netgroup("ng-1")
+                assert result is not None
+                assert result.name == "ng-1"
+                assert len(result.members) == 2
+                assert "(-,user-1,ipa.test)" in result.members
+                assert "(client.test,-,ipa.test)" in result.members
+
+        :param name: Netgroup name.
+        :type name: str
+        :return: New netgroup object.
+        :rtype: IPANetgroup
+        """
+        return IPANetgroup(self, name)
+
+    def host_account(self, name: str) -> IPAHostAccount:
+        """
+        Get host object.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example(client: Client, ipa: IPA):
+                # Create host
+                ipa.host_account(f'myhost.{ipa.domain}').add(ip="10.255.251.10")
+
+        :param name: Hostname.
+        :type name: str
+        :return: New host account object.
+        :rtype: IPAHostAccount
+        """
+        return IPAHostAccount(self, f"{name}.{self.domain}" if self.domain not in name else name)
+
+    def sudorule(self, name: str) -> IPASudoRule:
+        """
+        Get sudo rule object.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example(client: Client, ipa: IPA):
+                user = ipa.user('user-1').add()
+                ipa.sudorule('testrule').add(user=user, host='ALL', command='/bin/ls')
+
+                client.sssd.common.sudo()
+                client.sssd.start()
+
+                # Test that user can run /bin/ls
+                assert client.auth.sudo.run('user-1', command='/bin/ls')
+
+        :param name: Sudo rule name.
+        :type name: str
+        :return: New sudo rule object.
+        :rtype: IPASudoRule
+        """
+        return IPASudoRule(self, name)
+
+    def idview(self, name: str) -> IPAIDView:
+        """
+        IPA ID View object.
+
+        Here, we only add the IPA ID view, that can be used
+        while creating a new User ID override.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example(ipa: IPA):
+                ipa.idview("newview").add(description="This is a new view")
+                ipa.idview("newview").apply(hosts="client.test")
+                ipa.idview("newview").delete()
+
+        :param name: ID View name.
+        :type name: str
+        :return: New ID View object.
+        """
+        return IPAIDView(self, name)
+
+
+class IPAObject(BaseObject[IPAHost, IPA]):
+    """
+    Base class for IPA object management.
+
+    Provides shortcuts for command execution and implementation of :meth:`get`
+    and :meth:`delete` methods.
+    """
+
+    def __init__(self, role: IPA, name: str, command_group: str) -> None:
+        """
+        :param role: IPA role object.
+        :type role: IPA
+        :param name: Object name.
+        :type name: str
+        :param command_group: IPA command group.
+        :type command_group: str
+        """
+        super().__init__(role)
+        self.command_group: str = command_group
+        """IPA cli command group."""
+
+        self._name: str = name
+        """Object name."""
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    def _exec(
+        self, op: str, args: list[str] | None = None, ipaargs: list[str] | None = None, **kwargs
+    ) -> ProcessResult:
+        """
+        Execute IPA command.
+
+        .. code-block:: console
+
+            $ ipa $ipaargs $command_group-$op $name $args
+            for example >>> ipa user-add tuser
+
+        :param op: Command group operation (usually add, mod, del, show)
+        :type op: str
+        :param args: List of additional command arguments, defaults to None
+        :type args: list[str] | None, optional
+        :param ipaargs: List of additional command arguments to the ipa main command, defaults to None
+        :type ipaargs: list[str] | None, optional
+        :return: SSH process result.
+        :rtype: ProcessResult
+        """
+        if args is None:
+            args = []
+
+        if ipaargs is None:
+            ipaargs = []
+
+        return self.role.host.conn.exec(["ipa", *ipaargs, f"{self.command_group}-{op}", self.name, *args], **kwargs)
+
+    def _add(self, attrs: CLIBuilderArgs | None = None, input: str | None = None):
+        """
+        Add IPA object.
+
+        :param attrs: Object attributes in :class:`pytest_mh.cli.CLIBuilder` format, defaults to None
+        :type attrs: pytest_mh.cli.CLIBuilderArgs | None, optional
+        :param input: Contents of standard input given to the executed command, defaults to None
+        :type input: str | None, optional
+        """
+        if attrs is None:
+            attrs = {}
+
+        self._exec("add", self.cli.args(attrs), input=input)
+
+    def _modify(self, attrs: CLIBuilderArgs, input: str | None = None):
+        """
+        Modify IPA object.
+
+        :param attrs: Object attributes in :class:`pytest_mh.cli.CLIBuilder` format, defaults to dict()
+        :type attrs: pytest_mh.cli.CLIBuilderArgs, optional
+        :param input: Contents of standard input given to the executed command, defaults to None
+        :type input: str | None, optional
+        """
+        self._exec("mod", self.cli.args(attrs), input=input)
+
+    def delete(self) -> None:
+        """
+        Delete IPA object.
+
+        :raises SSHProcessError: If the object does not exist or deletion fails.
+        """
+        self._exec("del")
+
+    def discard(self) -> None:
+        """
+        Delete IPA object if it exists.
+
+        Does not raise when the object is already absent. Use :meth:`delete` when removal must succeed.
+        """
+        self._exec("del", raise_on_error=False)
+
+    def get(self, attrs: list[str] | None = None, *, opattrs: bool = False) -> dict[str, list[str]] | None:
+        """
+        Get IPA object attributes.
+
+        :param attrs: If set, only requested attributes are returned, defaults to None
+        :type attrs: list[str] | None, optional
+        :param opattrs: Ignored (LDAP-only); present for generic entity API compatibility.
+        :type opattrs: bool, optional
+        :return: Dictionary with attribute name as a key or None if no such attribute is found.
+        :rtype: dict[str, list[str]] | None
+        """
+        _ = opattrs
+        cmd = self._exec("show", ["--all", "--raw"], raise_on_error=False)
+
+        # ipa output starts with space
+        lines = dedent(cmd.stdout).splitlines()
+
+        if lines is None or len(lines) == 0:
+            return None
+
+        # Remove first line that contains the object name and not attribute
+        return attrs_parse(lines[1:], attrs)
+
+
+class IPAUser(IPAObject, GenericUser):
+    """
+    IPA user management.
+
+    :class:`IPAUser` implements :class:`GenericUser` for static typing and provider-agnostic tests.
+    IPA-specific keyword arguments on :meth:`add` and :meth:`modify` are in addition to the generic API.
+    """
+
+    def __init__(self, role: IPA, name: str) -> None:
+        """
+        :param role: IPA role object.
+        :type role: IPA
+        :param name: Username.
+        :type name: str
+        """
+        super().__init__(role, name, command_group="user")
+
+    def add(
+        self,
+        *,
+        uid: int | None = None,
+        gid: int | None = None,
+        password: str = "Secret123",
+        home: str | None = None,
+        gecos: str | None = None,
+        shell: str | None = None,
+        require_password_reset: bool = False,
+        user_auth_type: str | list[str] | None = None,
+        sshpubkey: str | list[str] | None = None,
+        email: str | None = None,
+    ) -> IPAUser:
+        """
+        Create new IPA user.
+
+        Parameters that are not set are ignored.
+
+        :param uid: User id, defaults to None
+        :type uid: int | None, optional
+        :param gid: Primary group id, defaults to None
+        :type gid: int | None, optional
+        :param password: Password, defaults to 'Secret123' (use empty string to skip setting a password)
+        :type password: str, optional
+        :param home: Home directory, defaults to None
+        :type home: str | None, optional
+        :param gecos: GECOS, defaults to None
+        :type gecos: str | None, optional
+        :param shell: Login shell, defaults to None
+        :type shell: str | None, optional
+        :param require_password_reset: Require password reset on first login, defaults to False
+        :type require_password_reset: bool, optional
+        :param user_auth_type: Types of supported user authentication, defaults to None
+        :type user_auth_type: str | list[str] | None, optional
+        :param sshpubkey: SSH public key, defaults to None
+        :type sshpubkey: str | list[str] | None, optional
+        :param email: email attribute, defaults to None
+        :type email: str | None, optional
+        :return: Self.
+        :rtype: IPAUser
+        """
+
+        attrs = {
+            "first": (self.cli.option.VALUE, self.name),
+            "last": (self.cli.option.VALUE, self.name),
+            "uid": (self.cli.option.VALUE, uid),
+            "gidnumber": (self.cli.option.VALUE, gid),
+            "homedir": (self.cli.option.VALUE, home),
+            "gecos": (self.cli.option.VALUE, gecos),
+            "shell": (self.cli.option.VALUE, shell),
+            "password": (self.cli.option.SWITCH, True) if password else None,
+            "user-auth-type": (self.cli.option.VALUE, user_auth_type),
+            "sshpubkey": (self.cli.option.VALUE, sshpubkey),
+            "email": (self.cli.option.VALUE, email),
+        }
+
+        if not require_password_reset:
+            attrs["password-expiration"] = (self.cli.option.VALUE, "20380101120000Z")
+
+        self._add(attrs, input=password or None)
+
+        return self
+
+    def delete(self) -> None:
+        """
+        Delete the IPA user.
+
+        :raises SSHProcessError: If the user does not exist or deletion fails.
+        """
+        super().delete()
+
+    def discard(self) -> None:
+        """
+        Remove the IPA user if they exist.
+        """
+        super().discard()
+
+    def modify(
+        self,
+        *,
+        first: str | None = None,
+        last: str | None = None,
+        uid: int | None = None,
+        gid: int | None = None,
+        password: str | None = None,
+        home: str | None = None,
+        gecos: str | None = None,
+        shell: str | None = None,
+        user_auth_type: str | list[str] | None = None,
+        idp: str | None = None,
+        idp_user_id: str | None = None,
+        password_expiration: str | None = None,
+        sshpubkey: str | list[str] | None = None,
+        email: str | None = None,
+    ) -> IPAUser:
+        """
+        Modify existing IPA user.
+
+        :param first: First name of user.
+        :type first: str | None, optional
+        :param last: Last name of user.
+        :type last: str | None, optional
+        :param uid: User id, defaults to None
+        :type uid: int | None, optional
+        :param gid: Primary group id, defaults to None
+        :type gid: int | None, optional
+        :param password: Password, defaults to 'Secret123'
+        :type password: str | None, optional
+        :param home: Home directory, defaults to None
+        :type home: str | None, optional
+        :param gecos: GECOS, defaults to None
+        :type gecos: str | None, optional
+        :param shell: Login shell, defaults to None
+        :type shell: str | None, optional
+        :param user_auth_type: Types of supported user authentication, defaults to None
+        :type user_auth_type: str | list[str] | None, optional
+        :param idp: Name of external IdP configured in IPA for user.
+        :type idp: str | None, optional
+        :param idp_user_id: User ID used to map IPA user to external IdP user.
+        :type idp_user_id: str | None, optional
+        :param password_expiration: Date and time stamp for password expiration.
+        :type password_expiration: str | None, optional
+        :param sshpubkey: SSH public key, defaults to None
+        :type sshpubkey: str | list[str] | None, optional
+        :param email: email attribute, defaults to None
+        :type email: str | None, optional
+        :return: Self.
+        :rtype: IPAUser
+        """
+        attrs = {
+            "first": (self.cli.option.VALUE, first),
+            "last": (self.cli.option.VALUE, last),
+            "uid": (self.cli.option.VALUE, uid),
+            "gidnumber": (self.cli.option.VALUE, gid),
+            "homedir": (self.cli.option.VALUE, home),
+            "gecos": (self.cli.option.VALUE, gecos),
+            "shell": (self.cli.option.VALUE, shell),
+            "password": (self.cli.option.SWITCH, True) if password is not None else None,
+            "user-auth-type": (self.cli.option.VALUE, user_auth_type),
+            "idp": (self.cli.option.VALUE, idp),
+            "idp-user-id": (self.cli.option.VALUE, idp_user_id),
+            "password-expiration": (self.cli.option.VALUE, password_expiration),
+            "sshpubkey": (self.cli.option.VALUE, sshpubkey),
+            "email": (self.cli.option.VALUE, email),
+        }
+
+        self._modify(attrs, input=password)
+        return self
+
+    def get(self, attrs: list[str] | None = None, *, opattrs: bool = False) -> dict[str, list[str]] | None:
+        """
+        Get user attributes.
+
+        :param attrs: If set, only requested attributes are returned, defaults to None
+        :type attrs: list[str] | None, optional
+        :param opattrs: Ignored (LDAP-only); present for :class:`GenericUser` API compatibility.
+        :type opattrs: bool, optional
+        :return: Dictionary with attribute name as a key (empty if the user does not exist).
+        :rtype: dict[str, list[str]] | None
+        """
+        result = super().get(attrs, opattrs=opattrs)
+        return result if result is not None else {}
+
+    def reset(self, password: str | None = "Secret123") -> IPAUser:
+        """
+        Reset user password.
+
+        :param password: Password, defaults to 'Secret123'
+        :type password: str, optional
+        :return: Self.
+        :rtype: IPAUser
+        """
+        pwinput = f"{password}\n{password}"
+        self.role.host.conn.run(f"ipa passwd {self.name}", input=pwinput)
+        self.expire("20380101120000Z")
+
+        return self
+
+    def expire(self, expiration: str | None = "19700101000000Z") -> IPAUser:
+        """
+        Set user password expiration date and time.
+
+        :param expiration: Date and time for user password expiration, defaults to 19700101000000
+        :type expiration: str, optional
+        :return: Self.
+        :rtype: IPAUser
+        """
+        self.modify(password_expiration=expiration)
+
+        return self
+
+    def password_change_at_logon(self, **kwargs) -> IPAUser:
+        """
+        Force user to change password next logon.
+
+        :return: Self.
+        :rtype: IPAUser
+        """
+        self.host.conn.run(f"ipa user-mod {self.name} --setattr=krbPasswordExpiration=20010203203734Z")
+        return self
+
+    def passkey_add(self, passkey_mapping: str) -> IPAUser:
+        """
+        Add passkey mapping to the user.
+
+        :param passkey_mapping: Passkey mapping generated by ``sssctl passkey-register``.
+        :type passkey_mapping: str
+        :return: Self.
+        :rtype: IPAUser
+        """
+        self._exec("add-passkey", [passkey_mapping])
+        return self
+
+    def passkey_add_register(self, **kwargs) -> str:
+        """wrapper for passkey_add_register methods"""
+        if "virt_type" in kwargs and kwargs["virt_type"] == "vfido":
+            del kwargs["virt_type"]
+            return self.vfido_passkey_add_register(**kwargs)
+        else:
+            return self.umockdev_passkey_add_register(**kwargs)
+
+    def umockdev_passkey_add_register(
+        self,
+        *,
+        pin: str | int | None,
+        device: str,
+        ioctl: str,
+        script: str,
+    ) -> str:
+        """
+        Register passkey with the user (run ipa user-add-passkey --register).
+
+        :param pin: Passkey PIN.
+        :type pin: str | int | None
+        :param device: Path to local umockdev device file.
+        :type device: str
+        :param ioctl: Path to local umockdev ioctl file.
+        :type ioctl: str
+        :param script: Path to local umockdev script file.
+        :type script: str
+        :return: Generated passkey mapping string.
+        :rtype: str
+        """
+        device_path = self.role.fs.upload_to_tmp(device, mode="a=r")
+        ioctl_path = self.role.fs.upload_to_tmp(ioctl, mode="a=r")
+        script_path = self.role.fs.upload_to_tmp(script, mode="a=r")
+        verify = pin is not None
+
+        command = self.role.fs.mktmp(
+            rf"""
+            #!/bin/bash
+
+            LD_PRELOAD=/opt/random.so umockdev-run \
+                --device '{device_path}'                \
+                --ioctl '/dev/hidraw1={ioctl_path}'     \
+                --script '/dev/hidraw1={script_path}'   \
+                -- ipa user-add-passkey '{self.name}' --register --cose-type=es256 --require-user-verification={verify}
+            """,
+            mode="a=rx",
+        )
+
+        if pin is not None:
+            result = self.host.conn.expect(
+                f"""
+                spawn {command}
+                expect {{
+                    "Enter PIN:*" {{send -- "{pin}\r"}}
+                    timeout {{puts "expect result: Unexpected output"; exit 201}}
+                    eof {{puts "expect result: Unexpected end of file"; exit 202}}
+                }}
+
+                expect eof
+                """,
+                raise_on_error=True,
+            )
+        else:
+            result = self.host.conn.expect(
+                f"""
+                spawn {command}
+                expect eof
+                """,
+                raise_on_error=True,
+            )
+
+        return result.stdout_lines[-1].strip()
+
+    def passkey_remove(self, passkey_mapping: str) -> IPAUser:
+        """
+        Remove passkey mapping from the user.
+
+        Implements :meth:`GenericUser.passkey_remove`.
+
+        :param passkey_mapping: Passkey mapping generated by ``sssctl passkey-register``
+        :type passkey_mapping: str
+        :return: Self.
+        :rtype: IPAUser
+        """
+        self._exec("remove-passkey", [passkey_mapping])
+        return self
+
+    def vfido_passkey_add_register(
+        self,
+        *,
+        client: Client,
+        pin: str | int | None = None,
+    ) -> str:
+        """
+        Register user passkey when using virtual-fido
+        """
+
+        if pin is None:
+            pin = "empty"
+
+        client.host.conn.exec(["kinit", f"{self.host.adminuser}@{self.host.realm}"], input=self.host.adminpw)
+
+        def run_expect():
+            return client.host.conn.expect(
+                f"""
+                set pin "{pin}"
+                set timeout 60
+                spawn ipa user-add-passkey {self.name} --register
+                set ID_reg $spawn_id
+
+                if {{ ($pin ne "empty") }} {{
+                    expect {{
+                        -i $ID_reg -re "Enter PIN:*" {{}}
+                        -i $ID_reg timeout {{puts "expect result: Unexpected output"; exit 201}}
+                        -i $ID_reg eof {{puts "expect result: Unexpected end of file"; exit 202}}
+                    }}
+
+                    puts "Entering PIN\n"
+                    send -i $ID_reg "{pin}\r"
+                }}
+
+                expect {{
+                    -i $ID_reg -re "Please touch the device.*" {{}}
+                    -i $ID_reg timeout {{puts "expect result: Unexpected output"; exit 203}}
+                    -i $ID_reg eof {{puts "expect result: Unexpected end of file"; exit 204}}
+                }}
+
+                puts "Touching device"
+                spawn {test_venv_bin}/vfido_touch
+                set ID_touch $spawn_id
+                expect {{
+                    -i $ID_reg -re "Added passkey mappings.*" {{}}
+                    -i $ID_reg timeout {{puts "expect result: Unexpected output"; exit 205}}
+                    -i $ID_reg eof {{puts "expect result: Unexpected end of file"; exit 206}}
+                }}
+                expect -i $ID_reg eof
+                expect -i $ID_touch eof
+                """,
+                raise_on_error=False,
+            )
+
+        retry = 0
+        max_retries = 5
+        result = run_expect()
+        while result.rc != 0:
+            if retry == max_retries:
+                raise AssertionError("Unable to register passkey for IPA user")
+            result = run_expect()
+            retry += 1
+            time.sleep(1)
+
+        return result.stdout_lines[-1].strip()
+
+    def iduseroverride(self) -> IDUserOverride:
+        """
+        Add override to the IPA user.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example(client: Client, ipa: IPA):
+                ipa.idview("newview1").add(description="This is a new view")
+                ipa.idview("newview1").apply(f"{client.host.hostname}")
+                ipa.user("user-1").add().iduseroverride().add_override("newview1", uid=1344567)
+                client.sssd.restart()
+                lookup1 = client.tools.id("user-1")
+                assert lookup1.user.id == 1344567
+
+        :return: New IDOverride object.
+        :rtype: IDOverride
+        """
+        return IDUserOverride(self)
+
+    def subid(self) -> IPASubID:
+        """
+        IPA subid management.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_ipa__subids_configured(ipa: IPA):
+                user = ipa.user("user1").add()
+                user.subid().generate()
+        """
+        return IPASubID(self.role, self.name)
+
+
+class IDUserOverride(IPAUser):
+    """
+    IPA ID override for users.
+    """
+
+    def __init__(self, user: IPAUser) -> None:
+        """
+        :param user: IPA user object.
+        :type user: IPAUser
+        """
+        super().__init__(user.role, user.name)
+
+    def add_override(
+        self,
+        idview_name: str,
+        *,
+        description: str | None = None,
+        login: str | None = None,
+        uid: int | None = None,
+        gid: int | None = None,
+        gecos: str | None = None,
+        home: str | None = None,
+        shell: str | None = None,
+        sshpubkey: str | None = None,
+        certificate: str | list[str] | None = None,
+        **kwargs,
+    ) -> tuple[ProcessResult[ProcessError], list[str] | str | list | None]:
+        """
+        Add a new User ID override.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :param description: Description.
+        :type description: str | None, defaults to None
+        :param login: Overridden User login.
+        :type login: str | None, defaults to None
+        :param uid: Overridden User ID number.
+        :type uid: str | None, defaults to None
+        :param gid: Overridden Group ID number.
+        :type gid: str | None, defaults to None
+        :param gecos: Overridden Gecos.
+        :type gecos: str | None, defaults to None
+        :param home: Overridden Home directory.
+        :type home: str | None, defaults to None
+        :param shell: Overridden Login shell.
+        :type shell: str | None, defaults to None
+        :param sshpubkey: Overridden SSH public key.
+        :type sshpubkey: str | None, defaults to None
+        :param certificate: Overridden Certificate.
+        :type certificate: str | list[str] | None, defaults to None
+        :return: ProcessResult, cert
+        :rtype: tuple[ProcessResult, list[str] | str | list | None]
+        """
+        certs = [certificate] if isinstance(certificate, str) else certificate or []
+
+        attrs: CLIBuilderArgs = {
+            "desc": (self.cli.option.VALUE, description),
+            "login": (self.cli.option.VALUE, login),
+            "uid": (self.cli.option.VALUE, uid),
+            "gidnumber": (self.cli.option.VALUE, gid),
+            "gecos": (self.cli.option.VALUE, gecos),
+            "homedir": (self.cli.option.VALUE, home),
+            "shell": (self.cli.option.VALUE, shell),
+            "sshpubkey": (self.cli.option.VALUE, sshpubkey),
+        }
+
+        if kwargs:
+            unexpected_keys = ", ".join(kwargs.keys())
+            raise TypeError(f"Unexpected keyword arguments: {unexpected_keys}")
+
+        # Create the ID override first
+        result = self.role.host.conn.exec(
+            ["ipa", "idoverrideuser-add", idview_name, self.name] + to_list_without_none(self.cli.args(attrs)),
+            raise_on_error=False,
+        )
+
+        # Add certificates if any exist
+        if certs:
+            cert_cmd = ["ipa", "idoverrideuser-add-cert", idview_name, self.name]
+            for cert in certs:
+                self.role.host.conn.exec(cert_cmd + [f"--certificate={cert}"])
+
+        return (result, certs)
+
+    def modify_override(
+        self,
+        idview_name: str,
+        *,
+        description: str | None = None,
+        login: str | None = None,
+        uid: int | None = None,
+        gid: int | None = None,
+        gecos: str | None = None,
+        home: str | None = None,
+        shell: str | None = None,
+        sshpubkey: str | None = None,
+        certificate: str | list[str] | None = None,
+    ) -> IDUserOverride:
+        """
+        Modify an User ID override.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :param description: Description.
+        :type description: str | None, defaults to None
+        :param login: Overridden User login.
+        :type login: str | None, defaults to None
+        :param uid: Overridden User ID number.
+        :type uid: str | None, defaults to None
+        :param gid: Overridden Group ID.
+        :type gid: str | None, defaults to None
+        :param gecos: Overridden Gecos.
+        :type gecos: str | None, defaults to None
+        :param home: Overridden Home directory.
+        :type home: str | None, defaults to None
+        :param shell: Overridden Login shell.
+        :type shell: str | None, defaults to None
+        :param sshpubkey: Overridden SSH public key.
+        :type sshpubkey: str | None, defaults to None
+        :param certificate: Overridden Certificate.
+        :type certificate: str | list[str] | None, defaults to None
+        :return: self.
+        :rtype: IDUserOverride
+        """
+
+        attrs: CLIBuilderArgs = {
+            "desc": (self.cli.option.VALUE, description),
+            "login": (self.cli.option.VALUE, login),
+            "uid": (self.cli.option.VALUE, uid),
+            "gidnumber": (self.cli.option.VALUE, gid),
+            "gecos": (self.cli.option.VALUE, gecos),
+            "homedir": (self.cli.option.VALUE, home),
+            "shell": (self.cli.option.VALUE, shell),
+            "sshpubkey": (self.cli.option.VALUE, sshpubkey),
+            "certificate": (self.cli.option.VALUE, certificate),
+        }
+
+        attrs = CLIBuilderArgs(attrs)
+        self.role.host.conn.exec(
+            ["ipa", "idoverrideuser-mod", idview_name, self.name] + to_list_without_none(self.cli.args(attrs))
+        )
+
+        return self
+
+    def delete_override(self, idview_name: str) -> ProcessResult[ProcessError]:
+        """
+        Delete an User ID override.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :return: ProcessResult[ProcessError]
+        :rtype: [ProcessError]
+        """
+
+        result = self.role.host.conn.exec(["ipa", "idoverrideuser-del", idview_name, self.name])
+        return result
+
+    def remove_cert(self, idview_name: str, certificate: str | list[str]) -> IDUserOverride:
+        """
+        Remove one or more certificates to the idoverrideuser entry.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :param certificate: Overridden Certificate.
+        :type certificate: str | list[str]
+        :return: self.
+        :rtype: IDOverride
+        """
+        self.role.host.conn.exec(
+            ["ipa", "idoverrideuser-remove-cert", idview_name, self.name, f"--certificate={certificate}"]
+        )
+        return self
+
+    def find_override(self, idview_name: str) -> dict[str, list[str]]:
+        """
+        Search for an User ID override.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :return: Dict of IDOverride user information.
+        :rtype: dict[str, list[str]]
+        """
+
+        cmd = self.role.host.conn.exec(["ipa", "idoverrideuser-find", idview_name, "--anchor", self.name, "--raw"])
+        cleaned_data = [dedent(line).strip() for line in cmd.stdout_lines if not set(line) == {"-"} and line.strip()]
+
+        lines = [line for line in cleaned_data if ":" in line]
+
+        return attrs_parse(lines)
+
+    def show_override(self, idview_name: str) -> dict[str, list[str]]:
+        """
+        Display information about an User ID override.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :return: dict of IDOverride user information.
+        :rtype: dict[str, list[str]]
+        """
+        cmd = self.role.host.conn.exec(["ipa", "idoverrideuser-show", idview_name, self.name, "--raw"])
+
+        lines = [line.strip() for line in cmd.stdout_lines if ":" in line]
+
+        return attrs_parse(lines)
+
+
+class IPASubID(BaseObject[IPAHost, IPA]):
+    """
+    IPA sub id management.
+    """
+
+    def __init__(self, role: IPA, user: str) -> None:
+        """
+        :param user: Username.
+        :type user: str
+        """
+        super().__init__(role)
+
+        self.name = user
+        """ Owner name."""
+
+        self.uid_start: int | None = None
+        """ SubUID range start"""
+
+        self.uid_size: int | None = None
+        """ SubUID range size."""
+
+        self.gid_start: int | None = None
+        """ SubGID range start."""
+
+        self.gid_size: int | None = None
+        """ SubGID range size."""
+
+    def generate(self) -> IPASubID:
+        """
+        Generate subordinate id.
+        """
+        self.host.conn.run(f"ipa subid-generate --owner {self.name}")
+        result = self.host.conn.run(f"ipa subid-find --owner {self.name}").stdout_lines
+        result = [item for item in result if ":" in item]
+        subids = delimiter_parse(result)
+
+        self.uid_start = int(subids["SubUID range start"]) if subids.get("SubUID range start") else None
+        self.uid_size = int(subids["SubUID range size"]) if subids.get("SubUID range size") else None
+        self.gid_start = int(subids["SubGID range start"]) if subids.get("SubGID range start") else None
+        self.gid_size = int(subids["SubGID range size"]) if subids.get("SubGID range size") else None
+
+        return self
+
+
+class IPAGroup(IPAObject, GenericGroup):
+    """
+    IPA group management.
+
+    :class:`IPAGroup` implements :class:`GenericGroup` for static typing and provider-agnostic tests.
+    IPA-specific keyword arguments on :meth:`add` and external members (``str``) on membership
+    methods are in addition to the generic API.
+    """
+
+    def __init__(self, role: IPA, name: str) -> None:
+        """
+        :param role: IPA role object.
+        :type role: IPA
+        :param name: Group name.
+        :type name: str
+        """
+        super().__init__(role, name, command_group="group")
+
+    def add(
+        self,
+        *,
+        gid: int | None = None,
+        description: str | None = None,
+        nonposix: bool = False,
+        external: bool = False,
+    ) -> IPAGroup:
+        """
+        Create new IPA group.
+
+        Parameters that are not set are ignored.
+
+        :param gid: Group id, defaults to None
+        :type gid: int | None, optional
+        :param description: Description, defaults to None
+        :type description: str | None, optional
+        :param nonposix: Group is non-posix group, defaults to False
+        :type nonposix: bool, optional
+        :param external: Group is external group, defaults to False
+        :type external: bool, optional
+        :return: Self.
+        :rtype: IPAGroup
+        """
+        attrs = {
+            "gid": (self.cli.option.VALUE, gid),
+            "desc": (self.cli.option.VALUE, description),
+            "nonposix": (self.cli.option.SWITCH, True) if nonposix else None,
+            "external": (self.cli.option.SWITCH, True) if external else None,
+        }
+
+        self._add(attrs)
+        return self
+
+    def delete(self) -> None:
+        """
+        Delete the IPA group.
+
+        :raises SSHProcessError: If the group does not exist or deletion fails.
+        """
+        super().delete()
+
+    def discard(self) -> None:
+        """
+        Remove the IPA group if it exists.
+        """
+        super().discard()
+
+    def modify(
+        self,
+        *,
+        gid: int | None = None,
+        description: str | None = None,
+    ) -> IPAGroup:
+        """
+        Modify existing IPA group.
+
+        Parameters that are not set are ignored.
+
+        :param gid: Group id, defaults to None
+        :type gid: int | None, optional
+        :param description: Description, defaults to None
+        :type description: str | None, optional
+        :return: Self.
+        :rtype: IPAGroup
+        """
+        attrs: CLIBuilderArgs = {
+            "gid": (self.cli.option.VALUE, gid),
+            "desc": (self.cli.option.VALUE, description),
+        }
+
+        self._modify(attrs)
+        return self
+
+    def get(self, attrs: list[str] | None = None, *, opattrs: bool = False) -> dict[str, list[str]] | None:
+        """
+        Get group attributes.
+
+        :param attrs: If set, only requested attributes are returned, defaults to None
+        :type attrs: list[str] | None, optional
+        :param opattrs: Ignored (LDAP-only); present for :class:`GenericGroup` API compatibility.
+        :type opattrs: bool, optional
+        :return: Dictionary with attribute name as a key (empty if the group does not exist).
+        :rtype: dict[str, list[str]] | None
+        """
+        result = super().get(attrs, opattrs=opattrs)
+        return result if result is not None else {}
+
+    def add_member(self, member: GroupMemberField) -> IPAGroup:
+        """
+        Add group member.
+
+        Member can be a :class:`GenericUser`, :class:`GenericGroup`, or a string in which case it
+        is added as an external member.
+
+        :param member: User or group to add as a member.
+        :type member: GroupMemberField
+        :return: Self.
+        :rtype: IPAGroup
+        """
+        return self.add_members([member])
+
+    def add_members(self, members: list[GroupMemberField]) -> IPAGroup:
+        """
+        Add multiple group members.
+
+        Members can be :class:`GenericUser`, :class:`GenericGroup`, or strings (external members).
+
+        :param members: List of users or groups to add as members.
+        :type members: list[GroupMemberField]
+        :return: Self.
+        :rtype: IPAGroup
+        """
+        self._exec("add-member", ipaargs=["--no-prompt"], args=self.__get_member_args(members))
+        return self
+
+    def remove_member(self, member: GroupMemberField) -> IPAGroup:
+        """
+        Remove group member.
+
+        Member can be a :class:`GenericUser`, :class:`GenericGroup`, or a string (external member).
+
+        :param member: User or group to remove from the group.
+        :type member: GroupMemberField
+        :return: Self.
+        :rtype: IPAGroup
+        """
+        return self.remove_members([member])
+
+    def remove_members(self, members: list[GroupMemberField]) -> IPAGroup:
+        """
+        Remove multiple group members.
+
+        Members can be :class:`GenericUser`, :class:`GenericGroup`, or strings (external members).
+
+        :param members: List of users or groups to remove from the group.
+        :type members: list[GroupMemberField]
+        :return: Self.
+        :rtype: IPAGroup
+        """
+        self._exec("remove-member", ipaargs=["--no-prompt"], args=self.__get_member_args(members))
+        return self
+
+    def __get_member_args(self, members: list[GroupMemberField]) -> list[str]:
+        users = [x for item in members if isinstance(item, GenericUser) for x in ("--users", item.name)]
+        groups = [x for item in members if isinstance(item, GenericGroup) for x in ("--groups", item.name)]
+        external = [x for item in members if isinstance(item, str) for x in ("--external", item)]
+        return [*users, *groups, *external]
+
+    def idgroupoverride(self) -> IDGroupOverride:
+        """
+        Add override to the IPA Group.
+
+        .. code-block:: python
+            :caption: Example usage
+
+            @pytest.mark.topology(Profile.SSSD)
+            def test_example(client: Client, ipa: IPA):
+                ipa.idview("newview1").add(description="This is a new view")
+                ipa.idview("newview1").apply(hosts=f"{client.host.hostname}")
+                ipa.group("group-1").add().idgroupoverride().add_override("newview1", gid=1344567)
+                client.sssd.restart()
+                g_lookup = client.tools.getent.group("group-1")
+                assert g_lookup.gid == 1344567
+
+        :return: New IDOverride object.
+        :rtype: IDOverride
+        """
+        return IDGroupOverride(self)
+
+
+class IDGroupOverride(IPAGroup):
+    """
+    IPA group ID override.
+    """
+
+    def __init__(self, group: IPAGroup) -> None:
+        """
+        :param user: IPA group object.
+        :type user: IPAGroup
+        """
+        super().__init__(group.role, group.name)
+
+    def add_override(
+        self,
+        idview_name: str,
+        *,
+        description: str | None = None,
+        name: str | None = None,
+        gid: int | None = None,
+    ) -> IDGroupOverride:
+        """
+        Add a new Group ID override.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :param description: Description.
+        :type description: str | None, defaults to None
+        :param name: Overridden group name.
+        :type name: str | None, defaults to None
+        :param gid: Overridden Group ID Number.
+        :type gid: str | None, defaults to None
+        :return: self.
+        :rtype: IDGroupOverride
+        """
+
+        attrs: CLIBuilderArgs = {
+            "desc": (self.cli.option.VALUE, description),
+            "group-name": (self.cli.option.VALUE, name),
+            "gid": (self.cli.option.VALUE, gid),
+        }
+
+        self.role.host.conn.exec(["ipa", "idoverridegroup-add", idview_name, self.name] + list(self.cli.args(attrs)))
+        return self
+
+    def modify_override(
+        self,
+        idview_name: str,
+        *,
+        description: str | None = None,
+        name: str | None = None,
+        gid: int | None = None,
+    ) -> IDGroupOverride:
+        """
+        Modify an Group ID override.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :param description: Description.
+        :type description: str | None, defaults to None
+        :param name: Overridden group name.
+        :type name: str | None, defaults to None
+        :param gid: Overridden Group ID Number.
+        :type gid: str | None, defaults to None
+        :return: self.
+        :rtype: IDGroupOverride
+        """
+
+        attrs: CLIBuilderArgs = {
+            "desc": (self.cli.option.VALUE, description),
+            "group-name": (self.cli.option.VALUE, name),
+            "gid": (self.cli.option.VALUE, gid),
+        }
+        attrs = CLIBuilderArgs(attrs)
+        self.role.host.conn.exec(["ipa", "idoverridegroup-mod", idview_name, self.name] + list(self.cli.args(attrs)))
+
+        return self
+
+    def delete_override(self, idview_name: str) -> ProcessResult[ProcessError]:
+        """
+        Delete an Group ID override.
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :return: ProcessResult[ProcessError]
+        :rtype: [ProcessError]
+        """
+        result = self.role.host.conn.exec(["ipa", "idoverridegroup-del", idview_name, self.name])
+        return result
+
+    def find_override(self, idview_name: str) -> dict[str, list[str]]:
+        """
+        Search for an Group ID override.
+
+        :param idview_name: Name of IDView.
+        :type: idview_name: str
+        :return: dict of Group ID override information.
+        :rtype: dict[str, list[str]]
+        """
+        cmd = self.role.host.conn.exec(["ipa", "idoverridegroup-find", idview_name, "--anchor", self.name, "--raw"])
+        cleaned_data = [dedent(line).strip() for line in cmd.stdout_lines if not set(line) == {"-"} and line.strip()]
+
+        lines = [line for line in cleaned_data if ":" in line]
+
+        return attrs_parse(lines)
+
+    def show_override(self, idview_name: str) -> dict[str, list[str]]:
+        """
+        Display information about an Group ID override.
+
+        :param idview_name: Name of IDView.
+        :type idview_name: str
+        :return: dict of Group ID Override information.
+        :rtype: dict[str, list[str]]
+        """
+        cmd = self.role.host.conn.exec(["ipa", "idoverridegroup-show", idview_name, self.name, "--raw"])
+
+        lines = [line.strip() for line in cmd.stdout_lines if ":" in line]
+
+        return attrs_parse(lines)
+
+
+class IPANetgroup(IPAObject, GenericNetgroup):
+    """
+    IPA netgroup management.
+
+    :class:`IPANetgroup` implements :class:`GenericNetgroup` for static typing and
+    provider-agnostic tests. IPA-specific ``group`` and ``hostgroup`` members on
+    :meth:`add_member` are in addition to the generic API.
+    """
+
+    def __init__(self, role: IPA, name: str) -> None:
+        """
+        :param role: IPA role object.
+        :type role: IPA
+        :param name: Netgroup name.
+        :type name: str
+        """
+        super().__init__(role, name, command_group="netgroup")
+
+    def add(self) -> IPANetgroup:
+        """
+        Create new IPA netgroup.
+
+        :return: Self.
+        :rtype: IPANetgroup
+        """
+        self._add()
+        return self
+
+    def get(self, attrs: list[str] | None = None, *, opattrs: bool = False) -> dict[str, list[str]] | None:
+        """
+        Get netgroup attributes.
+
+        :param attrs: If set, only requested attributes are returned, defaults to None
+        :type attrs: list[str] | None, optional
+        :param opattrs: Ignored (LDAP-only); present for :class:`GenericNetgroup` API compatibility.
+        :type opattrs: bool, optional
+        :return: Dictionary with attribute name as a key (empty if the netgroup does not exist).
+        :rtype: dict[str, list[str]] | None
+        """
+        result = super().get(attrs, opattrs=opattrs)
+        return result if result is not None else {}
+
+    def add_member(
+        self,
+        *,
+        host: str | None = None,
+        user: GenericUser | str | None = None,
+        group: GenericGroup | str | None = None,
+        hostgroup: str | None = None,
+        ng: GenericNetgroup | str | None = None,
+    ) -> IPANetgroup:
+        """
+        Add netgroup member.
+
+        :param host: Host, defaults to None
+        :type host: str | None, optional
+        :param user: User, defaults to None
+        :type user: GenericUser | str | None, optional
+        :param group: Group (IPA only), defaults to None
+        :type group: GenericGroup | str | None, optional
+        :param hostgroup: Hostgroup (IPA only), defaults to None
+        :type hostgroup: str | None, optional
+        :param ng: Netgroup, defaults to None
+        :type ng: GenericNetgroup | str | None, optional
+        :return: Self.
+        :rtype: IPANetgroup
+        """
+        return self.add_members([IPANetgroupMember(host=host, user=user, group=group, hostgroup=hostgroup, ng=ng)])
+
+    def add_members(self, members: list[GenericNetgroupMember]) -> IPANetgroup:
+        """
+        Add multiple netgroup members.
+
+        :param members: Netgroup members (use :class:`IPANetgroupMember` for IPA group/hostgroup members).
+        :type members: list[GenericNetgroupMember]
+        :return: Self.
+        :rtype: IPANetgroup
+        """
+        self._exec("add-member", self.__get_member_args(members))
+        return self
+
+    def remove_member(
+        self,
+        *,
+        host: str | None = None,
+        user: GenericUser | str | None = None,
+        group: GenericGroup | str | None = None,
+        hostgroup: str | None = None,
+        ng: GenericNetgroup | str | None = None,
+    ) -> IPANetgroup:
+        """
+        Remove netgroup member.
+
+        :param host: Host, defaults to None
+        :type host: str | None, optional
+        :param user: User, defaults to None
+        :type user: GenericUser | str | None, optional
+        :param group: Group (IPA only), defaults to None
+        :type group: GenericGroup | str | None, optional
+        :param hostgroup: Hostgroup (IPA only), defaults to None
+        :type hostgroup: str | None, optional
+        :param ng: Netgroup, defaults to None
+        :type ng: GenericNetgroup | str | None, optional
+        :return: Self.
+        :rtype: IPANetgroup
+        """
+        return self.remove_members([IPANetgroupMember(host=host, user=user, group=group, hostgroup=hostgroup, ng=ng)])
+
+    def remove_members(self, members: list[GenericNetgroupMember]) -> IPANetgroup:
+        """
+        Remove multiple netgroup members.
+
+        :param members: Netgroup members (use :class:`IPANetgroupMember` for IPA group/hostgroup members).
+        :type members: list[GenericNetgroupMember]
+        :return: Self.
+        :rtype: IPANetgroup
+        """
+        self._exec("remove-member", self.__get_member_args(members))
+        return self
+
+    def __get_member_args(self, members: list[GenericNetgroupMember]) -> list[str]:
+        users = [x for item in members if item.user is not None for x in ("--users", item.user)]
+        groups = [
+            x
+            for item in members
+            if getattr(item, "group", None) is not None
+            for x in ("--groups", getattr(item, "group"))
+        ]
+        hosts = [x for item in members if item.host is not None for x in ("--hosts", item.host)]
+        hostgroups = [
+            x
+            for item in members
+            if getattr(item, "hostgroup", None) is not None
+            for x in ("--hostgroups", getattr(item, "hostgroup"))
+        ]
+        netgroups = [x for item in members if item.netgroup is not None for x in ("--netgroups", item.netgroup)]
+
+        return [*users, *groups, *hosts, *hostgroups, *netgroups]
+
+
+class IPANetgroupMember(GenericNetgroupMember):
+    """
+    IPA netgroup member.
+    """
+
+    def __init__(
+        self,
+        *,
+        host: str | None = None,
+        user: GenericUser | str | None = None,
+        group: GenericGroup | str | None = None,
+        hostgroup: str | None = None,
+        ng: GenericNetgroup | str | None = None,
+    ) -> None:
+        """
+        :param host: Host, defaults to None
+        :type host: str | None, optional
+        :param user: User, defaults to None
+        :type user: GenericUser | str | None, optional
+        :param group: Group, defaults to None
+        :type group: GenericGroup | str | None, optional
+        :param hostgroup: Hostgroup, defaults to None
+        :type hostgroup: str | None, optional
+        :param ng: Netgroup, defaults to None
+        :type ng: GenericNetgroup | str | None, optional
+        """
+        super().__init__(host=host, user=user, ng=ng)
+
+        self.group: str | None = self._get_name(group)
+        """Netgroup group."""
+
+        self.hostgroup: str | None = hostgroup
+        """Netgroup hostgroup."""
+
+
+class IPAHostAccount(IPAObject):
+    """
+    IPA host management.
+    """
+
+    def __init__(self, role: IPA, name: str) -> None:
+        """
+        :param role: IPA role object.
+        :type role: IPA
+        :param name: Group name.
+        :type name: str
+        """
+        super().__init__(role, name, command_group="host")
+
+    def add(
+        self,
+        *,
+        description: str | None = None,
+        ip: str,
+        sshpubkey: str | list[str] | None = None,
+    ) -> IPAHostAccount:
+        """
+        Create new IPA host.
+
+        Parameters that are not set are ignored.
+
+        .. note::
+
+            If you need a reverse DNS record, use IP address from
+            10.255.251.0/24 address space. There is reverse zone for this
+            address space available on the IPA server.
+
+        :param description: Description, defaults to None
+        :type description: str | None, optional
+        :param ip: IP address.
+        :type ip: str
+        :param sshpubkey: SSH public key, defaults to None
+        :type sshpubkey: str | list[str] | None, optional
+        :return: Self.
+        :rtype: IPAHostAccount
+        """
+        attrs: CLIBuilderArgs = {
+            "desc": (self.cli.option.VALUE, description),
+            "ip-address": (self.cli.option.VALUE, ip),
+            "sshpubkey": (self.cli.option.VALUE, sshpubkey),
+        }
+
+        self._add(attrs)
+        return self
+
+    def modify(
+        self,
+        *,
+        description: str | None = None,
+        sshpubkey: str | list[str] | None = None,
+    ) -> IPAHostAccount:
+        """
+        Modify existing IPA host.
+
+        Parameters that are not set are ignored.
+
+        :param description: Description, defaults to None
+        :type description: str | None, optional
+        :param sshpubkey: SSH public key, defaults to None
+        :type sshpubkey: str | list[str] | None, optional
+        :return: Self.
+        :rtype: IPAGroup
+        """
+        attrs: CLIBuilderArgs = {
+            "desc": (self.cli.option.VALUE, description),
+            "sshpubkey": (self.cli.option.VALUE, sshpubkey),
+        }
+
+        self._modify(attrs)
+        return self
+
+
+class IPASudoRule(IPAObject, GenericSudoRule):
+    """
+    IPA sudo rule management.
+
+    :class:`IPASudoRule` implements :class:`GenericSudoRule` for static typing and
+    provider-agnostic tests.
+    """
+
+    def __init__(self, role: IPA, name: str) -> None:
+        """
+        :param role: IPA role object.
+        :type role: IPA
+        :param name: Sudo rule name.
+        :type name: str
+        """
+        super().__init__(role, name, command_group="sudorule")
+        self.__rule: dict[str, Any] = dict()
+
+    def add(
+        self,
+        *,
+        user: SudoRuleUserField = None,
+        host: SudoRuleHostField = None,
+        command: SudoRuleCommandField = None,
+        option: str | list[str] | None = None,
+        runasuser: SudoRuleRunAsUserField = None,
+        runasgroup: SudoRuleRunAsGroupField = None,
+        order: int | None = None,
+        nopasswd: bool | None = None,
+    ) -> IPASudoRule:
+        """
+        Create new sudo rule.
+
+        :param user: sudoUser attribute, defaults to None
+        :type user: SudoRuleUserField, optional
+        :param host: sudoHost attribute, defaults to None
+        :type host: SudoRuleHostField, optional
+        :param command: sudoCommand attribute, defaults to None
+        :type command: SudoRuleCommandField, optional
+        :param option: sudoOption attribute, defaults to None
+        :type option: str | list[str] | None, optional
+        :param runasuser: sudoRunAsUser attribute, defaults to None
+        :type runasuser: SudoRuleRunAsUserField, optional
+        :param runasgroup: sudoRunAsGroup attribute, defaults to None
+        :type runasgroup: SudoRuleRunAsGroupField, optional
+        :param order: sudoOrder attribute, defaults to None
+        :type order: int | None, optional
+        :param nopasswd: If true, no authentication is required (NOPASSWD), defaults to None (no change)
+        :type nopasswd: bool | None, optional
+        :return: Self.
+        :rtype: IPASudoRule
+        """
+        # Remember arguments so we can use them in modify if needed
+        self.__rule = dict(
+            user=user,
+            host=host,
+            command=command,
+            option=option,
+            runasuser=runasuser,
+            runasgroup=runasgroup,
+            order=order,
+            nopasswd=nopasswd,
+        )
+
+        # Prepare data
+        allow_commands, deny_commands, cmdcat = self.__get_commands(command)
+        hosts, hostcat = self.__get_hosts(host)
+        users, groups, usercat = self.__get_users_and_groups(user)
+        options = to_list_of_strings(option)
+        runasuser_users, runasuser_groups, runasusercat = self.__get_run_as_user(runasuser)
+        runasgroup_groups, runasgroupcat = self.__get_run_as_group(runasgroup)
+
+        if nopasswd is True:
+            options = attrs_include_value(options, "!authenticate")
+        elif nopasswd is False:
+            options = attrs_include_value(options, "authenticate")
+
+        # Add commands
+        for cmd in allow_commands + deny_commands:
+            self.role.host.conn.run(f'ipa sudocmd-find "{cmd}" || ipa sudocmd-add "{cmd}"')
+
+        # Add command group for commands allowed by this rule
+        self.role.host.conn.run(f'ipa sudocmdgroup-add "{self.name}_allow"')
+        args = self.__args_from_list("sudocmds", allow_commands)
+        self.__exec_with_args("sudocmdgroup-add-member", f"{self.name}_allow", args)
+
+        # Add command groups for commands denied by this rule
+        self.role.host.conn.run(f'ipa sudocmdgroup-add "{self.name}_deny"')
+        args = self.__args_from_list("sudocmds", deny_commands)
+        self.__exec_with_args("sudocmdgroup-add-member", f"{self.name}_deny", args)
+
+        # Add sudo rule
+        args = "" if order is None else f'"{order}"'
+        args += f" {cmdcat} {usercat} {hostcat} {runasusercat} {runasgroupcat}"
+        self.role.host.conn.run(f'ipa sudorule-add "{self.name}" {args}')
+
+        # Allow and deny commands through command groups
+        if not cmdcat:
+            self.role.host.conn.run(
+                f'ipa sudorule-add-allow-command "{self.name}" "--sudocmdgroups={self.name}_allow"'
+            )
+            self.role.host.conn.run(f'ipa sudorule-add-deny-command "{self.name}" "--sudocmdgroups={self.name}_deny"')
+
+        # Add hosts
+        args = self.__args_from_list("hosts", hosts)
+        self.__exec_with_args("sudorule-add-host", self.name, args)
+
+        # Add options
+        for opt in options:
+            self.role.host.conn.run(f'ipa sudorule-add-option "{self.name}" "--sudooption={opt}"')
+
+        # Add run as user
+        args_users = self.__args_from_list("users", runasuser_users)
+        args_groups = self.__args_from_list("groups", runasuser_groups)
+        self.__exec_with_args("sudorule-add-runasuser", self.name, args_users + args_groups)
+
+        # Add run as group
+        args = self.__args_from_list("groups", runasgroup_groups)
+        self.__exec_with_args("sudorule-add-runasgroup", self.name, args)
+
+        # Add users and groups
+        args_users = self.__args_from_list("users", users)
+        args_groups = self.__args_from_list("groups", groups)
+        self.__exec_with_args("sudorule-add-user", self.name, args_users + args_groups)
+
+        return self
+
+    def modify(
+        self,
+        *,
+        user: SudoRuleUserField = None,
+        host: SudoRuleHostField = None,
+        command: SudoRuleCommandField = None,
+        option: str | list[str] | None = None,
+        runasuser: SudoRuleRunAsUserField = None,
+        runasgroup: SudoRuleRunAsGroupField = None,
+        order: int | None = None,
+        nopasswd: bool | None = None,
+    ) -> IPASudoRule:
+        """
+        Modify existing IPA sudo rule.
+
+        :param user: sudoUser attribute, defaults to None
+        :type user: SudoRuleUserField, optional
+        :param host: sudoHost attribute, defaults to None
+        :type host: SudoRuleHostField, optional
+        :param command: sudoCommand attribute, defaults to None
+        :type command: SudoRuleCommandField, optional
+        :param option: sudoOption attribute, defaults to None
+        :type option: str | list[str] | None, optional
+        :param runasuser: sudoRunAsUser attribute, defaults to None
+        :type runasuser: SudoRuleRunAsUserField, optional
+        :param runasgroup: sudoRunAsGroup attribute, defaults to None
+        :type runasgroup: SudoRuleRunAsGroupField, optional
+        :param order: sudoOrder attribute, defaults to None
+        :type order: int | None, optional
+        :param nopasswd: If true, no authentication is required (NOPASSWD), defaults to None (no change)
+        :type nopasswd: bool | None, optional
+        :return: Self.
+        :rtype: IPASudoRule
+        """
+        self.delete()
+        self.add(
+            user=user if user is not None else self.__rule.get("user", None),
+            host=host if host is not None else self.__rule.get("host", None),
+            command=command if command is not None else self.__rule.get("command", None),
+            option=option if option is not None else self.__rule.get("option", None),
+            runasuser=runasuser if runasuser is not None else self.__rule.get("runasuser", None),
+            runasgroup=runasgroup if runasgroup is not None else self.__rule.get("runasgroup", None),
+            order=order if order is not None else self.__rule.get("order", None),
+            nopasswd=nopasswd if nopasswd is not None else self.__rule.get("nopasswd", None),
+        )
+
+        return self
+
+    def get(self, attrs: list[str] | None = None, *, opattrs: bool = False) -> dict[str, list[str]] | None:
+        """
+        Get sudo rule attributes.
+
+        :param attrs: If set, only requested attributes are returned, defaults to None
+        :type attrs: list[str] | None, optional
+        :param opattrs: Ignored (LDAP-only); present for :class:`GenericSudoRule` API compatibility.
+        :type opattrs: bool, optional
+        :return: Dictionary with attribute name as a key (empty if the rule does not exist).
+        :rtype: dict[str, list[str]] | None
+        """
+        result = super().get(attrs, opattrs=opattrs)
+        return result if result is not None else {}
+
+    def delete(self) -> None:
+        """
+        Delete sudo rule from IPA.
+        """
+        self.role.host.conn.run(f'ipa sudorule-del "{self.name}"')
+        self.role.host.conn.run(f'ipa sudocmdgroup-del "{self.name}_allow"')
+        self.role.host.conn.run(f'ipa sudocmdgroup-del "{self.name}_deny"')
+
+    def __get_commands(self, value: SudoRuleCommandField) -> tuple[list[str], list[str], str]:
+        allow_commands = []
+        deny_commands = []
+        category = ""
+        for cmd in to_list_of_strings(value):
+            if cmd == "ALL":
+                category = "--cmdcat=all"
+                continue
+
+            if cmd.startswith("!"):
+                deny_commands.append(cmd[1:])
+                continue
+
+            allow_commands.append(cmd)
+
+        return allow_commands, deny_commands, category
+
+    def __get_hosts(self, value: SudoRuleHostField) -> tuple[list[str], str]:
+        hosts = []
+        category = ""
+        for host in to_list_of_strings(value):
+            if host == "ALL":
+                category = "--hostcat=all"
+                continue
+
+            hosts.append(host)
+
+        return hosts, category
+
+    def __get_users_and_groups(
+        self, value: SudoRuleUserField | SudoRuleRunAsUserField
+    ) -> tuple[list[str], list[str], str]:
+        users = []
+        groups = []
+        category = ""
+        for item in to_list(value):
+            if isinstance(item, str) and item == "ALL":
+                category = "--usercat=all"
+                continue
+
+            if isinstance(item, GenericGroup):
+                groups.append(item.name)
+                continue
+
+            if isinstance(item, str) and item.startswith("%"):
+                groups.append(item[1:])
+                continue
+
+            if isinstance(item, GenericUser):
+                users.append(item.name)
+                continue
+
+            if isinstance(item, str):
+                users.append(item)
+                continue
+
+            if hasattr(item, "name"):
+                users.append(item.name)
+                continue
+
+            raise ValueError(f"Unsupported type: {type(item)}")
+
+        return users, groups, category
+
+    def __get_run_as_user(self, value: SudoRuleRunAsUserField) -> tuple[list[str], list[str], str]:
+        users, groups, category = self.__get_users_and_groups(value)
+        if category:
+            category = "--runasusercat=all"
+
+        return users, groups, category
+
+    def __get_run_as_group(self, value: SudoRuleRunAsGroupField) -> tuple[list[str], str]:
+        groups = []
+        category = ""
+        for item in to_list(value):
+            if isinstance(item, str) and item == "ALL":
+                category = "--runasgroupcat=all"
+                continue
+
+            if isinstance(item, GenericGroup):
+                groups.append(item.name)
+                continue
+
+            if isinstance(item, str):
+                groups.append(item)
+                continue
+
+            if hasattr(item, "name"):
+                groups.append(item.name)
+                continue
+
+            raise ValueError(f"Unsupported type: {type(item)}")
+
+        return groups, category
+
+    def __args_from_list(self, option: str, value: list[str]) -> str:
+        if not value:
+            return ""
+
+        args = ""
+        for cmd in value:
+            args += f' "--{option}={cmd}"'
+
+        return args
+
+    def __exec_with_args(self, cmd: str, name: str, args: str) -> None:
+        if args:
+            self.role.host.conn.run(f'ipa {cmd} "{name}" {args}')
+
+
+class IPAPasswordPolicy(IPAObject, GenericPasswordPolicy):
+    """
+    IPA password policy management.
+
+    :class:`IPAPasswordPolicy` implements :class:`GenericPasswordPolicy` for static typing
+    and provider-agnostic tests.
+    """
+
+    def __init__(self, role: IPA, name: str = "ipausers") -> None:
+        """
+        :param role: IPA role object.
+        :type role: IPA
+        :param name: Name of target object, defaults to 'ipausers'.
+        :type name: str
+        """
+        super().__init__(role, name, command_group="pwpolicy")
+
+    def _apply_attrs(self, attrs: CLIBuilderArgs) -> None:
+        if self.get() is None:
+            self._add(attrs)
+        else:
+            self._modify(attrs)
+
+    def complexity(self, enable: bool) -> IPAPasswordPolicy:
+        """
+        Enable or disable password complexity.
+
+        :param enable: Enable or disable password complexity.
+        :type enable: bool
+        :return: Self.
+        :rtype: IPAPasswordPolicy
+        """
+        if enable:
+            attrs: CLIBuilderArgs = {
+                "dictcheck": (self.cli.option.VALUE, "True"),
+                "usercheck": (self.cli.option.VALUE, "True"),
+                "minlength": (self.cli.option.VALUE, 8),
+                "minclasses": (self.cli.option.VALUE, 4),
+                "priority": (self.cli.option.VALUE, 1),
+            }
+        else:
+            attrs = {
+                "dictcheck": (self.cli.option.VALUE, "False"),
+                "usercheck": (self.cli.option.VALUE, "False"),
+                "minlength": (self.cli.option.VALUE, 0),
+                "minclasses": (self.cli.option.VALUE, 0),
+                "priority": (self.cli.option.VALUE, 1),
+            }
+
+        self._apply_attrs(attrs)
+        return self
+
+    def lockout(self, duration: int, attempts: int) -> IPAPasswordPolicy:
+        """
+        Set lockout duration and login attempts.
+
+        :param duration: Duration of lockout in seconds.
+        :type duration: int
+        :param attempts: Number of login attempts.
+        :type attempts: int
+        :return: Self.
+        :rtype: IPAPasswordPolicy
+        """
+        attrs: CLIBuilderArgs = {
+            "lockouttime": (self.cli.option.VALUE, str(duration)),
+            "maxfail": (self.cli.option.VALUE, str(attempts)),
+        }
+        self._apply_attrs(attrs)
+        return self
+
+
+class IPAIDView(IPAObject):
+    """
+    IPA ID view management.
+    """
+
+    def __init__(self, role: IPA, name: str) -> None:
+        """
+        :param role: IPA role.
+        :type role: IPA
+        :param name: Name of IPA ID view.
+        :type name: str
+        """
+        super().__init__(role, name, command_group="idview")
+
+    def add(
+        self,
+        *,
+        description: str | None = None,
+    ) -> IPAIDView:
+        """
+        Add a new ID View.
+
+        :param description: Description of ID View.
+        :type description: str | None, default to None
+        :return: Self.
+        :rtype: IPAIDView
+        """
+        attrs: CLIBuilderArgs = {
+            "desc": (self.cli.option.VALUE, description),
+        }
+
+        self._add(attrs)
+        return self
+
+    def modify(
+        self,
+        *,
+        description: str | None = None,
+        rename: str | None = None,
+    ) -> IPAIDView:
+        """
+        Modify existing IPA ID view.
+
+        :param description: Description, defaults to None
+        :type description: str | None, optional
+        :param rename: Name of IPA ID view, defaults to None
+        :type rename: str | None, optional
+        :return: Self.
+        :rtype: IPAIDView
+        """
+        attrs: CLIBuilderArgs = {
+            "desc": (self.cli.option.VALUE, description),
+            "rename": (self.cli.option.VALUE, rename),
+        }
+
+        self._modify(attrs)
+        return self
+
+    def apply(self, *, hosts: list[str] | str | None = None, hostgroups: str | None = None) -> ProcessResult:
+        """
+        Applies ID View to specified hosts or current members of specified
+        hostgroups.
+
+        :description: If any other ID View is applied to the host, it is overridden.
+        :param hosts: Hosts to apply the ID View to, defaults to None
+        :type hosts: list[str] | str | None
+        :param hostgroups: Hostgroups to apply the ID View to, defaults to None
+        :type hostgroups: str | None
+        :return: SSH Process result.
+        :rtype: ProcessResult
+        """
+        if not hosts and not hostgroups:
+            raise ValueError("Either 'hosts' or 'hostgroups' must be provided.")
+
+        attrs: CLIBuilderArgs = {}
+        if hosts:
+            attrs["hosts"] = (self.cli.option.VALUE, hosts)
+        if hostgroups:
+            attrs["hostgroups"] = (self.cli.option.VALUE, hostgroups)
+
+        result = self._exec("apply", self.cli.args(attrs), raise_on_error=False)
+        return result
+
+    def delete(self) -> None:
+        """
+        Delete existing IPA ID view.
+        """
+        self._exec("del", ["--continue"])
+
+
+class IPACertificateAuthority(GenericCertificateAuthority):
+    """
+    FreeIPA Certificate Authority operations.
+
+    :class:`IPACertificateAuthority` implements :class:`GenericCertificateAuthority` for
+    static typing and provider-agnostic tests. It requests, revokes, places/removes
+    certificate holds, and retrieves certificate information via the ``ipa`` CLI.
+    :meth:`request` accepts IPA-specific keyword arguments in addition to the generic API.
+
+    .. code-block:: python
+       :caption: Example usage
+
+       import pytest
+       from authselect_test_framework.roles.client import Client
+       from authselect_test_framework.roles.ipa import IPA
+       from authselect_test_framework.profiles import Profile
+
+       @pytest.mark.topology(Profile.SSSD)
+       def test_sssd__with_smartcard(client: Client, ipa: IPA):
+           ipa.user("ipacertuser1").add()
+           cert, key, _ = ipa.ca.request("ipacertuser1")
+           client.authselect.select("sssd", ["with-smartcard"])
+           client.sssd.start()
+    """
+
+    def __init__(self, host: MultihostHost, fs: LinuxFileSystem) -> None:
+        """
+        Initialize the IPA Certificate Authority helper.
+
+        :param host: Remote test host.
+        :type host: MultihostHost
+        :param fs: Filesystem helper for remote file operations.
+        :type fs: LinuxFileSystem
+        """
+        self.host = host
+        self.fs = fs
+        self.cli: CLIBuilder = host.cli
+        self.temp_dir = f"/tmp/ipa_test_certs_{os.getpid()}_{uuid.uuid4().hex}"
+        self.fs.mkdir_p(self.temp_dir, mode="700")
+        self.fs.backup(self.temp_dir)
+
+    def request(
+        self,
+        principal: str,
+        subject: Optional[str] = None,
+        add_service: bool = False,
+        key_size: int = 2048,
+        **kwargs: Any,
+    ) -> tuple[str, str, str]:
+        """
+        Request a certificate from the IPA CA.
+
+        Implements :meth:`GenericCertificateAuthority.request`; ``principal`` is passed
+        positionally or as the first argument. Extra ``**kwargs`` are ignored.
+
+        :param principal: The principal (user or service) name.
+        :type principal: str
+        :param subject: Optional OpenSSL subject (e.g., /CN=example). If omitted, derived from principal.
+        :type subject: str | None
+        :param add_service: Whether to add the principal as an IPA service.
+        :type add_service: bool
+        :param key_size: RSA key size in bits.
+        :type key_size: int
+        :returns: A tuple of (certificate_path, key_path, csr_path).
+        :rtype: tuple[str, str, str]
+        :raises ValueError: If subject cannot be derived from principal.
+        :raises RuntimeError: If CSR generation fails.
+        """
+        del kwargs
+        base = re.sub(r"[^a-zA-Z0-9.\_-]", "_", principal)
+        key_path = os.path.join(self.temp_dir, f"{base}.key")
+        csr_path = os.path.join(self.temp_dir, f"{base}.csr")
+        cert_path = os.path.join(self.temp_dir, f"{base}.crt")
+
+        if subject is None:
+            hostname = principal.split("@")[0].split("/")[-1] if "@" in principal else principal.split("/")[-1]
+            if not hostname:
+                raise ValueError(f"Cannot derive subject from principal '{principal}'")
+            subject = f"/CN={hostname}"
+
+        self._generate_csr(key_path, csr_path, subject, key_size)
+
+        if add_service:
+            self.host.conn.run(f"ipa service-add {shlex.quote(principal)}", raise_on_error=False)
+
+        args: CLIBuilderArgs = {
+            "principal": (self.cli.option.VALUE, principal),
+            "certificate-out": (self.cli.option.VALUE, cert_path),
+        }
+
+        self.host.conn.run(
+            self.cli.command(f"ipa cert-request {shlex.quote(csr_path)}", args),
+            raise_on_error=True,
+        )
+
+        return cert_path, key_path, csr_path
+
+    def revoke(self, cert_path: str, reason: str = "unspecified") -> None:
+        """
+        Revoke a certificate in IPA.
+
+        Implements :meth:`GenericCertificateAuthority.revoke`.
+
+        :param cert_path: Path to the certificate file.
+        :type cert_path: str
+        :param reason: Reason for revocation.
+        :type reason: str
+        :raises RuntimeError: If revocation fails.
+        """
+        serial = self._get_cert_serial(cert_path)
+        reason_code = self._revocation_reason_to_code(reason)
+        args: CLIBuilderArgs = {
+            "serial": (self.cli.option.VALUE, serial),
+            "revocation-reason": (self.cli.option.VALUE, str(reason_code)),
+        }
+        result = self.host.conn.run(self.cli.command("ipa cert-revoke", args), raise_on_error=False)
+        if result.rc != 0:
+            raise RuntimeError(f"IPA cert-revoke failed: {result.stderr}!")
+
+    def revoke_hold(self, cert_path: str) -> None:
+        """
+        Place a certificate on hold.
+
+        Implements :meth:`GenericCertificateAuthority.revoke_hold`.
+
+        :param cert_path: Path to the certificate file.
+        :type cert_path: str
+        """
+        self.revoke(cert_path, reason="certificate_hold")
+
+    def revoke_hold_remove(self, cert_path: str) -> None:
+        """
+        Remove hold from a certificate.
+
+        Implements :meth:`GenericCertificateAuthority.revoke_hold_remove`.
+
+        :param cert_path: Path to the certificate file.
+        :type cert_path: str
+        :raises RuntimeError: If hold removal fails.
+        """
+        serial = self._get_cert_serial(cert_path)
+        args: CLIBuilderArgs = {"serial": (self.cli.option.VALUE, serial)}
+        result = self.host.conn.run(self.cli.command("ipa cert-remove-hold", args), raise_on_error=False)
+        if result.rc != 0:
+            raise RuntimeError(f"ipa cert-remove-hold failed: {result.stderr}!")
+
+    def get(self, cert_path: str) -> dict[str, list[str]]:
+        """
+        Retrieve certificate details from IPA.
+
+        Implements :meth:`GenericCertificateAuthority.get`.
+
+        :param cert_path: Path to the certificate file.
+        :type cert_path: str
+        :returns: A dictionary of certificate attributes.
+        :rtype: dict[str, list[str]]
+        :raises ValueError: If the certificate is not found in IPA.
+        """
+        serial = self._get_cert_serial(cert_path)
+        args: CLIBuilderArgs = {
+            "serial": (self.cli.option.VALUE, serial),
+            "all": (self.cli.option.SWITCH, True),
+        }
+        result = self.host.conn.run(self.cli.command("ipa cert-show", args), raise_on_error=False)
+        if result.rc != 0:
+            raise ValueError(f"Certificate with serial '{serial}' not found in IPA: {result.stderr}!")
+        return self._parse_cert_info(result.stdout)
+
+    def _generate_csr(self, key_path: str, csr_path: str, subject: str, key_size: int = 2048) -> None:
+        """
+        Generate a CSR and key using OpenSSL.
+
+        :param key_path: Path to save the private key.
+        :type key_path: str
+        :param csr_path: Path to save the CSR file.
+        :type csr_path: str
+        :param subject: Subject for the CSR (e.g., /CN=example).
+        :type subject: str
+        :param key_size: RSA key size in bits.
+        :type key_size: int
+        :raises RuntimeError: If CSR generation fails.
+        """
+        args: CLIBuilderArgs = {
+            "newkey": (self.cli.option.VALUE, f"rsa:{key_size}"),
+            "nodes": (self.cli.option.SWITCH, True),
+            "keyout": (self.cli.option.VALUE, key_path),
+            "out": (self.cli.option.VALUE, csr_path),
+            "subj": (self.cli.option.VALUE, subject),
+        }
+        result = self.host.conn.run(self.cli.command("openssl req", args), raise_on_error=False)
+        if result.rc != 0:
+            raise RuntimeError(f"OpenSSL CSR generation failed: {result.stderr}!")
+
+    def _get_cert_serial(self, cert_path: str) -> str:
+        """
+        Extract the certificate serial number using OpenSSL.
+
+        :param cert_path: Path to the certificate file.
+        :type cert_path: str
+        :returns: The certificate serial number as a lowercase hex string.
+        :rtype: str
+        :raises RuntimeError: If serial extraction fails.
+        """
+        cmd = ["openssl", "x509", "-in", cert_path, "-noout", "-serial"]
+        cmdline = " ".join(shlex.quote(p) for p in cmd)
+        result = self.host.conn.run(cmdline, raise_on_error=False)
+        if result.rc != 0:
+            raise RuntimeError(f"Failed to get serial from certificate: {result.stderr}!")
+        out = (result.stdout or "").strip()
+        if "=" in out:
+            return out.split("=", 1)[1].lower()
+        return out.lower()
+
+    def _revocation_reason_to_code(self, reason: str) -> int:
+        """
+        Map a revocation reason string to its corresponding numeric code.
+
+        :param reason: Revocation reason string.
+        :type reason: str
+        :returns: Numeric reason code.
+        :rtype: int
+        """
+        reason_map = {
+            "unspecified": 0,
+            "key_compromise": 1,
+            "ca_compromise": 2,
+            "affiliation_changed": 3,
+            "superseded": 4,
+            "cessation_of_operation": 5,
+            "certificate_hold": 6,
+            "remove_from_crl": 8,
+            "privilege_withdrawn": 9,
+            "aa_compromise": 10,
+        }
+        return reason_map[reason]
+
+    def _parse_cert_info(self, output: str) -> dict[str, list[str]]:
+        """
+        Parse ipa cert-show output into a dictionary.
+
+        :param output: Raw command output from ipa cert-show.
+        :type output: str
+        :returns: Dictionary of certificate attributes with list of values.
+        :rtype: Dict[str, list[str]]
+        """
+        lines = [line.strip() for line in (output or "").splitlines() if line.strip()]
+
+        return attrs_parse(lines)
