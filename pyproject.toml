@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling", "hatch-requirements-txt", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "authselect-test-framework"
+authors = [
+  { name="Authselect Team", email="sssd-maintainers@lists.fedoraproject.org" },
+]
+description = "Test framework for authselect system tests"
+readme = "readme.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+dynamic = ["dependencies", "version"]
+
+[project.urls]
+"Homepage" = "https://github.com/authselect/authselect-test-framework"
+"Bug Tracker" = "https://github.com/authselect/authselect/issues"
+
+[tool.hatch.build]
+include = [
+  "/authselect_test_framework",
+  "/authselect_test_framework/py.typed",
+  "requirements.txt",
+]
+
+[tool.hatch.metadata.hooks.requirements_txt]
+files = ["requirements.txt"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.mypy]
+exclude = "docs"
+explicit_package_bases = true
+mypy_path = "."
+packages = ["authselect_test_framework"]
+
+[[tool.mypy.overrides]]
+module = ["jc.*", "ldap.*"]
+ignore_missing_imports = true
+
+[tool.isort]
+line_length = 119
+profile = "black"
+add_imports = "from __future__ import annotations"
+
+[tool.black]
+line-length = 119
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 119
+
+[tool.ruff.lint]
+ignore = ["E203", "W503"]

@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Winbind profile tests (test_winbind.py) &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="../api.html" />
+    <link rel="prev" title="SSSD profile tests (test_sssd.py)" href="test-sssd-profile.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Profile test guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="test-sssd-profile.html">SSSD profile tests (<code class="docutils literal notranslate"><span class="pre">test_sssd.py</span></code>)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Winbind profile tests (<code class="docutils literal notranslate"><span class="pre">test_winbind.py</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#marker-and-fixtures">Marker and fixtures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-pattern">Common pattern</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#with-mkhomedir">with-mkhomedir</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#with-faillock">with-faillock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#with-pamaccess">with-pamaccess</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#with-silent-lastlog">with-silent-lastlog</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#with-gssapi">with-gssapi</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sssd-vs-winbind-differences">SSSD vs winbind differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skeleton-tests">Skeleton tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Profile test guides</a></li>
+      <li class="breadcrumb-item active">Winbind profile tests (<code class="docutils literal notranslate"><span class="pre">test_winbind.py</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guides/test-winbind-profile.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="winbind-profile-tests-test-winbind-py">
+<h1>Winbind profile tests (<code class="docutils literal notranslate"><span class="pre">test_winbind.py</span></code>)<a class="headerlink" href="#winbind-profile-tests-test-winbind-py" title="Link to this heading"></a></h1>
+<p>Tests in <code class="docutils literal notranslate"><span class="pre">src/tests/system/tests/test_winbind.py</span></code> exercise the authselect
+<code class="docutils literal notranslate"><span class="pre">winbind</span></code> profile against a Samba AD domain.</p>
+<section id="marker-and-fixtures">
+<h2>Marker and fixtures<a class="headerlink" href="#marker-and-fixtures" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.roles.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.roles.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.topology</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_winbind__example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">provider</span><span class="p">:</span> <span class="n">GenericProvider</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">client</span></code> — client configured for winbind (SSSD disabled by <code class="xref py py-class docutils literal notranslate"><span class="pre">WinbindController</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">provider</span></code> — <code class="docutils literal notranslate"><span class="pre">sssd.samba[0]</span></code> (Samba AD, implements <a class="reference internal" href="../api/authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericProvider" title="authselect_test_framework.roles.generic.GenericProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericProvider</span></code></a>)</p></li>
+</ul>
+</section>
+<section id="common-pattern">
+<h2>Common pattern<a class="headerlink" href="#common-pattern" title="Link to this heading"></a></h2>
+<p>Winbind tests mirror the SSSD profile flow with these substitutions:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">client.authselect.select(&quot;winbind&quot;,</span> <span class="pre">[features])</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&quot;sssd&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client.winbind.start()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">client.sssd.start()</span></code></p></li>
+<li><p>Samba users are often created with explicit POSIX attributes:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">provider</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">home</span><span class="o">=</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="with-mkhomedir">
+<h3>with-mkhomedir<a class="headerlink" href="#with-mkhomedir" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">test_winbind__with_mkhomedir</span></code> — same mkhomedir flow as SSSD, using winbind.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">backup</span><span class="p">(</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">)</span>
+
+<span class="n">provider</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">home</span><span class="o">=</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;winbind&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;with-mkhomedir&quot;</span><span class="p">])</span>
+<span class="n">client</span><span class="o">.</span><span class="n">oddjob</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">winbind</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="s2">&quot;user-1 should be able to log in!&quot;</span>
+<span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">),</span> <span class="s2">&quot;/home/user-1 should be created on first login!&quot;</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">disable_feature</span><span class="p">([</span><span class="s2">&quot;with-mkhomedir&quot;</span><span class="p">])</span>
+
+<span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="s2">&quot;user-1 should be able to log in!&quot;</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">client</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">),</span> <span class="s2">&quot;/home/user-1 should not exist without with-mkhomedir!&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="with-faillock">
+<h3>with-faillock<a class="headerlink" href="#with-faillock" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">test_all_profiles__with_faillock</span></code> — PAM faillock with <code class="docutils literal notranslate"><span class="pre">su</span></code>; no SSSD pam responder.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.utils.pam</span><span class="w"> </span><span class="kn">import</span> <span class="n">PAMFaillockUtils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pytest_mh</span><span class="w"> </span><span class="kn">import</span> <span class="n">mh_utility</span>
+
+<span class="n">provider</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">home</span><span class="o">=</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">)</span>
+
+<span class="n">faillock</span> <span class="o">=</span> <span class="n">PAMFaillockUtils</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">fs</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">mh_utility</span><span class="p">(</span><span class="n">faillock</span><span class="p">):</span>
+    <span class="n">faillock</span><span class="o">.</span><span class="n">config_set</span><span class="p">({</span><span class="s2">&quot;deny&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;unlock_time&quot;</span><span class="p">:</span> <span class="s2">&quot;300&quot;</span><span class="p">})</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;winbind&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;with-faillock&quot;</span><span class="p">])</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">winbind</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">&quot;Initial su authentication failed for user-1 with with-faillock enabled!&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;BadSecret123&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">&quot;user-1 should be locked out after 3 failed authentication attempts!&quot;</span>
+    <span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">faillock</span><span class="p">([</span><span class="s2">&quot;--user&quot;</span><span class="p">,</span> <span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;--reset&quot;</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">&quot;su authentication failed for user-1 after faillock reset!&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">disable_feature</span><span class="p">([</span><span class="s2">&quot;with-faillock&quot;</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;BadSecret123&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">&quot;user-1 should not be locked out after with-faillock was disabled!&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="with-pamaccess">
+<h3>with-pamaccess<a class="headerlink" href="#with-pamaccess" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">test_winbind__with_pamaccess</span></code> — SSH access control.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.utils.pam</span><span class="w"> </span><span class="kn">import</span> <span class="n">PAMAccessUtils</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pytest_mh</span><span class="w"> </span><span class="kn">import</span> <span class="n">mh_utility</span>
+
+<span class="n">provider</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">home</span><span class="o">=</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">)</span>
+<span class="n">provider</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10002</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">10002</span><span class="p">,</span> <span class="n">home</span><span class="o">=</span><span class="s2">&quot;/home/user-2&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">)</span>
+
+<span class="n">access</span> <span class="o">=</span> <span class="n">PAMAccessUtils</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">fs</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">mh_utility</span><span class="p">(</span><span class="n">access</span><span class="p">):</span>
+    <span class="n">access</span><span class="o">.</span><span class="n">config_set</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;access&quot;</span><span class="p">:</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;origin&quot;</span><span class="p">:</span> <span class="s2">&quot;ALL&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;access&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;user-2&quot;</span><span class="p">,</span> <span class="s2">&quot;origin&quot;</span><span class="p">:</span> <span class="s2">&quot;ALL&quot;</span><span class="p">},</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;winbind&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;with-pamaccess&quot;</span><span class="p">])</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">winbind</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">&quot;SSH authentication failed for permitted user-1 with with-pamaccess enabled!&quot;</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-2&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">&quot;SSH authentication should be denied for user-2 with with-pamaccess enabled!&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="with-silent-lastlog">
+<h3>with-silent-lastlog<a class="headerlink" href="#with-silent-lastlog" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">test_winbind__with_silent_lastlog</span></code> — same last-login check as SSSD, via winbind.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">provider</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">home</span><span class="o">=</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;winbind&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;with-silent-lastlog&quot;</span><span class="p">])</span>
+<span class="n">client</span><span class="o">.</span><span class="n">winbind</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password_with_output</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;Secret123&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password_with_output</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&quot;Secret123&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="s2">&quot;Last login:&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">(</span>
+    <span class="s2">&quot;su output should not contain last login information with with-silent-lastlog enabled!&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="with-gssapi">
+<h3>with-gssapi<a class="headerlink" href="#with-gssapi" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">test_winbind__with_gssapi</span></code> — Kerberos sudo over SSH; no extra SSSD domain options.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">provider</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">10001</span><span class="p">,</span> <span class="n">home</span><span class="o">=</span><span class="s2">&quot;/home/user-1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">)</span>
+<span class="n">provider</span><span class="o">.</span><span class="n">sudorule</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;ALL&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s2">&quot;/bin/ls&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;winbind&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;with-gssapi&quot;</span><span class="p">,</span> <span class="s2">&quot;with-sudo&quot;</span><span class="p">])</span>
+<span class="n">client</span><span class="o">.</span><span class="n">winbind</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">ssh</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ssh</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">ssh</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;kinit user-1@</span><span class="si">{</span><span class="n">provider</span><span class="o">.</span><span class="n">realm</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;Secret123&quot;</span><span class="p">),</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;kinit failed for user-1@</span><span class="si">{</span><span class="n">provider</span><span class="o">.</span><span class="n">realm</span><span class="si">}</span><span class="s2"> with with-gssapi enabled!&quot;</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">&quot;(root) /bin/ls&quot;</span> <span class="ow">in</span> <span class="n">ssh</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;sudo -l&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;sudo rule was not listed with with-gssapi enabled!&quot;</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="n">ssh</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;sudo /bin/ls /root&quot;</span><span class="p">),</span> <span class="s2">&quot;sudo command failed with with-gssapi enabled!&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="sssd-vs-winbind-differences">
+<h2>SSSD vs winbind differences<a class="headerlink" href="#sssd-vs-winbind-differences" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Step</p></th>
+<th class="head"><p>SSSD profile</p></th>
+<th class="head"><p>Winbind profile</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Profile marker</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Profile.SSSD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Profile.Winbind</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>authselect profile</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;sssd&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;winbind&quot;</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Identity service</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">client.sssd.start()</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">client.winbind.start()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Provider fixture</p></td>
+<td><p>FreeIPA (<code class="docutils literal notranslate"><span class="pre">provider</span></code> → IPA)</p></td>
+<td><p>Samba AD (<code class="docutils literal notranslate"><span class="pre">provider</span></code> → Samba)</p></td>
+</tr>
+<tr class="row-even"><td><p>Sudo / pamaccess extras</p></td>
+<td><p>SSSD responders and domain options</p></td>
+<td><p>winbind only; no <code class="docutils literal notranslate"><span class="pre">client.sssd</span></code> configuration</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="skeleton-tests">
+<h2>Skeleton tests<a class="headerlink" href="#skeleton-tests" title="Link to this heading"></a></h2>
+<p>The remaining <code class="docutils literal notranslate"><span class="pre">test_winbind__*</span></code> cases are <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.skip</span></code> placeholders for
+features listed by <code class="docutils literal notranslate"><span class="pre">authselect</span> <span class="pre">list-features</span> <span class="pre">winbind</span></code>. Use the implemented
+tests above as templates when filling them in.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="test-sssd-profile.html" class="btn btn-neutral float-left" title="SSSD profile tests (test_sssd.py)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

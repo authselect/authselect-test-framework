@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.hosts.base &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.hosts.client" href="authselect_test_framework.hosts.client.html" />
+    <link rel="prev" title="authselect_test_framework.hosts" href="authselect_test_framework.hosts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.hosts.base</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.hosts.base.BaseHost"><code class="docutils literal notranslate"><span class="pre">BaseHost</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.hosts.base.BaseDomainHost"><code class="docutils literal notranslate"><span class="pre">BaseDomainHost</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost"><code class="docutils literal notranslate"><span class="pre">BaseLDAPDomainHost</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.hosts.base.BaseLinuxHost"><code class="docutils literal notranslate"><span class="pre">BaseLinuxHost</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.hosts.client.html">authselect_test_framework.hosts.client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.hosts.ipa.html">authselect_test_framework.hosts.ipa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.hosts.samba.html">authselect_test_framework.hosts.samba</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.hosts.base</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.hosts.base.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.hosts.base">
+<span id="authselect-test-framework-hosts-base"></span><h1>authselect_test_framework.hosts.base<a class="headerlink" href="#module-authselect_test_framework.hosts.base" title="Link to this heading"></a></h1>
+<p>Base classes and objects for SSSD specific multihost hosts.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.hosts.base.BaseDomainHost" title="authselect_test_framework.hosts.base.BaseDomainHost"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseDomainHost</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Base class for all domain (backend) hosts.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.hosts.base.BaseHost" title="authselect_test_framework.hosts.base.BaseHost"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseHost</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Base class for all SSSD hosts.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost" title="authselect_test_framework.hosts.base.BaseLDAPDomainHost"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseLDAPDomainHost</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Base class for all domain (backend) hosts that require direct LDAP access to manipulate data (like 389ds or SambaDC).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.hosts.base.BaseLinuxHost" title="authselect_test_framework.hosts.base.BaseLinuxHost"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseLinuxHost</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Base Linux host.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseHost">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.hosts.base.</span></span><span class="sig-name descname"><span class="pre">BaseHost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseHost" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostBackupHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostBackupHost</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AuthselectMultihostDomain</span></code>]</p>
+<p>Base class for all SSSD hosts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auto_start</strong> – Automatically start service before taking the first
+backup.</p></li>
+<li><p><strong>auto_restore</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the host is automatically restored to the
+backup state when a test is finished in <code class="xref py py-meth docutils literal notranslate"><span class="pre">teardown()</span></code>, defaults
+to True</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseHost.features">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">features</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseHost.features" title="Link to this definition"></a></dt>
+<dd><p>Features supported by the host.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseDomainHost">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.hosts.base.</span></span><span class="sig-name descname"><span class="pre">BaseDomainHost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseDomainHost" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.hosts.base.BaseHost" title="authselect_test_framework.hosts.base.BaseHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseHost</span></code></a></p>
+<p>Base class for all domain (backend) hosts.</p>
+<p>This class extends the multihost configuration with <code class="docutils literal notranslate"><span class="pre">config.client</span></code>
+section that can contain additional SSSD configuration for the domain to
+allow connection to the domain (like keytab and certificate locations,
+domain name, etc.).</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example multihost configuration</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master.ipa.test</span>
+<span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipa</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="hll"><span class="w">    </span><span class="nt">client</span><span class="p">:</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">ipa_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipa.test</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/enrollment/ipa.keytab</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">ldap_krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/enrollment/ipa.keytab</span>
+</span></pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auto_start</strong> – Automatically start service before taking the first
+backup.</p></li>
+<li><p><strong>auto_restore</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the host is automatically restored to the
+backup state when a test is finished in <code class="xref py py-meth docutils literal notranslate"><span class="pre">teardown()</span></code>, defaults
+to True</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseDomainHost.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseDomainHost.domain" title="Link to this definition"></a></dt>
+<dd><p>Identity domain name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseDomainHost.realm">
+<span class="sig-name descname"><span class="pre">realm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseDomainHost.realm" title="Link to this definition"></a></dt>
+<dd><p>Kerberos realm.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLDAPDomainHost">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.hosts.base.</span></span><span class="sig-name descname"><span class="pre">BaseLDAPDomainHost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.hosts.base.BaseDomainHost" title="authselect_test_framework.hosts.base.BaseDomainHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDomainHost</span></code></a></p>
+<p>Base class for all domain (backend) hosts that require direct LDAP access to
+manipulate data (like 389ds or SambaDC).</p>
+<p>Extends <a class="reference internal" href="#authselect_test_framework.hosts.base.BaseDomainHost" title="authselect_test_framework.hosts.base.BaseDomainHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDomainHost</span></code></a> to manage LDAP connection and adds
+<code class="docutils literal notranslate"><span class="pre">config.binddn</span></code> and <code class="docutils literal notranslate"><span class="pre">config.bindpw</span></code> multihost configuration options.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example multihost configuration</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master.ldap.test</span>
+<span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ldap</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">binddn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cn=Directory Manager</span>
+<span class="w">    </span><span class="nt">bindpw</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret123</span>
+<span class="hll"><span class="w">    </span><span class="nt">client</span><span class="p">:</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">ldap_tls_reqcert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demand</span>
+</span><span class="w">      </span><span class="nt">ldap_tls_cacert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/data/certs/ca.crt</span>
+<span class="w">      </span><span class="nt">dns_discovery_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ldap.test</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The LDAP connection is not opened immediately, but only when
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">conn</span></code> is accessed for the first time.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tls</strong> (<em>bool</em><em>, </em><em>optional</em>) – Require TLS connection, defaults to True</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLDAPDomainHost.tls">
+<span class="sig-name descname"><span class="pre">tls</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost.tls" title="Link to this definition"></a></dt>
+<dd><p>Use TLS when establishing connection or no?</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLDAPDomainHost.binddn">
+<span class="sig-name descname"><span class="pre">binddn</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost.binddn" title="Link to this definition"></a></dt>
+<dd><p>Bind DN <code class="docutils literal notranslate"><span class="pre">config.binddn</span></code>, defaults to <code class="docutils literal notranslate"><span class="pre">cn=Directory</span> <span class="pre">Manager</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLDAPDomainHost.bindpw">
+<span class="sig-name descname"><span class="pre">bindpw</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost.bindpw" title="Link to this definition"></a></dt>
+<dd><p>Bind password <code class="docutils literal notranslate"><span class="pre">config.bindpw</span></code>, defaults to <code class="docutils literal notranslate"><span class="pre">Secret123</span></code></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLDAPDomainHost.ldap_conn">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ldap_conn</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ReconnectLDAPObject</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost.ldap_conn" title="Link to this definition"></a></dt>
+<dd><p>LDAP connection (<code class="docutils literal notranslate"><span class="pre">python-ldap</span></code> library).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ReconnectLDAPObject</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLDAPDomainHost.naming_context">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">naming_context</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost.naming_context" title="Link to this definition"></a></dt>
+<dd><p>Default naming context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If default naming context can not be obtained.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLDAPDomainHost.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost.disconnect" title="Link to this definition"></a></dt>
+<dd><p>Disconnect LDAP connection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLDAPDomainHost.ldap_result_to_dict">
+<span class="sig-name descname"><span class="pre">ldap_result_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLDAPDomainHost.ldap_result_to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert result from python-ldap library from tuple into a dictionary
+to simplify lookup by distinguished name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>result</strong> (<em>tuple</em><em>[</em><em>str</em><em>, </em><em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><em>bytes</em><em>]</em><em>]</em><em>]</em>) – Search result from python-ldap.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with distinguished name as key and attributes as value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, dict[str, list[bytes]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.hosts.base.</span></span><span class="sig-name descname"><span class="pre">BaseLinuxHost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AuthselectMultihostDomain</span></code>]</p>
+<p>Base Linux host.</p>
+<p>Adds linux specific reentrant utilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> (<em>DomainType</em>) – Multihost domain object.</p></li>
+<li><p><strong>confdict</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Host configuration as a dictionary.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost.fs">
+<span class="sig-name descname"><span class="pre">fs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.utils.fs.html#pytest_mh.utils.fs.LinuxFileSystem" title="(in pytest_mh)"><span class="pre">LinuxFileSystem</span></a></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost.fs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost.svc">
+<span class="sig-name descname"><span class="pre">svc</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.utils.services.html#pytest_mh.utils.services.SystemdServices" title="(in pytest_mh)"><span class="pre">SystemdServices</span></a></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost.svc" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost.distro_name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">distro_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost.distro_name" title="Link to this definition"></a></dt>
+<dd><p>Host distribution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Distribution name or “unknown”</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost.distro_major">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">distro_major</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost.distro_major" title="Link to this definition"></a></dt>
+<dd><p>Host distribution major version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Major version</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost.distro_minor">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">distro_minor</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost.distro_minor" title="Link to this definition"></a></dt>
+<dd><p>Host distribution minor version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Minor version</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost.get_package_version">
+<span class="sig-name descname"><span class="pre">get_package_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sssd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_on_error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost.get_package_version" title="Link to this definition"></a></dt>
+<dd><p>Parse package version and return it as a dictionary with:
+major, minor, patch, prerelease, update, release</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>package</strong> – package name</p></li>
+<li><p><strong>raise_on_error</strong> – raise exeption when package is missing</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>version dictionary</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>OSError</strong> – If package is missing or version could not be parsed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost.compare_package_version">
+<span class="sig-name descname"><span class="pre">compare_package_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sssd'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost.compare_package_version" title="Link to this definition"></a></dt>
+<dd><p>Compare installed package version with other version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>other_version</strong> – Version dictionary to compare
+keys: major, minor, patch, prerelease, update, release</p></li>
+<li><p><strong>package</strong> – Package name (default: sssd)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>-1 if installed &lt; other, 0 if equal, 1 if installed &gt; other</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.base.BaseLinuxHost.selinux_permissive_for_test">
+<span class="sig-name descname"><span class="pre">selinux_permissive_for_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.base.BaseLinuxHost.selinux_permissive_for_test" title="Link to this definition"></a></dt>
+<dd><p>Temporarily set SELinux to permissive for tests.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.hosts.html" class="btn btn-neutral float-left" title="authselect_test_framework.hosts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.hosts.client.html" class="btn btn-neutral float-right" title="authselect_test_framework.hosts.client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

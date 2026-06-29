@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.utils.sssctl &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.utils.sssd" href="authselect_test_framework.utils.sssd.html" />
+    <link rel="prev" title="authselect_test_framework.utils.smartcard" href="authselect_test_framework.utils.smartcard.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authentication.html">authselect_test_framework.utils.authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authselect.html">authselect_test_framework.utils.authselect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.gdm.html">authselect_test_framework.utils.gdm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.idp.html">authselect_test_framework.utils.idp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.ldap.html">authselect_test_framework.utils.ldap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.local_users.html">authselect_test_framework.utils.local_users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.oddjobd.html">authselect_test_framework.utils.oddjobd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.pam.html">authselect_test_framework.utils.pam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.smartcard.html">authselect_test_framework.utils.smartcard</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.utils.sssctl</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils"><code class="docutils literal notranslate"><span class="pre">SSSCTLUtils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssd.html">authselect_test_framework.utils.sssd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.tools.html">authselect_test_framework.utils.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.vfido.html">authselect_test_framework.utils.vfido</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.winbind.html">authselect_test_framework.utils.winbind</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.utils.sssctl</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.utils.sssctl.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.utils.sssctl">
+<span id="authselect-test-framework-utils-sssctl"></span><h1>authselect_test_framework.utils.sssctl<a class="headerlink" href="#module-authselect_test_framework.utils.sssctl" title="Link to this heading"></a></h1>
+<p>Manage and configure SSSD.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils" title="authselect_test_framework.utils.sssctl.SSSCTLUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSSCTLUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Call commands from sssctl.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.sssctl.</span></span><span class="sig-name descname"><span class="pre">SSSCTLUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Call commands from sssctl.</p>
+<p>Find all MultihostUtility objects in the constructor.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.cli">
+<span class="sig-name descname"><span class="pre">cli</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.cli.html#pytest_mh.cli.CLIBuilder" title="(in pytest_mh)"><span class="pre">CLIBuilder</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.cli" title="Link to this definition"></a></dt>
+<dd><p>Command line builder.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.fs">
+<span class="sig-name descname"><span class="pre">fs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.utils.fs.html#pytest_mh.utils.fs.LinuxFileSystem" title="(in pytest_mh)"><span class="pre">LinuxFileSystem</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.fs" title="Link to this definition"></a></dt>
+<dd><p>Filesystem utils.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.cache_expire">
+<span class="sig-name descname"><span class="pre">cache_expire</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">everything</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">netgroups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">services</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autofs_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autofs_maps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssh_host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssh_hosts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sudorule</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sudorules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.cache_expire" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">cache-expire</span></code> with given arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>everything</strong> (<em>bool</em><em>, </em><em>optional</em>) – Invalidate all cached entries, defaults to False</p></li>
+<li><p><strong>user</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Invalidate particular user, defaults to None</p></li>
+<li><p><strong>users</strong> (<em>bool</em><em>, </em><em>optional</em>) – Invalidate all users, defaults to False</p></li>
+<li><p><strong>group</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Invalidate particular group, defaults to None</p></li>
+<li><p><strong>groups</strong> (<em>bool</em><em>, </em><em>optional</em>) – Invalidate all groups, defaults to False</p></li>
+<li><p><strong>netgroup</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Invalidate particular netgroup, defaults to None</p></li>
+<li><p><strong>netgroups</strong> (<em>bool</em><em>, </em><em>optional</em>) – Invalidate all netgroups, defaults to False</p></li>
+<li><p><strong>service</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Invalidate particular service, defaults to None</p></li>
+<li><p><strong>services</strong> (<em>bool</em><em>, </em><em>optional</em>) – Invalidate all services, defaults to False</p></li>
+<li><p><strong>autofs_map</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Invalidate particular autofs map, defaults to None</p></li>
+<li><p><strong>autofs_maps</strong> (<em>bool</em><em>, </em><em>optional</em>) – Invalidate all autofs maps, defaults to False</p></li>
+<li><p><strong>ssh_host</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Invalidate particular SSH host, defaults to None</p></li>
+<li><p><strong>ssh_hosts</strong> (<em>bool</em><em>, </em><em>optional</em>) – Invalidate all SSH hosts, defaults to False</p></li>
+<li><p><strong>sudorule</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Invalidate particular sudo rule, defaults to None</p></li>
+<li><p><strong>sudorules</strong> (<em>bool</em><em>, </em><em>optional</em>) – Invalidate all cached sudo rules, defaults to False</p></li>
+<li><p><strong>domain</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Only invalidate entries from a particular domain, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.passkey_register">
+<span class="sig-name descname"><span class="pre">passkey_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.passkey_register" title="Link to this definition"></a></dt>
+<dd><p>wrapper for passkey_register methods</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.vfido_passkey_register">
+<span class="sig-name descname"><span class="pre">vfido_passkey_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.vfido_passkey_register" title="Link to this definition"></a></dt>
+<dd><p>Register user passkey when using virtual-fido</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.umockdev_passkey_register">
+<span class="sig-name descname"><span class="pre">umockdev_passkey_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ioctl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">script</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.umockdev_passkey_register" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">passkey-register</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – User name</p></li>
+<li><p><strong>domain</strong> (<em>str</em>) – Domain name</p></li>
+<li><p><strong>pin</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>) – Passkey PIN.</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – Path to local umockdev device file.</p></li>
+<li><p><strong>ioctl</strong> (<em>str</em>) – Path to local umockdev ioctl file.</p></li>
+<li><p><strong>script</strong> (<em>str</em>) – Path to local umockdev script file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated passkey mapping string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.user_checks">
+<span class="sig-name descname"><span class="pre">user_checks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'acct'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'system-auth'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.user_checks" title="Link to this definition"></a></dt>
+<dd><p>Print information about a user and check authentication</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – User that will be checked</p></li>
+<li><p><strong>action</strong> (<em>str</em>) – PAM action, defaults to “acct”</p></li>
+<li><p><strong>service</strong> (<em>str</em>) – PAM service, defaults to “system-auth”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.user_show">
+<span class="sig-name descname"><span class="pre">user_show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.user_show" title="Link to this definition"></a></dt>
+<dd><p>Information about cached user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>str</em><em> | </em><em>None</em>) – User that will be showed, defaults to None</p></li>
+<li><p><strong>sid</strong> (<em>str</em><em> | </em><em>None</em>) – Search by SID, defaults to None</p></li>
+<li><p><strong>uid</strong> (<em>int</em><em> | </em><em>None</em>) – Search by user ID, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.config_check">
+<span class="sig-name descname"><span class="pre">config_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snippet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.config_check" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">config-check</span></code> with additional arguments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>str</em>) – Non default config file, defaults to None</p></li>
+<li><p><strong>snippet</strong> (<em>str</em>) – Non default snippet dir, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.domain_status">
+<span class="sig-name descname"><span class="pre">domain_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">online</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">servers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.domain_status" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">domain-status</span> <span class="pre">&#64;domain</span></code> with additional arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> (<em>str</em>) – Domain name.</p></li>
+<li><p><strong>online</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show online status, defaults to False</p></li>
+<li><p><strong>active</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show information about active server, defaults to False</p></li>
+<li><p><strong>servers</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show list of discovered servers, defaults to False</p></li>
+<li><p><strong>start</strong> (<em>bool</em><em>, </em><em>optional</em>) – Start SSSD if it is not running, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.analyze_request">
+<span class="sig-name descname"><span class="pre">analyze_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.analyze_request" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">analyze</span> <span class="pre">[arguments]</span> <span class="pre">request</span> <span class="pre">command</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> (<em>str</em>) – request command</p></li>
+<li><p><strong>source</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – “files” or “journald”, defaults to None</p></li>
+<li><p><strong>logdir</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – SSSD Log directory to parse log files from, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.logs_remove">
+<span class="sig-name descname"><span class="pre">logs_remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.logs_remove" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">logs-remove</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Result of called command</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.logs_fetch">
+<span class="sig-name descname"><span class="pre">logs_fetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.logs_fetch" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">logs-fetch</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>output_file</strong> (<em>str</em>) – Path where to save the log archive</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.debug_level">
+<span class="sig-name descname"><span class="pre">debug_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sudo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autofs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pac</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ifp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secrets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kcm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.debug_level" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">debug-level</span></code> with specific targets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level</strong> (<em>str</em><em> | </em><em>None</em>) – Debug level to set (e.g., “9”, “0x3ff0”)</p></li>
+<li><p><strong>set</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set debug level (use with level parameter), defaults to False</p></li>
+<li><p><strong>domain</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Apply to specific domain, defaults to None</p></li>
+<li><p><strong>nss</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to NSS responder, defaults to False</p></li>
+<li><p><strong>pam</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to PAM responder, defaults to False</p></li>
+<li><p><strong>sudo</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to SUDO responder, defaults to False</p></li>
+<li><p><strong>autofs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to AUTOFS responder, defaults to False</p></li>
+<li><p><strong>ssh</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to SSH responder, defaults to False</p></li>
+<li><p><strong>pac</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to PAC responder, defaults to False</p></li>
+<li><p><strong>ifp</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to InfoPipe responder, defaults to False</p></li>
+<li><p><strong>secrets</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to SECRETS service, defaults to False</p></li>
+<li><p><strong>kcm</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to KCM service, defaults to False</p></li>
+<li><p><strong>all</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply to all services, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.group_show">
+<span class="sig-name descname"><span class="pre">group_show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.group_show" title="Link to this definition"></a></dt>
+<dd><p>Information about cached group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Group that will be showed, defaults to None</p></li>
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Search by group ID, defaults to None</p></li>
+<li><p><strong>sid</strong> (<em>str</em><em> | </em><em>None</em>) – Search by SID, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssctl.SSSCTLUtils.netgroup_show">
+<span class="sig-name descname"><span class="pre">netgroup_show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">netgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssctl.SSSCTLUtils.netgroup_show" title="Link to this definition"></a></dt>
+<dd><p>Information about cached netgroup</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>netgroup</strong> (<em>str</em>) – Netgroup that will be showed</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of called command</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.utils.smartcard.html" class="btn btn-neutral float-left" title="authselect_test_framework.utils.smartcard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.utils.sssd.html" class="btn btn-neutral float-right" title="authselect_test_framework.utils.sssd" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.roles.base &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.roles.client" href="authselect_test_framework.roles.client.html" />
+    <link rel="prev" title="authselect_test_framework.roles" href="authselect_test_framework.roles.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.roles.base</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.base.DeleteAttribute"><code class="docutils literal notranslate"><span class="pre">DeleteAttribute</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.base.BaseObject"><code class="docutils literal notranslate"><span class="pre">BaseObject</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.base.BaseRole"><code class="docutils literal notranslate"><span class="pre">BaseRole</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.base.BaseLinuxRole"><code class="docutils literal notranslate"><span class="pre">BaseLinuxRole</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.base.BaseLinuxLDAPRole"><code class="docutils literal notranslate"><span class="pre">BaseLinuxLDAPRole</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.client.html">authselect_test_framework.roles.client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.generic.html">authselect_test_framework.roles.generic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.ipa.html">authselect_test_framework.roles.ipa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.samba.html">authselect_test_framework.roles.samba</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.roles.base</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.roles.base.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.roles.base">
+<span id="authselect-test-framework-roles-base"></span><h1>authselect_test_framework.roles.base<a class="headerlink" href="#module-authselect_test_framework.roles.base" title="Link to this heading"></a></h1>
+<p>Base classes and objects for SSSD specific multihost roles.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.base.BaseLinuxLDAPRole" title="authselect_test_framework.roles.base.BaseLinuxLDAPRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseLinuxLDAPRole</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Base Linux role for roles that require direct LDAP access.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.base.BaseLinuxRole" title="authselect_test_framework.roles.base.BaseLinuxRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseLinuxRole</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Base linux role.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.base.BaseObject" title="authselect_test_framework.roles.base.BaseObject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseObject</span></code></a>(role)</p></td>
+<td><p>Base class for object management classes (like users or groups).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.base.BaseRole" title="authselect_test_framework.roles.base.BaseRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseRole</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Base role class.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeleteAttribute</span></code></a>()</p></td>
+<td><p>This class is used to distinguish between setting an attribute to an empty value and deleting it completely.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.DeleteAttribute">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.base.</span></span><span class="sig-name descname"><span class="pre">DeleteAttribute</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.DeleteAttribute" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is used to distinguish between setting an attribute to an empty
+value and deleting it completely.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseObject">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.base.</span></span><span class="sig-name descname"><span class="pre">BaseObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RoleType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseObject" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">HostType</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">RoleType</span></code>]</p>
+<p>Base class for object management classes (like users or groups).</p>
+<p>It provides shortcuts to low level functionality to easily enable execution
+of remote commands. It also defines multiple helper methods that are shared
+across roles.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseObject.role">
+<span class="sig-name descname"><span class="pre">role</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">RoleType</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseObject.role" title="Link to this definition"></a></dt>
+<dd><p>Multihost role object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseObject.host">
+<span class="sig-name descname"><span class="pre">host</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HostType</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseObject.host" title="Link to this definition"></a></dt>
+<dd><p>Multihost host object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseObject.cli">
+<span class="sig-name descname"><span class="pre">cli</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.cli.html#pytest_mh.cli.CLIBuilder" title="(in pytest_mh)"><span class="pre">CLIBuilder</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseObject.cli" title="Link to this definition"></a></dt>
+<dd><p>Command line builder to easy build command line for execution.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseRole">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.base.</span></span><span class="sig-name descname"><span class="pre">BaseRole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseRole" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostRole" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostRole</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">HostType</span></code>]</p>
+<p>Base role class. Roles are the main interface to the remote hosts that can
+be directly accessed in test cases as fixtures.</p>
+<p>All changes to the remote host that were done through the role object API
+are automatically reverted when a test is finished.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseRole.Delete">
+<span class="sig-name descname"><span class="pre">Delete</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;authselect_test_framework.roles.base.DeleteAttribute</span> <span class="pre">object&gt;</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseRole.Delete" title="Link to this definition"></a></dt>
+<dd><p>Use this to indicate that you want to delete an attribute instead of setting
+it to an empty value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseRole.is_delete_attribute">
+<span class="sig-name descname"><span class="pre">is_delete_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">TypeGuard</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseRole.is_delete_attribute" title="Link to this definition"></a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the value is <a class="reference internal" href="#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DeleteAttribute</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Any</em>) – Value to test.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the value is <a class="reference internal" href="#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DeleteAttribute</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TypeGuard[<a class="reference internal" href="#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute">DeleteAttribute</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseRole.features">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">features</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseRole.features" title="Link to this definition"></a></dt>
+<dd><p>Features supported by the role.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseRole.ssh">
+<span class="sig-name descname"><span class="pre">ssh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.Shell" title="(in pytest_mh)"><span class="pre">Shell</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.ssh.html#pytest_mh.conn.ssh.SSHClient" title="(in pytest_mh)"><span class="pre">SSHClient</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseRole.ssh" title="Link to this definition"></a></dt>
+<dd><p>Open SSH connection to the host as given user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – User password.</p></li>
+<li><p><strong>shell</strong> (<em>Shell</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Shell that will run the commands, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> (= <code class="docutils literal notranslate"><span class="pre">Bash</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SSH client connection.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SSHClient</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.base.</span></span><span class="sig-name descname"><span class="pre">BaseLinuxRole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.base.BaseRole" title="authselect_test_framework.roles.base.BaseRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRole</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">HostType</span></code>]</p>
+<p>Base linux role.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.authselect">
+<span class="sig-name descname"><span class="pre">authselect</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.authselect.html#authselect_test_framework.utils.authselect.AuthselectUtils" title="authselect_test_framework.utils.authselect.AuthselectUtils"><span class="pre">AuthselectUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.authselect" title="Link to this definition"></a></dt>
+<dd><p>Manage nsswitch and PAM configuration.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.fs">
+<span class="sig-name descname"><span class="pre">fs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">LinuxFileSystem</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.fs" title="Link to this definition"></a></dt>
+<dd><p>File system manipulation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.svc">
+<span class="sig-name descname"><span class="pre">svc</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SystemdServices</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.svc" title="Link to this definition"></a></dt>
+<dd><p>Systemd service management.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.firewall">
+<span class="sig-name descname"><span class="pre">firewall</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Firewalld</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.firewall" title="Link to this definition"></a></dt>
+<dd><p>Configure firewall using firewalld.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.tc">
+<span class="sig-name descname"><span class="pre">tc</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">LinuxTrafficControl</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.tc" title="Link to this definition"></a></dt>
+<dd><p>Traffic control manipulation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.tools">
+<span class="sig-name descname"><span class="pre">tools</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.tools.html#authselect_test_framework.utils.tools.LinuxToolsUtils" title="authselect_test_framework.utils.tools.LinuxToolsUtils"><span class="pre">LinuxToolsUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.tools" title="Link to this definition"></a></dt>
+<dd><p>Standard tools interface.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.auth">
+<span class="sig-name descname"><span class="pre">auth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.authentication.html#authselect_test_framework.utils.authentication.AuthenticationUtils" title="authselect_test_framework.utils.authentication.AuthenticationUtils"><span class="pre">AuthenticationUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.auth" title="Link to this definition"></a></dt>
+<dd><p>Authentication helpers.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.hostnameutils">
+<span class="sig-name descname"><span class="pre">hostnameutils</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HostnameUtils</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.hostnameutils" title="Link to this definition"></a></dt>
+<dd><p>Hostname utilities.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.journald">
+<span class="sig-name descname"><span class="pre">journald</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">JournaldUtils</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.journald" title="Link to this definition"></a></dt>
+<dd><p>Journald utilities.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.auditd">
+<span class="sig-name descname"><span class="pre">auditd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Auditd</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.auditd" title="Link to this definition"></a></dt>
+<dd><p>Auditd utilities.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.coredumpd">
+<span class="sig-name descname"><span class="pre">coredumpd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Coredumpd</span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.coredumpd" title="Link to this definition"></a></dt>
+<dd><p>Coredumpd utilities.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.profile">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">profile</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.topology.html#authselect_test_framework.topology.Profile" title="authselect_test_framework.topology.Profile"><span class="pre">Profile</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.profile" title="Link to this definition"></a></dt>
+<dd><p>Active authselect profile for the current topology.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxRole.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxRole.setup" title="Link to this definition"></a></dt>
+<dd><p>Resolve and store the active authselect profile from the topology mark.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxLDAPRole">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.base.</span></span><span class="sig-name descname"><span class="pre">BaseLinuxLDAPRole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxLDAPRole" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.base.BaseLinuxRole" title="authselect_test_framework.roles.base.BaseLinuxRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseLinuxRole</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">LDAPHostType</span></code>]</p>
+<p>Base Linux role for roles that require direct LDAP access.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxLDAPRole.ldap">
+<span class="sig-name descname"><span class="pre">ldap</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.ldap.html#authselect_test_framework.utils.ldap.LDAPUtils" title="authselect_test_framework.utils.ldap.LDAPUtils"><span class="pre">LDAPUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxLDAPRole.ldap" title="Link to this definition"></a></dt>
+<dd><p>Provides methods for direct LDAP access to the LDAP server.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxLDAPRole.auto_ou">
+<span class="sig-name descname"><span class="pre">auto_ou</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxLDAPRole.auto_ou" title="Link to this definition"></a></dt>
+<dd><p>Organizational units that were automatically created.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.base.BaseLinuxLDAPRole.ou">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ou</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basedn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.base.BaseLinuxLDAPRole.ou" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.roles.html" class="btn btn-neutral float-left" title="authselect_test_framework.roles" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.roles.client.html" class="btn btn-neutral float-right" title="authselect_test_framework.roles.client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

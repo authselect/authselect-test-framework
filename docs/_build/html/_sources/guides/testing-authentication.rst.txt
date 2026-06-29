@@ -1,0 +1,50 @@
+Testing Authentication and Sudo
+###############################
+
+:class:`~authselect_test_framework.utils.authentication.AuthenticationUtils` is
+available as ``client.auth`` and provides su, ssh and sudo helpers.
+
+.. code-block:: python
+
+    from authselect_test_framework.roles.client import Client
+    from authselect_test_framework.roles.generic import GenericServer
+    from authselect_test_framework.topology import Profile
+
+
+    @pytest.mark.topology(Profile.SSSD)
+    def test_sssd_auth(client: Client, server: GenericServer):
+        server.user("user-1").add()
+        client.authselect.select("sssd")
+        client.sssd.start()
+
+        assert client.auth.ssh.password("user-1", "Secret123")
+        assert client.auth.su.password("user-1", "Secret123")
+
+    @pytest.mark.topology(Profile.Winbind)
+    def test_winbind_auth(client: Client, server: GenericServer):
+        server.user("user-1").add()
+        client.authselect.select("winbind")
+        client.winbind.start()
+
+        assert client.auth.ssh.password("user-1", "Secret123")
+        assert client.auth.su.password("user-1", "Secret123")
+
+Parametrize su and ssh with ``client.auth.parametrize(method)``.
+
+Sudo testing
+============
+
+.. code-block:: python
+
+    server.user("user-1").add()
+    server.sudorule("test").add(user="user-1", host="ALL", command="/bin/ls")
+
+    client.sssd.common.sudo()
+    client.sssd.start()
+
+    assert client.auth.sudo.list("user-1", "Secret123", expected=["(root) /bin/ls"])
+    assert client.auth.sudo.run("user-1", "Secret123", command="/bin/ls /root")
+
+.. seealso::
+
+    :class:`~authselect_test_framework.utils.authentication.AuthenticationUtils`

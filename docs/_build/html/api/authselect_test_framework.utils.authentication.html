@@ -1,0 +1,1173 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.utils.authentication &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.utils.authselect" href="authselect_test_framework.utils.authselect.html" />
+    <link rel="prev" title="authselect_test_framework.utils" href="authselect_test_framework.utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.utils.authentication</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.authentication.AuthenticationUtils"><code class="docutils literal notranslate"><span class="pre">AuthenticationUtils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils"><code class="docutils literal notranslate"><span class="pre">KerberosAuthenticationUtils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases"><code class="docutils literal notranslate"><span class="pre">PasskeyAuthenticationUseCases</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils"><code class="docutils literal notranslate"><span class="pre">SSHAuthenticationUtils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils"><code class="docutils literal notranslate"><span class="pre">SUAuthenticationUtils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.authentication.SudoAuthenticationUtils"><code class="docutils literal notranslate"><span class="pre">SudoAuthenticationUtils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authselect.html">authselect_test_framework.utils.authselect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.gdm.html">authselect_test_framework.utils.gdm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.idp.html">authselect_test_framework.utils.idp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.ldap.html">authselect_test_framework.utils.ldap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.local_users.html">authselect_test_framework.utils.local_users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.oddjobd.html">authselect_test_framework.utils.oddjobd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.pam.html">authselect_test_framework.utils.pam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.smartcard.html">authselect_test_framework.utils.smartcard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssctl.html">authselect_test_framework.utils.sssctl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssd.html">authselect_test_framework.utils.sssd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.tools.html">authselect_test_framework.utils.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.vfido.html">authselect_test_framework.utils.vfido</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.winbind.html">authselect_test_framework.utils.winbind</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.utils.authentication</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.utils.authentication.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.utils.authentication">
+<span id="authselect-test-framework-utils-authentication"></span><h1>authselect_test_framework.utils.authentication<a class="headerlink" href="#module-authselect_test_framework.utils.authentication" title="Link to this heading"></a></h1>
+<p>Testing authentications and authorization mechanisms.</p>
+<p class="rubric">Module Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DEFAULT_AUTHENTICATION_TIMEOUT</span></code></p></td>
+<td><p>Default timeout for authentication failure.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.authentication.AuthenticationUtils" title="authselect_test_framework.utils.authentication.AuthenticationUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AuthenticationUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Methods for testing various authentication and authorization mechanisms.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils" title="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KerberosAuthenticationUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Methods for testing Kerberos authentication and KCM.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases" title="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PasskeyAuthenticationUseCases</span></code></a>(*values)</p></td>
+<td><p>Authentication methods for passkey authentication.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">PasswdUtils</span></code>(*args, **kwargs)</p></td>
+<td><p>Change authentication tokens with passwd tool.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils" title="authselect_test_framework.utils.authentication.SSHAuthenticationUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSHAuthenticationUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Methods for testing authentication and authorization via ssh.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSHPasswdUtils</span></code>(*args, **kwargs)</p></td>
+<td><p>Change password via SSH session using passwd command.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils" title="authselect_test_framework.utils.authentication.SUAuthenticationUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SUAuthenticationUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Methods for testing authentication and authorization via su.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.utils.authentication.SudoAuthenticationUtils" title="authselect_test_framework.utils.authentication.SudoAuthenticationUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SudoAuthenticationUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Methods for testing authentication and authorization via sudo.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.AuthenticationUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.authentication.</span></span><span class="sig-name descname"><span class="pre">AuthenticationUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.authentication.AuthenticationUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Methods for testing various authentication and authorization mechanisms.</p>
+<p>It executes commands on remote host in order to test authentication and
+authorization via su, ssh, sudo and kerberos.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the authentication via su and ssh command can be mostly done via
+the same mechanisms (like password or two-factor authentication), it
+implements the same API. Therefore you can test su and ssh in the same
+test case through parametrization.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;su&#39;</span><span class="p">,</span> <span class="s1">&#39;ssh&#39;</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">provider</span><span class="p">:</span> <span class="n">GenericProvider</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">ldap</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s1">&#39;Secret123&#39;</span><span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="n">method</span><span class="p">)</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">,</span> <span class="s1">&#39;Secret123&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>MultihostHost</em>) – Remote host.</p></li>
+<li><p><strong>fs</strong> (<em>LinuxFileSystem</em>) – File system utils.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.AuthenticationUtils.su">
+<span class="sig-name descname"><span class="pre">su</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils" title="authselect_test_framework.utils.authentication.SUAuthenticationUtils"><span class="pre">SUAuthenticationUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.AuthenticationUtils.su" title="Link to this definition"></a></dt>
+<dd><p>Test authentication and authorization via su.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ldap</span><span class="p">:</span> <span class="n">LDAP</span><span class="p">):</span>
+    <span class="n">ldap</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s1">&#39;Secret123&#39;</span><span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">su</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;Secret123&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.AuthenticationUtils.sudo">
+<span class="sig-name descname"><span class="pre">sudo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.authentication.SudoAuthenticationUtils" title="authselect_test_framework.utils.authentication.SudoAuthenticationUtils"><span class="pre">SudoAuthenticationUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.AuthenticationUtils.sudo" title="Link to this definition"></a></dt>
+<dd><p>Test authentication and authorization via sudo.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ldap</span><span class="p">:</span> <span class="n">LDAP</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s1">&#39;Secret123&#39;</span><span class="p">)</span>
+    <span class="n">ldap</span><span class="o">.</span><span class="n">sudorule</span><span class="p">(</span><span class="s1">&#39;allow_ls&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;ALL&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;/bin/ls&#39;</span><span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">sudo</span><span class="p">()</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">sudo</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">,</span> <span class="s1">&#39;Secret123&#39;</span><span class="p">,</span> <span class="n">expected</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;(root) /bin/ls&#39;</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">sudo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">,</span> <span class="s1">&#39;Secret123&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;/bin/ls /root&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.AuthenticationUtils.ssh">
+<span class="sig-name descname"><span class="pre">ssh</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils" title="authselect_test_framework.utils.authentication.SSHAuthenticationUtils"><span class="pre">SSHAuthenticationUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.AuthenticationUtils.ssh" title="Link to this definition"></a></dt>
+<dd><p>Test authentication and authorization via ssh.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ldap</span><span class="p">:</span> <span class="n">LDAP</span><span class="p">):</span>
+    <span class="n">ldap</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s1">&#39;Secret123&#39;</span><span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;Secret123&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.AuthenticationUtils.passwd">
+<span class="sig-name descname"><span class="pre">passwd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">PasswdUtils</span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.AuthenticationUtils.passwd" title="Link to this definition"></a></dt>
+<dd><p>Change authentication tokens with passwd tool</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ldap</span><span class="p">:</span> <span class="n">LDAP</span><span class="p">):</span>
+    <span class="n">ldap</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s1">&#39;Secret123&#39;</span><span class="p">)</span>
+    <span class="c1"># Change the ACI record so that users can change their password</span>
+    <span class="n">ldap</span><span class="o">.</span><span class="n">aci</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+        <span class="s1">&#39;(targetattr=&quot;userpassword&quot;)(version 3.0; acl &quot;pwp test&quot;; allow (all) userdn=&quot;ldap:///self&quot;;)&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">passwd</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">,</span> <span class="s1">&#39;Secret123&#39;</span><span class="p">,</span> <span class="s1">&#39;New_password123&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.AuthenticationUtils.idp">
+<span class="sig-name descname"><span class="pre">idp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.idp.html#authselect_test_framework.utils.idp.IdpAuthenticationUtils" title="authselect_test_framework.utils.idp.IdpAuthenticationUtils"><span class="pre">IdpAuthenticationUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.AuthenticationUtils.idp" title="Link to this definition"></a></dt>
+<dd><p>Authenticate to External Identity Providers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.AuthenticationUtils.parametrize">
+<span class="sig-name descname"><span class="pre">parametrize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils" title="authselect_test_framework.utils.authentication.SUAuthenticationUtils"><span class="pre">SUAuthenticationUtils</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils" title="authselect_test_framework.utils.authentication.SSHAuthenticationUtils"><span class="pre">SSHAuthenticationUtils</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.AuthenticationUtils.parametrize" title="Link to this definition"></a></dt>
+<dd><p>Return authentication tool based on the method. The method can be
+either <code class="docutils literal notranslate"><span class="pre">su</span></code> or <code class="docutils literal notranslate"><span class="pre">ssh</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>method</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">su</span></code> or <code class="docutils literal notranslate"><span class="pre">ssh</span></code></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If invalid method is specified.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Authentication tool.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>HostSU | HostSSH</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.AuthenticationUtils.kerberos">
+<span class="sig-name descname"><span class="pre">kerberos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ssh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.Connection" title="(in pytest_mh)"><span class="pre">Connection</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils" title="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils"><span class="pre">KerberosAuthenticationUtils</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.AuthenticationUtils.kerberos" title="Link to this definition"></a></dt>
+<dd><p>Test authentication and authorization via Kerberos.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;sssd&#39;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">ssh</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">,</span> <span class="s1">&#39;Secret123&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ssh</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">kerberos</span><span class="p">(</span><span class="n">ssh</span><span class="p">)</span> <span class="k">as</span> <span class="n">krb</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">krb</span><span class="o">.</span><span class="n">has_tgt</span><span class="p">(</span><span class="n">ipa</span><span class="o">.</span><span class="n">realm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ssh</strong> (<em>Connection</em>) – SSH connection for the target user.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Kerberos authentication object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils" title="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils">KerberosAuthenticationUtils</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.authentication.</span></span><span class="sig-name descname"><span class="pre">KerberosAuthenticationUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Methods for testing Kerberos authentication and KCM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>MultihostHost</em>) – Multihost host.</p></li>
+<li><p><strong>ssh</strong> (<em>Connection</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – SSH client for the target user, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.conn">
+<span class="sig-name descname"><span class="pre">conn</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.Connection" title="(in pytest_mh)"><span class="pre">Connection</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.conn" title="Link to this definition"></a></dt>
+<dd><p>SSH client for the target user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.kinit">
+<span class="sig-name descname"><span class="pre">kinit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.kinit" title="Link to this definition"></a></dt>
+<dd><p>Run <code class="docutils literal notranslate"><span class="pre">kinit</span></code> command.</p>
+<p>Principal can be without the realm part. The realm can be given in
+separate parameter <code class="docutils literal notranslate"><span class="pre">realm</span></code>, in such case the principal name is
+constructed as <code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>. If the principal does not contain
+realm specification and <code class="docutils literal notranslate"><span class="pre">realm</span></code> parameter is not set then the default
+realm is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>principal</strong> (<em>str</em>) – Kerberos principal.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Principal’s password.</p></li>
+<li><p><strong>realm</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Kerberos realm that is appended to the principal (<code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>), defaults to None</p></li>
+<li><p><strong>args</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Additional parameters to <code class="docutils literal notranslate"><span class="pre">klist</span></code>, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.kvno">
+<span class="sig-name descname"><span class="pre">kvno</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.kvno" title="Link to this definition"></a></dt>
+<dd><p>Run <code class="docutils literal notranslate"><span class="pre">kvno</span></code> command.</p>
+<p>Principal can be without the realm part. The realm can be given in
+separate parameter <code class="docutils literal notranslate"><span class="pre">realm</span></code>, in such case the principal name is
+constructed as <code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>. If the principal does not contain
+realm specification and <code class="docutils literal notranslate"><span class="pre">realm</span></code> parameter is not set then the default
+realm is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>principal</strong> (<em>str</em>) – Kerberos principal.</p></li>
+<li><p><strong>realm</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Kerberos realm that is appended to the principal (<code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>), defaults to None</p></li>
+<li><p><strong>args</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Additional parameters to <code class="docutils literal notranslate"><span class="pre">klist</span></code>, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.klist">
+<span class="sig-name descname"><span class="pre">klist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.klist" title="Link to this definition"></a></dt>
+<dd><p>Run <code class="docutils literal notranslate"><span class="pre">klist</span></code> command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Additional parameters to <code class="docutils literal notranslate"><span class="pre">klist</span></code>, defaults to None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.kswitch">
+<span class="sig-name descname"><span class="pre">kswitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.kswitch" title="Link to this definition"></a></dt>
+<dd><p>Run <code class="docutils literal notranslate"><span class="pre">kswitch</span> <span class="pre">-p</span> <span class="pre">principal&#64;realm</span></code> command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>principal</strong> (<em>str</em>) – Kerberos principal.</p></li>
+<li><p><strong>realm</strong> (<em>str</em>) – Kerberos realm that is appended to the principal (<code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.kdestroy">
+<span class="sig-name descname"><span class="pre">kdestroy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.kdestroy" title="Link to this definition"></a></dt>
+<dd><p>Run <code class="docutils literal notranslate"><span class="pre">kdestroy</span></code> command.</p>
+<p>Principal can be without the realm part. The realm can be given in
+separate parameter <code class="docutils literal notranslate"><span class="pre">realm</span></code>, in such case the principal name is
+constructed as <code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>. If the principal does not contain
+realm specification and <code class="docutils literal notranslate"><span class="pre">realm</span></code> parameter is not set then the default
+realm is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>all</strong> (<em>bool</em><em>, </em><em>optional</em>) – Destroy all ccaches (<code class="docutils literal notranslate"><span class="pre">kdestroy</span> <span class="pre">-A</span></code>), defaults to False</p></li>
+<li><p><strong>ccache</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Destroy specific ccache (<code class="docutils literal notranslate"><span class="pre">kdestroy</span> <span class="pre">-c</span> <span class="pre">$cache</span></code>), defaults to None</p></li>
+<li><p><strong>principal</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Destroy ccache for given principal (<code class="docutils literal notranslate"><span class="pre">kdestroy</span> <span class="pre">-p</span> <span class="pre">$princ</span></code>), defaults to None</p></li>
+<li><p><strong>realm</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Kerberos realm that is appended to the principal (<code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>), defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.has_tgt">
+<span class="sig-name descname"><span class="pre">has_tgt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.has_tgt" title="Link to this definition"></a></dt>
+<dd><p>Check that the user has obtained Kerberos Ticket Granting Ticket for
+given principle. If <code class="docutils literal notranslate"><span class="pre">principal</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> then primary principal is
+checked.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>principal</strong> (<em>str</em><em> | </em><em>None</em>) – Expected principal for which the TGT was obtained (without the realm part).</p></li>
+<li><p><strong>realm</strong> (<em>str</em>) – Expected realm for which the TGT was obtained.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if TGT is available, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.user_has_tgt">
+<span class="sig-name descname"><span class="pre">user_has_tgt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.user_has_tgt" title="Link to this definition"></a></dt>
+<dd><p>Check that the specified user has obtained Kerberos Ticket Granting Ticket for
+itself.  This is for use cases where SSH cannot be used to check for the ticket
+like with users that authenticate through Identity Providers via other means than
+SSH such as GDM logins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – User to check for TGT default principal.</p></li>
+<li><p><strong>realm</strong> (<em>str</em>) – Expected realm for which the TGT was obtained.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if TGT is available, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.has_primary_cache">
+<span class="sig-name descname"><span class="pre">has_primary_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.has_primary_cache" title="Link to this definition"></a></dt>
+<dd><p>Check that the ccache for given principal is the primary one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>principal</strong> (<em>str</em>) – Kerberos principal.</p></li>
+<li><p><strong>realm</strong> (<em>str</em>) – Kerberos realm that is appended to the principal (<code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the ccache for given principal is the primary one.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.has_tickets">
+<span class="sig-name descname"><span class="pre">has_tickets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.has_tickets" title="Link to this definition"></a></dt>
+<dd><p>Check that the ccache contains all tickets from <code class="docutils literal notranslate"><span class="pre">expected</span></code> and nothing
+more.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>principal</strong> (<em>str</em>) – Kerberos principal.</p></li>
+<li><p><strong>realm</strong> (<em>str</em>) – Kerberos realm that is appended to the principal
+(<code class="docutils literal notranslate"><span class="pre">$principal&#64;$realm</span></code>)</p></li>
+<li><p><strong>expected</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – List of tickets that must be present in the ccache.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the ccache contains exactly <code class="docutils literal notranslate"><span class="pre">expected</span></code> tickets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.cache_count">
+<span class="sig-name descname"><span class="pre">cache_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.cache_count" title="Link to this definition"></a></dt>
+<dd><p>Return number of existing credential caches (or number of principals)
+for active user (klist -l).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of existing ccaches.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.list_principals">
+<span class="sig-name descname"><span class="pre">list_principals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.list_principals" title="Link to this definition"></a></dt>
+<dd><p>List all principals that have existing credential cache.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>env</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Additional environment variables passed to <code class="docutils literal notranslate"><span class="pre">klist</span> <span class="pre">-A</span></code> command, defaults to None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with principal as the key and list of available tickets as value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.list_ccaches">
+<span class="sig-name descname"><span class="pre">list_ccaches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.list_ccaches" title="Link to this definition"></a></dt>
+<dd><p>List all available ccaches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with principal as the key and ccache name as value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.list_tgt_times">
+<span class="sig-name descname"><span class="pre">list_tgt_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">datetime</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.list_tgt_times" title="Link to this definition"></a></dt>
+<dd><p>Return start and expiration time of primary ccache TGT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>realm</strong> (<em>str</em>) – Expected realm for which the TGT was obtained.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(start time, expiration time) of the TGT</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.ktutil_create_mixed_keytab">
+<span class="sig-name descname"><span class="pre">ktutil_create_mixed_keytab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrong_principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_keytab</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_keytab</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_on_error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.ktutil_create_mixed_keytab" title="Link to this definition"></a></dt>
+<dd><p>Create keytab with wrong principal first, then entries from valid keytab.</p>
+<p>BZ 805281: Uses ktutil to add a password-based entry (wrong realm) first,
+then merge with an existing keytab. Tests that SSSD selects the correct
+principal when multiple realms exist in one keytab.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wrong_principal</strong> – Principal to add first (e.g. <a class="reference external" href="mailto:nfs/host&#37;&#52;&#48;TEST&#46;EXAMPLE&#46;COM">nfs/host<span>&#64;</span>TEST<span>&#46;</span>EXAMPLE<span>&#46;</span>COM</a>)</p></li>
+<li><p><strong>valid_keytab</strong> – Path to keytab with correct principal</p></li>
+<li><p><strong>output_keytab</strong> – Path for the combined keytab output</p></li>
+<li><p><strong>password</strong> – Password for addent -password, defaults to “Secret123”</p></li>
+<li><p><strong>raise_on_error</strong> – Raise on failure, defaults to True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Process result from expect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.ktutil_create_keytab">
+<span class="sig-name descname"><span class="pre">ktutil_create_keytab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_keytab</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enctype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'aes256-cts-hmac-sha1-96'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kvno</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_on_error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.KerberosAuthenticationUtils.ktutil_create_keytab" title="Link to this definition"></a></dt>
+<dd><p>Create keytab with single password-based entry (BZ 1198478).</p>
+<p>Uses ktutil to add a principal with password and write to keytab file.
+Useful for dummy keytabs (principal in keytab but not on KDC).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>principal</strong> – Principal name (e.g. <a class="reference external" href="mailto:bla&#37;&#52;&#48;EXAMPLE&#46;COM">bla<span>&#64;</span>EXAMPLE<span>&#46;</span>COM</a>)</p></li>
+<li><p><strong>output_keytab</strong> – Path for the keytab output</p></li>
+<li><p><strong>password</strong> – Password for addent -password, defaults to “Secret123”</p></li>
+<li><p><strong>enctype</strong> – Encryption type (default: aes256-cts-hmac-sha1-96)</p></li>
+<li><p><strong>kvno</strong> – Key version number, defaults to 1</p></li>
+<li><p><strong>raise_on_error</strong> – Raise on failure, defaults to True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Process result from expect</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.authentication.</span></span><span class="sig-name descname"><span class="pre">PasskeyAuthenticationUseCases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Authentication methods for passkey authentication.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_PIN">
+<span class="sig-name descname"><span class="pre">PASSKEY_PIN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_PIN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_PIN_AND_PROMPTS">
+<span class="sig-name descname"><span class="pre">PASSKEY_PIN_AND_PROMPTS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_PIN_AND_PROMPTS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_PROMPTS_NO_PIN">
+<span class="sig-name descname"><span class="pre">PASSKEY_PROMPTS_NO_PIN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_PROMPTS_NO_PIN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_NO_PIN_NO_PROMPTS">
+<span class="sig-name descname"><span class="pre">PASSKEY_NO_PIN_NO_PROMPTS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_NO_PIN_NO_PROMPTS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_FALLBACK_TO_PASSWORD">
+<span class="sig-name descname"><span class="pre">PASSKEY_FALLBACK_TO_PASSWORD</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases.PASSKEY_FALLBACK_TO_PASSWORD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SSHAuthenticationUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.authentication.</span></span><span class="sig-name descname"><span class="pre">SSHAuthenticationUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Methods for testing authentication and authorization via ssh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>host</strong> (<em>MultihostHost</em>) – Multihost host.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SSHAuthenticationUtils.opts">
+<span class="sig-name descname"><span class="pre">opts</span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils.opts" title="Link to this definition"></a></dt>
+<dd><p>SSH CLI options.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SSHAuthenticationUtils.passwd">
+<span class="sig-name descname"><span class="pre">passwd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SSHPasswdUtils</span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils.passwd" title="Link to this definition"></a></dt>
+<dd><p>Change password via SSH session using passwd command.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SSHAuthenticationUtils.password_with_output">
+<span class="sig-name descname"><span class="pre">password_with_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'localhost'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils.password_with_output" title="Link to this definition"></a></dt>
+<dd><p>SSH to the remote host and authenticate the user with password and captures standard output and error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – User password.</p></li>
+<li><p><strong>hostname</strong> (<em>str</em>) – The hostname to connect to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing [except return code, command exit code, stdout, stderr].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, int, str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SSHAuthenticationUtils.password">
+<span class="sig-name descname"><span class="pre">password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'localhost'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils.password" title="Link to this definition"></a></dt>
+<dd><p>SSH to the remote host and authenticate the user with password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – User password.</p></li>
+<li><p><strong>hostname</strong> (<em>str</em>) – The hostname to connect to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if authentication was successful, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SSHAuthenticationUtils.password_expired_with_output">
+<span class="sig-name descname"><span class="pre">password_expired_with_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'localhost'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils.password_expired_with_output" title="Link to this definition"></a></dt>
+<dd><p>SSH to the remote host and authenticate the user with password, expect that the password
+is expired and change it to the new password and captures standard output and error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Old, expired user password.</p></li>
+<li><p><strong>new_password</strong> (<em>str</em>) – New user password.</p></li>
+<li><p><strong>hostname</strong> (<em>str</em>) – The hostname to connect to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing [except return code, command exit code, stdout, stderr].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, int, str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SSHAuthenticationUtils.password_expired">
+<span class="sig-name descname"><span class="pre">password_expired</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'localhost'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SSHAuthenticationUtils.password_expired" title="Link to this definition"></a></dt>
+<dd><p>SSH to the remote host and authenticate the user with password, expect
+that the password is expired and change it to the new password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Old, expired user password.</p></li>
+<li><p><strong>new_password</strong> (<em>str</em>) – New user password.</p></li>
+<li><p><strong>hostname</strong> (<em>str</em>) – The hostname to connect to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if authentication and password change was successful, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.authentication.</span></span><span class="sig-name descname"><span class="pre">SUAuthenticationUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Methods for testing authentication and authorization via su.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>MultihostHost</em>) – Multihost host.</p></li>
+<li><p><strong>fs</strong> (<em>LinuxFileSystem.</em>) – Linux File system.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.fs">
+<span class="sig-name descname"><span class="pre">fs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.utils.fs.html#pytest_mh.utils.fs.LinuxFileSystem" title="(in pytest_mh)"><span class="pre">LinuxFileSystem</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.fs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.password_with_output">
+<span class="sig-name descname"><span class="pre">password_with_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.password_with_output" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">$username</span></code> and authenticate the user with password and captures standard output and error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – User password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing [return code, command code, stdout, stderr].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, int, str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.password">
+<span class="sig-name descname"><span class="pre">password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.password" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">$username</span></code> and authenticate the user with password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – User password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if authentication was successful, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.password_expired_with_output">
+<span class="sig-name descname"><span class="pre">password_expired_with_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.password_expired_with_output" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">$username</span></code> and authenticate the user with password, expect that the password
+is expired and change it to the new password and captures standard output and error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Old, expired user password.</p></li>
+<li><p><strong>new_password</strong> (<em>str</em>) – New user password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing [return code, command code, stdout, stderr].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, int, str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.password_expired">
+<span class="sig-name descname"><span class="pre">password_expired</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.password_expired" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">$username</span></code> and authenticate the user with password, expect
+that the password is expired and change it to the new password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Old, expired user password.</p></li>
+<li><p><strong>new_password</strong> (<em>str</em>) – New user password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if password change is successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.passkey_with_output">
+<span class="sig-name descname"><span class="pre">passkey_with_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.passkey_with_output" title="Link to this definition"></a></dt>
+<dd><p>wrapper for passkey_with_output methods</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.passkey">
+<span class="sig-name descname"><span class="pre">passkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.passkey" title="Link to this definition"></a></dt>
+<dd><p>wrapper for passkey methods</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.umockdev_passkey_with_output">
+<span class="sig-name descname"><span class="pre">umockdev_passkey_with_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ioctl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">script</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive_prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Insert</span> <span class="pre">your</span> <span class="pre">passkey</span> <span class="pre">device,</span> <span class="pre">then</span> <span class="pre">press</span> <span class="pre">ENTER.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">touch_prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Please</span> <span class="pre">touch</span> <span class="pre">the</span> <span class="pre">device.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'exit</span> <span class="pre">0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases" title="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases"><span class="pre">PasskeyAuthenticationUseCases</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PasskeyAuthenticationUseCases.PASSKEY_PIN</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.umockdev_passkey_with_output" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">$username</span></code> and authenticate the user with passkey.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – Path to local umockdev device file.</p></li>
+<li><p><strong>ioctl</strong> (<em>str</em>) – Path to local umockdev ioctl file.</p></li>
+<li><p><strong>script</strong> (<em>str</em>) – Path to local umockdev script file</p></li>
+<li><p><strong>pin</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>) – Passkey PIN, defaults to None</p></li>
+<li><p><strong>interactive_prompt</strong> (<em>str</em>) – Interactive prompt, defaults to “Insert your passkey device, then press ENTER.”</p></li>
+<li><p><strong>touch_prompt</strong> (<em>str</em>) – Touch prompt, defaults to “Can you touch this device”</p></li>
+<li><p><strong>command</strong> (<em>str</em>) – Command executed after user is authenticated, defaults to “exit 0”</p></li>
+<li><p><strong>auth_method</strong> (<a class="reference internal" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases" title="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases"><em>PasskeyAuthenticationUseCases</em></a>) – Authentication method, defaults to PasskeyAuthenticationUseCases.PASSKEY_WITH_PIN</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing [return code, command code, stdout, stderr].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, int, str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.umockdev_passkey">
+<span class="sig-name descname"><span class="pre">umockdev_passkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ioctl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">script</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'exit</span> <span class="pre">0'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.umockdev_passkey" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">$username</span></code> and authenticate the user with passkey.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username</p></li>
+<li><p><strong>pin</strong> (<em>str</em><em> | </em><em>int</em>) – Passkey PIN.</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – Path to local umockdev device file.</p></li>
+<li><p><strong>ioctl</strong> (<em>str</em>) – Path to local umockdev ioctl file.</p></li>
+<li><p><strong>script</strong> (<em>str</em>) – Path to local umockdev script file</p></li>
+<li><p><strong>command</strong> (<em>str</em>) – Command executed after user is authenticated, defaults to “exit 0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated passkey mapping string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if authentication was successful, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.vfido_passkey_with_output">
+<span class="sig-name descname"><span class="pre">vfido_passkey_with_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive_prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Insert</span> <span class="pre">your</span> <span class="pre">passkey</span> <span class="pre">device,</span> <span class="pre">then</span> <span class="pre">press</span> <span class="pre">ENTER.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">touch_prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Please</span> <span class="pre">touch</span> <span class="pre">the</span> <span class="pre">device.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'exit</span> <span class="pre">0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases" title="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases"><span class="pre">PasskeyAuthenticationUseCases</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PasskeyAuthenticationUseCases.PASSKEY_PIN</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.vfido_passkey_with_output" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">$username</span></code> and authenticate the user with vfido passkey</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username</p></li>
+<li><p><strong>pin</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>) – Passkey PIN, defaults to None</p></li>
+<li><p><strong>interactive_prompt</strong> (<em>str</em>) – Interactive prompt, defaults to “Insert your passkey device, then press ENTER.”</p></li>
+<li><p><strong>touch_prompt</strong> (<em>str</em>) – Touch prompt, defaults to “Please touch the device.”</p></li>
+<li><p><strong>command</strong> (<em>str</em>) – Command executed after user is authenticated, defaults to “exit 0”</p></li>
+<li><p><strong>auth_method</strong> (<a class="reference internal" href="#authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases" title="authselect_test_framework.utils.authentication.PasskeyAuthenticationUseCases"><em>PasskeyAuthenticationUseCases</em></a>) – Authentication method, defaults to PasskeyAuthenticationUseCases.PASSKEY_PIN</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing [return code, command code, stdout, stderr].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, int, str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.vfido_passkey">
+<span class="sig-name descname"><span class="pre">vfido_passkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'exit</span> <span class="pre">0'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.vfido_passkey" title="Link to this definition"></a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-</span> <span class="pre">$username</span></code> and authenticate the user with passkey.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username</p></li>
+<li><p><strong>pin</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>) – Passkey PIN.</p></li>
+<li><p><strong>command</strong> (<em>str</em>) – Command executed after user is authenticated, defaults to “exit 0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if authentication was successful, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.smartcard_with_output">
+<span class="sig-name descname"><span class="pre">smartcard_with_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_certs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert_selection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.smartcard_with_output" title="Link to this definition"></a></dt>
+<dd><p>Authenticate via <code class="docutils literal notranslate"><span class="pre">su</span></code> with the smart card PIN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>pin</strong> (<em>str</em>) – Smart card PIN.</p></li>
+<li><p><strong>num_certs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of certificates that map to the user, defaults to 1.</p></li>
+<li><p><strong>cert_selection</strong> (<em>int</em><em>, </em><em>optional</em>) – Index of the certificate to select when multiple are present, defaults to 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of the <code class="docutils literal notranslate"><span class="pre">su</span></code> command.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SUAuthenticationUtils.smartcard">
+<span class="sig-name descname"><span class="pre">smartcard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_certs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert_selection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SUAuthenticationUtils.smartcard" title="Link to this definition"></a></dt>
+<dd><p>Authenticate via <code class="docutils literal notranslate"><span class="pre">su</span></code> with the smart card PIN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username.</p></li>
+<li><p><strong>pin</strong> (<em>str</em>) – Smart card PIN.</p></li>
+<li><p><strong>num_certs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of certificates that map to the user, defaults to 1.</p></li>
+<li><p><strong>cert_selection</strong> (<em>int</em><em>, </em><em>optional</em>) – Index of the certificate to select when multiple are present, defaults to 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if authentication was successful, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SudoAuthenticationUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.authentication.</span></span><span class="sig-name descname"><span class="pre">SudoAuthenticationUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SudoAuthenticationUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Methods for testing authentication and authorization via sudo.</p>
+<p>Find all MultihostUtility objects in the constructor.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SudoAuthenticationUtils.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SudoAuthenticationUtils.run" title="Link to this definition"></a></dt>
+<dd><p>Execute sudo command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username that calls sudo.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – User password, defaults to <code class="docutils literal notranslate"><span class="pre">Secret123</span></code></p></li>
+<li><p><strong>command</strong> (<em>str</em>) – Command to execute (make sure to properly escape any quotes).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the command was successful, False if the command failed or the user can not run sudo.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SudoAuthenticationUtils.run_advanced">
+<span class="sig-name descname"><span class="pre">run_advanced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SudoAuthenticationUtils.run_advanced" title="Link to this definition"></a></dt>
+<dd><p>Execute sudo command with parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username that calls sudo.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – User password, defaults to None</p></li>
+<li><p><strong>parameters</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – List of parameters to sudo.</p></li>
+<li><p><strong>command</strong> (<em>str</em>) – Command to execute (make sure to properly escape any quotes).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authentication.SudoAuthenticationUtils.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authentication.SudoAuthenticationUtils.list" title="Link to this definition"></a></dt>
+<dd><p>List commands that the user can run under sudo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username that runs sudo.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – User password, defaults to <code class="docutils literal notranslate"><span class="pre">Secret123</span></code></p></li>
+<li><p><strong>expected</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – List of expected commands (formatted as sudo output), defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the user can run sudo and allowed commands match expected commands (if set), False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.utils.html" class="btn btn-neutral float-left" title="authselect_test_framework.utils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.utils.authselect.html" class="btn btn-neutral float-right" title="authselect_test_framework.utils.authselect" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.utils.authselect &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.utils.gdm" href="authselect_test_framework.utils.gdm.html" />
+    <link rel="prev" title="authselect_test_framework.utils.authentication" href="authselect_test_framework.utils.authentication.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authentication.html">authselect_test_framework.utils.authentication</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.utils.authselect</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.authselect.AuthselectUtils"><code class="docutils literal notranslate"><span class="pre">AuthselectUtils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.gdm.html">authselect_test_framework.utils.gdm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.idp.html">authselect_test_framework.utils.idp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.ldap.html">authselect_test_framework.utils.ldap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.local_users.html">authselect_test_framework.utils.local_users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.oddjobd.html">authselect_test_framework.utils.oddjobd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.pam.html">authselect_test_framework.utils.pam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.smartcard.html">authselect_test_framework.utils.smartcard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssctl.html">authselect_test_framework.utils.sssctl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssd.html">authselect_test_framework.utils.sssd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.tools.html">authselect_test_framework.utils.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.vfido.html">authselect_test_framework.utils.vfido</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.winbind.html">authselect_test_framework.utils.winbind</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.utils.authselect</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.utils.authselect.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.utils.authselect">
+<span id="authselect-test-framework-utils-authselect"></span><h1>authselect_test_framework.utils.authselect<a class="headerlink" href="#module-authselect_test_framework.utils.authselect" title="Link to this heading"></a></h1>
+<p>Selecting authselect profiles.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.authselect.AuthselectUtils" title="authselect_test_framework.utils.authselect.AuthselectUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AuthselectUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Use authselect to configure nsswitch and PAM.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authselect.AuthselectUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.authselect.</span></span><span class="sig-name descname"><span class="pre">AuthselectUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.authselect.AuthselectUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Use authselect to configure nsswitch and PAM.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">provider</span><span class="p">:</span> <span class="n">GenericProvider</span><span class="p">):</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;sssd&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;with-mkhomedir&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Authselect changes are restored in <code class="xref py py-meth docutils literal notranslate"><span class="pre">ClientHost.teardown()</span></code>.</p>
+</div>
+<p>Find all MultihostUtility objects in the constructor.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authselect.AuthselectUtils.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authselect.AuthselectUtils.select" title="Link to this definition"></a></dt>
+<dd><p>Select an authselect profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>profile</strong> (<em>str</em>) – Authselect profile name.</p></li>
+<li><p><strong>features</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Authselect features to enable, defaults to []</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authselect.AuthselectUtils.assert_selected">
+<span class="sig-name descname"><span class="pre">assert_selected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authselect.AuthselectUtils.assert_selected" title="Link to this definition"></a></dt>
+<dd><p>Verify that authselect profile and features were applied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>profile</strong> (<em>str</em>) – Authselect profile or preset name passed to <a class="reference internal" href="#authselect_test_framework.utils.authselect.AuthselectUtils.select" title="authselect_test_framework.utils.authselect.AuthselectUtils.select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">select()</span></code></a>.</p></li>
+<li><p><strong>features</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Authselect features expected to be enabled, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authselect.AuthselectUtils.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.authselect.AuthselectUtils.list" title="Link to this definition"></a></dt>
+<dd><p>Run <code class="docutils literal notranslate"><span class="pre">authselect</span> <span class="pre">list</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Command result.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authselect.AuthselectUtils.current">
+<span class="sig-name descname"><span class="pre">current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authselect.AuthselectUtils.current" title="Link to this definition"></a></dt>
+<dd><p>Return current Authselect configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, run <code class="docutils literal notranslate"><span class="pre">authselect</span> <span class="pre">current</span> <span class="pre">--raw</span></code>, defaults to False</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Authselect configuration</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authselect.AuthselectUtils.disable_feature">
+<span class="sig-name descname"><span class="pre">disable_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authselect.AuthselectUtils.disable_feature" title="Link to this definition"></a></dt>
+<dd><p>Disable Authselect feature.
+:param features: Authselect features to disable
+:type: list[str], required</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authselect.AuthselectUtils.enable_feature">
+<span class="sig-name descname"><span class="pre">enable_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authselect.AuthselectUtils.enable_feature" title="Link to this definition"></a></dt>
+<dd><p>Enable Authselect feature.
+:param features:  Authselect features to enable
+:type: list[str], required</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.authselect.AuthselectUtils.is_feature_enabled">
+<span class="sig-name descname"><span class="pre">is_feature_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.authselect.AuthselectUtils.is_feature_enabled" title="Link to this definition"></a></dt>
+<dd><p>Check whether authselect features are enabled.</p>
+<p>Runs <code class="docutils literal notranslate"><span class="pre">authselect</span> <span class="pre">is-feature-enabled</span></code> for each given feature. When multiple
+features are passed, returns <code class="docutils literal notranslate"><span class="pre">True</span></code> only if every feature is enabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>feature</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – Feature name or list of feature names.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the feature (or every feature in the list) is enabled.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.utils.authentication.html" class="btn btn-neutral float-left" title="authselect_test_framework.utils.authentication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.utils.gdm.html" class="btn btn-neutral float-right" title="authselect_test_framework.utils.gdm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

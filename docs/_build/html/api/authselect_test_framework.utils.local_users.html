@@ -1,0 +1,1081 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.utils.local_users &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.utils.oddjobd" href="authselect_test_framework.utils.oddjobd.html" />
+    <link rel="prev" title="authselect_test_framework.utils.ldap" href="authselect_test_framework.utils.ldap.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authentication.html">authselect_test_framework.utils.authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authselect.html">authselect_test_framework.utils.authselect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.gdm.html">authselect_test_framework.utils.gdm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.idp.html">authselect_test_framework.utils.idp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.ldap.html">authselect_test_framework.utils.ldap</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.utils.local_users</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup"><code class="docutils literal notranslate"><span class="pre">LocalGroup</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser"><code class="docutils literal notranslate"><span class="pre">LocalUser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils"><code class="docutils literal notranslate"><span class="pre">LocalUsersUtils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup"><code class="docutils literal notranslate"><span class="pre">LocalNetgroup</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember"><code class="docutils literal notranslate"><span class="pre">LocalNetgroupMember</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias"><code class="docutils literal notranslate"><span class="pre">LocalSudoAlias</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoRule"><code class="docutils literal notranslate"><span class="pre">LocalSudoRule</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.oddjobd.html">authselect_test_framework.utils.oddjobd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.pam.html">authselect_test_framework.utils.pam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.smartcard.html">authselect_test_framework.utils.smartcard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssctl.html">authselect_test_framework.utils.sssctl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssd.html">authselect_test_framework.utils.sssd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.tools.html">authselect_test_framework.utils.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.vfido.html">authselect_test_framework.utils.vfido</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.winbind.html">authselect_test_framework.utils.winbind</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.utils.local_users</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.utils.local_users.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.utils.local_users">
+<span id="authselect-test-framework-utils-local-users"></span><h1>authselect_test_framework.utils.local_users<a class="headerlink" href="#module-authselect_test_framework.utils.local_users" title="Link to this heading"></a></h1>
+<p>Managing local users and groups.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalGroup</span></code></a>(util, name)</p></td>
+<td><p>Management of local groups.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalNetgroup</span></code></a>(util, name)</p></td>
+<td><p>Local netgroup management via <code class="docutils literal notranslate"><span class="pre">/etc/netgroup</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember" title="authselect_test_framework.utils.local_users.LocalNetgroupMember"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalNetgroupMember</span></code></a>(*[, host, user, group, ...])</p></td>
+<td><p>Local netgroup member (NIS triple and/or nested netgroup).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalSudoAlias</span></code></a>(util, name, kind)</p></td>
+<td><p>Local sudoers alias (<code class="docutils literal notranslate"><span class="pre">User_Alias</span></code>, <code class="docutils literal notranslate"><span class="pre">Runas_Alias</span></code>, <code class="docutils literal notranslate"><span class="pre">Host_Alias</span></code>, or <code class="docutils literal notranslate"><span class="pre">Cmnd_Alias</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoRule" title="authselect_test_framework.utils.local_users.LocalSudoRule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalSudoRule</span></code></a>(util, name)</p></td>
+<td><p>Local sudo rule management (<code class="docutils literal notranslate"><span class="pre">/etc/sudoers.d/</span></code> drop-ins).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalUser</span></code></a>(util, name)</p></td>
+<td><p>Management of local users.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalUsersUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Management of local users and groups.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.local_users.</span></span><span class="sig-name descname"><span class="pre">LocalGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">util</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><span class="pre">LocalUsersUtils</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code></a></p>
+<p>Management of local groups.</p>
+<p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalGroup</span></code></a> is a <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code> for static typing. Membership
+changes only accept <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalUser</span></code></a> and <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalGroup</span></code></a>; directory
+principals are not valid members of <code class="docutils literal notranslate"><span class="pre">/etc/group</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>util</strong> (<a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><em>LocalUsersUtils</em></a>) – LocalUsersUtils utility object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Group name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.name" title="Link to this definition"></a></dt>
+<dd><p>Group name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.add" title="Link to this definition"></a></dt>
+<dd><p>Create new local group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Group id, defaults to None.</p></li>
+<li><p><strong>description</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Not stored for pure local groups (present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code> API compatibility).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup">LocalGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing local group.</p>
+<p>Parameters that are not set are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Group id, defaults to None.</p></li>
+<li><p><strong>description</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Not stored for pure local groups (present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code> API compatibility).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup">LocalGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete the group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>SSHProcessError</strong> – If the group does not exist or deletion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.discard" title="Link to this definition"></a></dt>
+<dd><p>Remove the local group if it exists.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.get" title="Link to this definition"></a></dt>
+<dd><p>Get group attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None.</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code> API compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.add_member">
+<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.add_member" title="Link to this definition"></a></dt>
+<dd><p>Add group member.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>member</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a>) – User or group to add as a member.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup">LocalGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.add_members">
+<span class="sig-name descname"><span class="pre">add_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.add_members" title="Link to this definition"></a></dt>
+<dd><p>Add multiple group members.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>members</strong> (<em>list</em><em>[</em><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a><em>]</em>) – List of users or groups to add as members.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup">LocalGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.remove_member">
+<span class="sig-name descname"><span class="pre">remove_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.remove_member" title="Link to this definition"></a></dt>
+<dd><p>Remove group member.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>member</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a>) – User or group to remove from the group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup">LocalGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalGroup.remove_members">
+<span class="sig-name descname"><span class="pre">remove_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalGroup.remove_members" title="Link to this definition"></a></dt>
+<dd><p>Remove multiple group members.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>members</strong> (<em>list</em><em>[</em><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a><em>]</em>) – List of users or groups to remove from the group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup">LocalGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.local_users.</span></span><span class="sig-name descname"><span class="pre">LocalUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">util</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><span class="pre">LocalUsersUtils</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code></a></p>
+<p>Management of local users.</p>
+<p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalUser</span></code></a> is a <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code> for static typing; passkey-related
+methods are not supported on local <code class="docutils literal notranslate"><span class="pre">/etc/passwd</span></code> users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>util</strong> (<a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><em>LocalUsersUtils</em></a>) – LocalUsersUtils utility object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – User name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.name" title="Link to this definition"></a></dt>
+<dd><p>User name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gecos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.add" title="Link to this definition"></a></dt>
+<dd><p>Create new local user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – User id, defaults to None.</p></li>
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Primary group id, defaults to None.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – Password, defaults to ‘Secret123’ (use empty string to skip <code class="docutils literal notranslate"><span class="pre">passwd</span></code>).</p></li>
+<li><p><strong>home</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Home directory, defaults to None.</p></li>
+<li><p><strong>gecos</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – GECOS, defaults to None.</p></li>
+<li><p><strong>shell</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Login shell, defaults to None.</p></li>
+<li><p><strong>email</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Not applied to local users (present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code> API compatibility).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser">LocalUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gecos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing local user.</p>
+<p>Parameters that are not set are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – User id, defaults to None.</p></li>
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Primary group id, defaults to None.</p></li>
+<li><p><strong>home</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Home directory, defaults to None.</p></li>
+<li><p><strong>gecos</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – GECOS, defaults to None.</p></li>
+<li><p><strong>shell</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Login shell, defaults to None.</p></li>
+<li><p><strong>email</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Not applied to local users (present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code> API compatibility).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser">LocalUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.reset" title="Link to this definition"></a></dt>
+<dd><p>Reset user password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – Password, defaults to ‘Secret123’</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser">LocalUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.expire">
+<span class="sig-name descname"><span class="pre">expire</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expiration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'19700101000000'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.expire" title="Link to this definition"></a></dt>
+<dd><p>Set user password expiration date and time (via <code class="docutils literal notranslate"><span class="pre">chage</span> <span class="pre">-E</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>expiration</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Date and time for user password expiration, defaults to 19700101000000</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser">LocalUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.password_change_at_logon">
+<span class="sig-name descname"><span class="pre">password_change_at_logon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.password_change_at_logon" title="Link to this definition"></a></dt>
+<dd><p>Force user to change password next logon (<code class="docutils literal notranslate"><span class="pre">chage</span> <span class="pre">-d</span> <span class="pre">0</span></code> and password reset).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser">LocalUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.passkey_add">
+<span class="sig-name descname"><span class="pre">passkey_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">passkey_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.passkey_add" title="Link to this definition"></a></dt>
+<dd><p>Add passkey mapping to the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Not supported for local users.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.passkey_remove">
+<span class="sig-name descname"><span class="pre">passkey_remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">passkey_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.passkey_remove" title="Link to this definition"></a></dt>
+<dd><p>Remove passkey mapping from the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – Not supported for local users.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>SSHProcessError</strong> – If the user does not exist or deletion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.discard" title="Link to this definition"></a></dt>
+<dd><p>Remove the local user if they exist.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUser.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUser.get" title="Link to this definition"></a></dt>
+<dd><p>Get user attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None.</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code> API compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUsersUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.local_users.</span></span><span class="sig-name descname"><span class="pre">LocalUsersUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Management of local users and groups.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All changes are automatically reverted when a test is finished.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>MultihostHost</em>) – Remote host instance.</p></li>
+<li><p><strong>client</strong> (<a class="reference internal" href="authselect_test_framework.roles.client.html#authselect_test_framework.roles.client.Client" title="authselect_test_framework.roles.client.Client"><em>Client</em></a><em> | </em><em>None</em>) – Client role that owns this utility.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUsersUtils.teardown">
+<span class="sig-name descname"><span class="pre">teardown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUsersUtils.teardown" title="Link to this definition"></a></dt>
+<dd><p>Remove local changes made through this utility.</p>
+<p>Deletes added users and groups, removes sudo rules and sudoers aliases
+created under <code class="docutils literal notranslate"><span class="pre">/etc/sudoers.d/</span></code>, and relies on the filesystem helper’s
+backup/restore for <code class="docutils literal notranslate"><span class="pre">/etc/netgroup</span></code> and other backed-up paths.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUsersUtils.user">
+<span class="sig-name descname"><span class="pre">user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUsersUtils.user" title="Link to this definition"></a></dt>
+<dd><p>Get user object.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Local</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="c1"># Create user</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10001</span><span class="p">)</span>
+
+    <span class="c1"># Call `id user-1` and assert the result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">10001</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">10001</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – User name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New user object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser">LocalUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUsersUtils.group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUsersUtils.group" title="Link to this definition"></a></dt>
+<dd><p>Get group object.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Local</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="c1"># Create user</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="o">=</span><span class="mi">10001</span><span class="p">)</span>
+
+    <span class="c1"># Create secondary group and add user as a member</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;group-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="c1"># Call `id user-1` and assert the result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">10001</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">10001</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">memberof</span><span class="p">(</span><span class="s1">&#39;group-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Group name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New group object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup">LocalGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUsersUtils.netgroup">
+<span class="sig-name descname"><span class="pre">netgroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><span class="pre">LocalNetgroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUsersUtils.netgroup" title="Link to this definition"></a></dt>
+<dd><p>Get a local netgroup object.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Local</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="n">ng</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">netgroup</span><span class="p">(</span><span class="s2">&quot;ng-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">ng</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;u1&quot;</span><span class="p">))</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">getent</span><span class="o">.</span><span class="n">netgroup</span><span class="p">(</span><span class="s2">&quot;ng-1&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Netgroup name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Netgroup helper.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup">LocalNetgroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUsersUtils.sudoalias">
+<span class="sig-name descname"><span class="pre">sudoalias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'user'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'runas'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'host'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'command'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias"><span class="pre">LocalSudoAlias</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUsersUtils.sudoalias" title="Link to this definition"></a></dt>
+<dd><p>Get a sudoers alias object.</p>
+<p>Alias names must match sudoers rules: start with an uppercase letter and contain only
+uppercase letters, digits, and underscores. Define aliases before rules that reference
+them (e.g. write alias files first, or use lower <code class="docutils literal notranslate"><span class="pre">order</span></code> values than dependent rules).</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Local</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="n">admins</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">sudoalias</span><span class="p">(</span><span class="s2">&quot;ADMINS&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">)</span>
+    <span class="n">admins</span><span class="o">.</span><span class="n">add</span><span class="p">([</span><span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;u1&quot;</span><span class="p">),</span> <span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;g1&quot;</span><span class="p">)])</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">sudorule</span><span class="p">(</span><span class="s2">&quot;r1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">admins</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;ALL&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s2">&quot;/bin/ls&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Alias name (e.g. <code class="docutils literal notranslate"><span class="pre">ADMINS</span></code>).</p></li>
+<li><p><strong>kind</strong> (<em>LocalSudoAliasKind</em>) – <code class="docutils literal notranslate"><span class="pre">user</span></code> → <code class="docutils literal notranslate"><span class="pre">User_Alias</span></code>, <code class="docutils literal notranslate"><span class="pre">runas</span></code> → <code class="docutils literal notranslate"><span class="pre">Runas_Alias</span></code>, <code class="docutils literal notranslate"><span class="pre">host</span></code> → <code class="docutils literal notranslate"><span class="pre">Host_Alias</span></code>,
+<code class="docutils literal notranslate"><span class="pre">command</span></code> → <code class="docutils literal notranslate"><span class="pre">Cmnd_Alias</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sudo alias helper.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias">LocalSudoAlias</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalUsersUtils.sudorule">
+<span class="sig-name descname"><span class="pre">sudorule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoRule" title="authselect_test_framework.utils.local_users.LocalSudoRule"><span class="pre">LocalSudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalUsersUtils.sudorule" title="Link to this definition"></a></dt>
+<dd><p>Get a local sudoers rule object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Rule basename (used in the generated filename under <code class="docutils literal notranslate"><span class="pre">/etc/sudoers.d/</span></code>).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sudo rule helper.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoRule" title="authselect_test_framework.utils.local_users.LocalSudoRule">LocalSudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.local_users.</span></span><span class="sig-name descname"><span class="pre">LocalNetgroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">util</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><span class="pre">LocalUsersUtils</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroup" title="authselect_test_framework.roles.generic.GenericNetgroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericNetgroup</span></code></a></p>
+<p>Local netgroup management via <code class="docutils literal notranslate"><span class="pre">/etc/netgroup</span></code>.</p>
+<p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalNetgroup</span></code></a> is a <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericNetgroup</span></code> for static typing. Only
+<a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember" title="authselect_test_framework.utils.local_users.LocalNetgroupMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalNetgroupMember</span></code></a> instances are supported in <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup.add_members" title="authselect_test_framework.utils.local_users.LocalNetgroup.add_members"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_members()</span></code></a>
+and <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup.remove_members" title="authselect_test_framework.utils.local_users.LocalNetgroup.remove_members"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_members()</span></code></a> (not arbitrary <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericNetgroupMember</span></code>
+subclasses from other backends).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>util</strong> (<a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><em>LocalUsersUtils</em></a>) – LocalUsersUtils utility object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Netgroup name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup.name" title="Link to this definition"></a></dt>
+<dd><p>Netgroup name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><span class="pre">LocalNetgroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup.add" title="Link to this definition"></a></dt>
+<dd><p>Create a new netgroup entry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup">LocalNetgroup</a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code> for duplicate names.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup.get" title="Link to this definition"></a></dt>
+<dd><p>Get netgroup data from <code class="docutils literal notranslate"><span class="pre">getent</span> <span class="pre">netgroup</span></code> (reflecting <code class="docutils literal notranslate"><span class="pre">/etc/netgroup</span></code>).</p>
+<p>Keys include <code class="docutils literal notranslate"><span class="pre">cn</span></code> (netgroup name) and <code class="docutils literal notranslate"><span class="pre">nisNetgroupTriple</span></code> (member tokens).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericNetgroup</span></code> API compatibility.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup.add_member">
+<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroup" title="authselect_test_framework.roles.generic.GenericNetgroup"><span class="pre">GenericNetgroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><span class="pre">LocalNetgroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup.add_member" title="Link to this definition"></a></dt>
+<dd><p>Add a netgroup member.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup">LocalNetgroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup.add_members">
+<span class="sig-name descname"><span class="pre">add_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroupMember" title="authselect_test_framework.roles.generic.GenericNetgroupMember"><span class="pre">GenericNetgroupMember</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><span class="pre">LocalNetgroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup.add_members" title="Link to this definition"></a></dt>
+<dd><p>Add multiple netgroup members.</p>
+<p>Duplicate member strings are not allowed in <code class="docutils literal notranslate"><span class="pre">/etc/netgroup</span></code>: each line must be unique.
+Members are compared by <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember.to_member_string" title="authselect_test_framework.utils.local_users.LocalNetgroupMember.to_member_string"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LocalNetgroupMember.to_member_string()</span></code></a>; if that string is
+already in this netgroup or appears more than once in <code class="docutils literal notranslate"><span class="pre">members</span></code>, later duplicates are
+skipped (nothing is appended for them).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>members</strong> (<em>list</em><em>[</em><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroupMember" title="authselect_test_framework.roles.generic.GenericNetgroupMember"><em>GenericNetgroupMember</em></a><em>]</em>) – Netgroup members (must be <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember" title="authselect_test_framework.utils.local_users.LocalNetgroupMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalNetgroupMember</span></code></a>).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup">LocalNetgroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup.remove_member">
+<span class="sig-name descname"><span class="pre">remove_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroup" title="authselect_test_framework.roles.generic.GenericNetgroup"><span class="pre">GenericNetgroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><span class="pre">LocalNetgroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup.remove_member" title="Link to this definition"></a></dt>
+<dd><p>Remove a netgroup member.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup">LocalNetgroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup.remove_members">
+<span class="sig-name descname"><span class="pre">remove_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroupMember" title="authselect_test_framework.roles.generic.GenericNetgroupMember"><span class="pre">GenericNetgroupMember</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><span class="pre">LocalNetgroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup.remove_members" title="Link to this definition"></a></dt>
+<dd><p>Remove netgroup members.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>members</strong> (<em>list</em><em>[</em><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroupMember" title="authselect_test_framework.roles.generic.GenericNetgroupMember"><em>GenericNetgroupMember</em></a><em>]</em>) – Members to remove (must be <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember" title="authselect_test_framework.utils.local_users.LocalNetgroupMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalNetgroupMember</span></code></a>).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup">LocalNetgroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroup.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroup.delete" title="Link to this definition"></a></dt>
+<dd><p>Remove this netgroup from <code class="docutils literal notranslate"><span class="pre">/etc/netgroup</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroupMember">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.local_users.</span></span><span class="sig-name descname"><span class="pre">LocalNetgroupMember</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroup" title="authselect_test_framework.roles.generic.GenericNetgroup"><span class="pre">GenericNetgroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroupMember" title="authselect_test_framework.roles.generic.GenericNetgroupMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericNetgroupMember</span></code></a></p>
+<p>Local netgroup member (NIS triple and/or nested netgroup).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Host part of the triple, defaults to None.</p></li>
+<li><p><strong>user</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><em>GenericUser</em></a><em> | </em><em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – User part of the triple, defaults to None.</p></li>
+<li><p><strong>group</strong> (<a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><em>LocalGroup</em></a><em> | </em><em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Not supported for local netgroups.</p></li>
+<li><p><strong>hostgroup</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Not supported for local netgroups.</p></li>
+<li><p><strong>ng</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroup" title="authselect_test_framework.roles.generic.GenericNetgroup"><em>GenericNetgroup</em></a><em> | </em><em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Nested netgroup, defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<p>:raises <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code> for unsupported member kinds.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroupMember.group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember.group" title="Link to this definition"></a></dt>
+<dd><p>Netgroup group (not supported locally).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroupMember.hostgroup">
+<span class="sig-name descname"><span class="pre">hostgroup</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember.hostgroup" title="Link to this definition"></a></dt>
+<dd><p>Netgroup hostgroup (not supported locally).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalNetgroupMember.to_member_string">
+<span class="sig-name descname"><span class="pre">to_member_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalNetgroupMember.to_member_string" title="Link to this definition"></a></dt>
+<dd><p>Format this member for <code class="docutils literal notranslate"><span class="pre">/etc/netgroup</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Triple or nested netgroup name.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoAlias">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.local_users.</span></span><span class="sig-name descname"><span class="pre">LocalSudoAlias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">util</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><span class="pre">LocalUsersUtils</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'user'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'runas'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'host'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'command'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Local sudoers alias (<code class="docutils literal notranslate"><span class="pre">User_Alias</span></code>, <code class="docutils literal notranslate"><span class="pre">Runas_Alias</span></code>, <code class="docutils literal notranslate"><span class="pre">Host_Alias</span></code>, or <code class="docutils literal notranslate"><span class="pre">Cmnd_Alias</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>util</strong> (<a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><em>LocalUsersUtils</em></a>) – LocalUsersUtils utility object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Alias name (uppercase; see sudoers(5)).</p></li>
+<li><p><strong>kind</strong> (<em>LocalSudoAliasKind</em>) – Which alias type to write.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoAlias.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoAlias.filename" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoAlias.alias_str">
+<span class="sig-name descname"><span class="pre">alias_str</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoAlias.alias_str" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoAlias.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias"><span class="pre">LocalSudoAlias</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoAlias.add" title="Link to this definition"></a></dt>
+<dd><p>Write the alias line to <code class="docutils literal notranslate"><span class="pre">/etc/sudoers.d/</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>members</strong> (<em>str</em><em> | </em><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><em>LocalUser</em></a><em> | </em><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><em>LocalGroup</em></a><em> | </em><em>list</em><em>[</em><em>str</em><em> | </em><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><em>LocalUser</em></a><em> | </em><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><em>LocalGroup</em></a><em>]</em>) – One or more users/groups (for <code class="docutils literal notranslate"><span class="pre">user</span></code> / <code class="docutils literal notranslate"><span class="pre">runas</span></code>), hostnames (for <code class="docutils literal notranslate"><span class="pre">host</span></code>),
+or commands (for <code class="docutils literal notranslate"><span class="pre">command</span></code>).</p></li>
+<li><p><strong>order</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Optional ordering prefix for the drop-in file name (lower sorts first).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias">LocalSudoAlias</a></p>
+</dd>
+</dl>
+<p>After <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias.delete" title="authselect_test_framework.utils.local_users.LocalSudoAlias.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete()</span></code></a>, <code class="docutils literal notranslate"><span class="pre">filename</span></code> is unset and a <strong>new</strong> name is chosen here; see the class
+docstring.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoAlias.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias"><span class="pre">LocalSudoAlias</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoAlias.modify" title="Link to this definition"></a></dt>
+<dd><p>Replace alias members (and optionally the file order prefix).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>members</strong> (<em>str</em><em> | </em><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><em>LocalUser</em></a><em> | </em><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><em>LocalGroup</em></a><em> | </em><em>list</em><em>[</em><em>str</em><em> | </em><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><em>LocalUser</em></a><em> | </em><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><em>LocalGroup</em></a><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – New member list, defaults to None (keep previous).</p></li>
+<li><p><strong>order</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Optional ordering prefix for the drop-in file name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias">LocalSudoAlias</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoAlias.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoAlias.delete" title="Link to this definition"></a></dt>
+<dd><p>Remove this alias drop-in file.</p>
+<p>Clears the stored file name so a later <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias.add" title="authselect_test_framework.utils.local_users.LocalSudoAlias.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code></a> picks a new path; see the class
+docstring.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.local_users.</span></span><span class="sig-name descname"><span class="pre">LocalSudoRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">util</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><span class="pre">LocalUsersUtils</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericSudoRule" title="authselect_test_framework.roles.generic.GenericSudoRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericSudoRule</span></code></a></p>
+<p>Local sudo rule management (<code class="docutils literal notranslate"><span class="pre">/etc/sudoers.d/</span></code> drop-ins).</p>
+<p>See <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericSudoRule</span></code> for parameter meanings. Objects with a <code class="docutils literal notranslate"><span class="pre">name</span></code>
+attribute (including <a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalSudoAlias</span></code></a>) are emitted as bare sudoers names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>util</strong> – LocalUsersUtils util object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Sudo rule name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.default_user">
+<span class="sig-name descname"><span class="pre">default_user</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ALL'</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.default_user" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.default_host">
+<span class="sig-name descname"><span class="pre">default_host</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ALL'</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.default_host" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.default_command">
+<span class="sig-name descname"><span class="pre">default_command</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ALL'</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.default_command" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.util">
+<span class="sig-name descname"><span class="pre">util</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><span class="pre">LocalUsersUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.util" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.filename" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.rule_str">
+<span class="sig-name descname"><span class="pre">rule_str</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.rule_str" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.name" title="Link to this definition"></a></dt>
+<dd><p>Sudo rule name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.get" title="Link to this definition"></a></dt>
+<dd><p>Return rule text as attributes (<code class="docutils literal notranslate"><span class="pre">cn</span></code>, <code class="docutils literal notranslate"><span class="pre">sudoRule</span></code>).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">rule_str</span></code> is unset, reads the drop-in file when <code class="docutils literal notranslate"><span class="pre">filename</span></code> is set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericSudoRule</span></code> API compatibility.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ALL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ALL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ALL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasuser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopasswd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoRule" title="authselect_test_framework.utils.local_users.LocalSudoRule"><span class="pre">LocalSudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.add" title="Link to this definition"></a></dt>
+<dd><p>Create new sudo rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>SudoRuleUserField</em><em>, </em><em>optional</em>) – sudoUser attribute, defaults to ALL.</p></li>
+<li><p><strong>host</strong> (<em>SudoRuleHostField</em><em>, </em><em>optional</em>) – sudoHost attribute, defaults to ALL.</p></li>
+<li><p><strong>command</strong> (<em>SudoRuleCommandField</em><em>, </em><em>optional</em>) – sudoCommand attribute, defaults to ALL.</p></li>
+<li><p><strong>option</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – sudoOption attribute, defaults to None.</p></li>
+<li><p><strong>runasuser</strong> (<em>SudoRuleRunAsUserField</em><em>, </em><em>optional</em>) – sudoRunAsUser attribute, defaults to None.</p></li>
+<li><p><strong>runasgroup</strong> (<em>SudoRuleRunAsGroupField</em><em>, </em><em>optional</em>) – sudoRunAsGroup attribute, defaults to None.</p></li>
+<li><p><strong>order</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – sudoOrder attribute, defaults to None.</p></li>
+<li><p><strong>nopasswd</strong> (<em>bool</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – If true, no authentication is required (NOPASSWD), defaults to None (no change)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New sudo rule object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoRule" title="authselect_test_framework.utils.local_users.LocalSudoRule">LocalSudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasuser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopasswd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoRule" title="authselect_test_framework.utils.local_users.LocalSudoRule"><span class="pre">LocalSudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing local sudo rule.</p>
+<p>Parameters set to <code class="docutils literal notranslate"><span class="pre">None</span></code> keep the previous values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>SudoRuleUserField</em><em>, </em><em>optional</em>) – sudoUser attribute, defaults to None.</p></li>
+<li><p><strong>host</strong> (<em>SudoRuleHostField</em><em>, </em><em>optional</em>) – sudoHost attribute, defaults to None.</p></li>
+<li><p><strong>command</strong> (<em>SudoRuleCommandField</em><em>, </em><em>optional</em>) – sudoCommand attribute, defaults to None.</p></li>
+<li><p><strong>option</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – sudoOption attribute, defaults to None.</p></li>
+<li><p><strong>runasuser</strong> (<em>SudoRuleRunAsUserField</em><em>, </em><em>optional</em>) – sudoRunAsUser attribute, defaults to None.</p></li>
+<li><p><strong>runasgroup</strong> (<em>SudoRuleRunAsGroupField</em><em>, </em><em>optional</em>) – sudoRunAsGroup attribute, defaults to None.</p></li>
+<li><p><strong>order</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – sudoOrder attribute, defaults to None.</p></li>
+<li><p><strong>nopasswd</strong> (<em>bool</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – If true, no authentication is required (NOPASSWD), defaults to None (no change).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.utils.local_users.LocalSudoRule" title="authselect_test_framework.utils.local_users.LocalSudoRule">LocalSudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.local_users.LocalSudoRule.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.local_users.LocalSudoRule.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete local sudo rule.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.utils.ldap.html" class="btn btn-neutral float-left" title="authselect_test_framework.utils.ldap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.utils.oddjobd.html" class="btn btn-neutral float-right" title="authselect_test_framework.utils.oddjobd" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

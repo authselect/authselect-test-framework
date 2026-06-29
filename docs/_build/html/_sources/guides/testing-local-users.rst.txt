@@ -1,0 +1,38 @@
+Testing Local Users
+###################
+
+:class:`~authselect_test_framework.utils.local_users.LocalUsersUtils` is available
+as ``client.local`` on the client role.
+
+.. code-block:: python
+
+    from authselect_test_framework.roles.client import Client
+    from authselect_test_framework.topology import Profile
+
+
+    @pytest.mark.topology(Profile.Local)
+    def test_local_user(client: Client):
+        client.local.user("user-1").add()
+        client.authselect.select("local")
+        client.sssd.common.local()
+        client.sssd.start()
+
+        assert client.auth.ssh.password("user-1", "Secret123")
+
+Groups
+======
+
+.. code-block:: python
+
+    client.local.group("group").add(gid=123456)
+
+Local and provider groups with the same GID are used in group-merging tests:
+
+.. code-block:: python
+
+    client.local.group("group").add(gid=123456)
+    server.group("group").add(gid=123456).add_member(server.user("user").add())
+
+.. seealso::
+
+    :class:`~authselect_test_framework.utils.local_users.LocalUsersUtils`

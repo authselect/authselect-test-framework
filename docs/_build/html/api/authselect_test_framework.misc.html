@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.misc &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.misc.errors" href="authselect_test_framework.misc.errors.html" />
+    <link rel="prev" title="authselect_test_framework.hosts.samba" href="authselect_test_framework.hosts.samba.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">authselect_test_framework.misc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.attrs_include_value"><code class="docutils literal notranslate"><span class="pre">attrs_include_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.attrs_parse"><code class="docutils literal notranslate"><span class="pre">attrs_parse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.delimiter_parse"><code class="docutils literal notranslate"><span class="pre">delimiter_parse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.get_attr"><code class="docutils literal notranslate"><span class="pre">get_attr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.parse_ldif"><code class="docutils literal notranslate"><span class="pre">parse_ldif()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.retry"><code class="docutils literal notranslate"><span class="pre">retry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.to_list"><code class="docutils literal notranslate"><span class="pre">to_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.to_list_of_strings"><code class="docutils literal notranslate"><span class="pre">to_list_of_strings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authselect_test_framework.misc.to_list_without_none"><code class="docutils literal notranslate"><span class="pre">to_list_without_none()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.misc.errors.html">authselect_test_framework.misc.errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.misc.globals.html">authselect_test_framework.misc.globals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.misc.ssh.html">authselect_test_framework.misc.ssh</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.misc</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.misc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.misc">
+<span id="authselect-test-framework-misc"></span><h1>authselect_test_framework.misc<a class="headerlink" href="#module-authselect_test_framework.misc" title="Link to this heading"></a></h1>
+<p>Miscellaneous helper functions.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.misc.attrs_include_value" title="authselect_test_framework.misc.attrs_include_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">attrs_include_value</span></code></a>(attr, value)</p></td>
+<td><p>Include <code class="docutils literal notranslate"><span class="pre">value</span></code> to attribute list if it is not yet present.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.misc.attrs_parse" title="authselect_test_framework.misc.attrs_parse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">attrs_parse</span></code></a>(lines[, attrs])</p></td>
+<td><p>Parse LDAP attributes from output.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.misc.delimiter_parse" title="authselect_test_framework.misc.delimiter_parse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delimiter_parse</span></code></a>(lines[, delimiter])</p></td>
+<td><p>Parse delimited lines from output.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.misc.get_attr" title="authselect_test_framework.misc.get_attr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_attr</span></code></a>(data, key[, default])</p></td>
+<td><p>Retrieve a value from a dictionary with list-aware semantics.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.misc.parse_ldif" title="authselect_test_framework.misc.parse_ldif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_ldif</span></code></a>(ldif)</p></td>
+<td><p>Convert given LDIF to dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.misc.retry" title="authselect_test_framework.misc.retry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">retry</span></code></a>([max_retries, delay, on])</p></td>
+<td><p>Decorated function will be retried if it raises an exception.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.misc.to_list" title="authselect_test_framework.misc.to_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_list</span></code></a>(value)</p></td>
+<td><p>Convert value into a list.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.misc.to_list_of_strings" title="authselect_test_framework.misc.to_list_of_strings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_list_of_strings</span></code></a>(value)</p></td>
+<td><p>Convert given list or single value to list of strings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.misc.to_list_without_none" title="authselect_test_framework.misc.to_list_without_none"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_list_without_none</span></code></a>(r_list)</p></td>
+<td><p>Remove all elements that are <code class="docutils literal notranslate"><span class="pre">None</span></code> from the list.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.attrs_include_value">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">attrs_include_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.attrs_include_value" title="Link to this definition"></a></dt>
+<dd><p>Include <code class="docutils literal notranslate"><span class="pre">value</span></code> to attribute list if it is not yet present.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">attr</span></code> is not a list, then it is first converted into a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attr</strong> (<em>Any</em><em> | </em><em>list</em><em>[</em><em>Any</em><em>]</em>) – List of attribute values or a single value.</p></li>
+<li><p><strong>value</strong> (<em>Any</em>) – Value to add to the list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New list with the value included.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.attrs_parse">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">attrs_parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.attrs_parse" title="Link to this definition"></a></dt>
+<dd><p>Parse LDAP attributes from output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lines</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Output.</p></li>
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.delimiter_parse">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">delimiter_parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">':'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.delimiter_parse" title="Link to this definition"></a></dt>
+<dd><p>Parse delimited lines from output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lines</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Output.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em><em>, </em><em>defaults to :</em>) – Delimiter, optional</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with first element as the name as a key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.get_attr">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">get_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.get_attr" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a value from a dictionary with list-aware semantics.
+This helper makes working with parsed command output or API responses easier:
+- Single-item lists → returns the first element.
+- Multi-item lists → returns the full list.
+- Missing, empty, or None values → returns <cite>default</cite>.
+- Non-list values → returned as-is.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;login&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;user-1&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;uidnumber&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1234567</span><span class="p">],</span>
+    <span class="s2">&quot;groups&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;admins&quot;</span><span class="p">,</span> <span class="s2">&quot;developers&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;services&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;nested&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;sshpubkey&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ssh-rsa AAAAB3Nza...&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;user1@example.com&quot;</span><span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+<span class="k">assert</span> <span class="n">get_attr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;login&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;user-1&quot;</span>
+<span class="k">assert</span> <span class="n">get_attr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;groups&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;admins&quot;</span><span class="p">,</span> <span class="s2">&quot;developers&quot;</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">get_attr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;uidnumber&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1234567</span>
+<span class="k">assert</span> <span class="n">get_attr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;services&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="k">assert</span> <span class="n">get_attr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;missing&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;N/A&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;N/A&quot;</span>
+<span class="c1"># Nested dictionary</span>
+<span class="n">nested</span> <span class="o">=</span> <span class="n">get_attr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;nested&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nested</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">get_attr</span><span class="p">(</span><span class="n">nested</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;user1@example.com&quot;</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Dictionary returned from command parsing.</p></li>
+<li><p><strong>key</strong> (<em>str</em>) – Attribute name to look up.</p></li>
+<li><p><strong>default</strong> (<em>Any</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Value to return if key is missing or empty, defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single value or list of values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any | list[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.parse_ldif">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">parse_ldif</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ldif</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.parse_ldif" title="Link to this definition"></a></dt>
+<dd><p>Convert given LDIF to dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ldif</strong> (<em>str</em>) – Output of ldbsearch.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Data of given ldif in format: dict[dn, dict[attribute, list[attrvalue]]].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, dict[str, list[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.retry">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">retry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_retries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">Exception</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">Exception</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Param</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">RetType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Param</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">RetType</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.retry" title="Link to this definition"></a></dt>
+<dd><p>Decorated function will be retried if it raises an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_retries</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of retry attempts, defaults to 5</p></li>
+<li><p><strong>delay</strong> (<em>float</em><em>, </em><em>optional</em>) – Delay in seconds between each retry, defaults to 1</p></li>
+<li><p><strong>on</strong> (<em>type</em><em>[</em><em>Exception</em><em>] </em><em>| </em><em>list</em><em>[</em><em>type</em><em>[</em><em>Exception</em><em>]</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, retry only on given exceptions, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Decorated function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.to_list">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.to_list" title="Link to this definition"></a></dt>
+<dd><p>Convert value into a list.</p>
+<ul class="simple">
+<li><p>if value is <code class="docutils literal notranslate"><span class="pre">None</span></code> then return an empty list</p></li>
+<li><p>if value is already a list then return it unchanged</p></li>
+<li><p>if value is not a list then return <code class="docutils literal notranslate"><span class="pre">[value]</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Any</em><em> | </em><em>list</em><em>[</em><em>Any</em><em>] </em><em>| </em><em>None</em>) – Value that should be converted to a list.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List with the value as an element.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.to_list_of_strings">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">to_list_of_strings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.to_list_of_strings" title="Link to this definition"></a></dt>
+<dd><p>Convert given list or single value to list of strings.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">value</span></code> is first converted to a list and then <code class="docutils literal notranslate"><span class="pre">str(item)</span></code> is run on
+each of its item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Any</em><em> | </em><em>list</em><em>[</em><em>Any</em><em>] </em><em>| </em><em>None</em>) – Value to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of strings.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authselect_test_framework.misc.to_list_without_none">
+<span class="sig-prename descclassname"><span class="pre">authselect_test_framework.misc.</span></span><span class="sig-name descname"><span class="pre">to_list_without_none</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.misc.to_list_without_none" title="Link to this definition"></a></dt>
+<dd><p>Remove all elements that are <code class="docutils literal notranslate"><span class="pre">None</span></code> from the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>r_list</strong> (<em>list</em><em>[</em><em>Any</em><em>]</em>) – List of all elements.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New list with all values from the given list that are not <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Modules</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="authselect_test_framework.misc.errors.html#module-authselect_test_framework.misc.errors" title="authselect_test_framework.misc.errors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">errors</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="authselect_test_framework.misc.globals.html#module-authselect_test_framework.misc.globals" title="authselect_test_framework.misc.globals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">globals</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="authselect_test_framework.misc.ssh.html#module-authselect_test_framework.misc.ssh" title="authselect_test_framework.misc.ssh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ssh</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.hosts.samba.html" class="btn btn-neutral float-left" title="authselect_test_framework.hosts.samba" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.misc.errors.html" class="btn btn-neutral float-right" title="authselect_test_framework.misc.errors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

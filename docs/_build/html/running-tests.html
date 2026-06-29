@@ -1,0 +1,196 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running tests &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Writing new tests" href="writing-tests.html" />
+    <link rel="prev" title="authselect - writing system tests" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running tests</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-requirements">Installing requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#important-pytest-plugins">Important pytest plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-multihost-environment">Setting up multihost environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#starting-containers">Starting containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multihost-configuration">Multihost configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Running tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Running tests</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/running-tests.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="running-tests">
+<h1>Running tests<a class="headerlink" href="#running-tests" title="Link to this heading"></a></h1>
+<section id="installing-requirements">
+<h2>Installing requirements<a class="headerlink" href="#installing-requirements" title="Link to this heading"></a></h2>
+<p>Authselect system tests are written in Python using <a class="reference external" href="https://pytest.org">pytest</a> and additional
+plugins. Install dependencies inside a virtual environment:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>sudo dnf install -y gcc python3-devel openldap-devel libssh libssh-devel
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install -r requirements.txt
+</pre></div>
+</div>
+<section id="important-pytest-plugins">
+<h3>Important pytest plugins<a class="headerlink" href="#important-pytest-plugins" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pytest-mh.readthedocs.io">pytest-mh</a>: multihost testing support</p></li>
+<li><p><a class="reference external" href="https://github.com/next-actions/pytest-ticket">pytest-ticket</a>: <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.ticket(...)</span></code> and <code class="docutils literal notranslate"><span class="pre">--ticket</span></code> option</p></li>
+<li><p><a class="reference external" href="https://github.com/next-actions/pytest-tier">pytest-tier</a>: <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.tier(...)</span></code> and <code class="docutils literal notranslate"><span class="pre">--tier</span></code> option</p></li>
+<li><p><a class="reference external" href="https://github.com/next-actions/pytest-importance">pytest-importance</a>: <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.importance(...)</span></code> and <code class="docutils literal notranslate"><span class="pre">--importance</span></code> option</p></li>
+</ul>
+</section>
+</section>
+<section id="setting-up-multihost-environment">
+<h2>Setting up multihost environment<a class="headerlink" href="#setting-up-multihost-environment" title="Link to this heading"></a></h2>
+<p>Tests run commands on remote machines. Use <a class="reference external" href="https://github.com/SSSD/sssd-ci-containers">sssd-ci-containers</a> to provide
+client, IPA and Samba hosts.</p>
+<section id="starting-containers">
+<h3>Starting containers<a class="headerlink" href="#starting-containers" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SSSD/sssd-ci-containers.git
+<span class="nb">cd</span><span class="w"> </span>sssd-ci-containers
+
+sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>podman<span class="w"> </span>podman-docker<span class="w"> </span>docker-compose
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>podman.socket
+sudo<span class="w"> </span>setsebool<span class="w"> </span>-P<span class="w"> </span>container_manage_cgroup<span class="w"> </span><span class="nb">true</span>
+
+cp<span class="w"> </span>env.example<span class="w"> </span>.env
+sudo<span class="w"> </span>make<span class="w"> </span>trust-ca
+sudo<span class="w"> </span>make<span class="w"> </span>setup-dns
+sudo<span class="w"> </span>make<span class="w"> </span>up
+</pre></div>
+</div>
+<p>Only client, IPA and Samba containers are required for authselect tests.</p>
+</section>
+<section id="multihost-configuration">
+<h3>Multihost configuration<a class="headerlink" href="#multihost-configuration" title="Link to this heading"></a></h3>
+<p>See <a class="reference internal" href="config.html"><span class="doc">Multihost configuration</span></a> for details. The authselect repository ships
+<code class="docutils literal notranslate"><span class="pre">src/tests/system/mhc.yaml</span></code> configured for the three supported profiles:
+<code class="docutils literal notranslate"><span class="pre">local</span></code>, <code class="docutils literal notranslate"><span class="pre">sssd</span></code> and <code class="docutils literal notranslate"><span class="pre">winbind</span></code>.</p>
+</section>
+</section>
+<section id="id1">
+<h2>Running tests<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>From the authselect source tree:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>cd src/tests/system
+pytest --mh-config=mhc.yaml --mh-lazy-ssh -v
+</pre></div>
+</div>
+<p>Filter by profile name:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>pytest --mh-config=mhc.yaml --mh-lazy-ssh -v --mh-topology=sssd
+pytest --mh-config=mhc.yaml --mh-lazy-ssh -v --mh-topology=winbind
+pytest --mh-config=mhc.yaml --mh-lazy-ssh -v --mh-topology=local
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://pytest-mh.readthedocs.io">pytest-mh documentation</a> for additional
+options such as <code class="docutils literal notranslate"><span class="pre">--mh-log-path</span></code> and <code class="docutils literal notranslate"><span class="pre">--mh-topology</span></code>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="authselect - writing system tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="writing-tests.html" class="btn btn-neutral float-right" title="Writing new tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

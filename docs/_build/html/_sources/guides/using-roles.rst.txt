@@ -1,0 +1,66 @@
+Using Roles
+###########
+
+Multihost roles are the main interface to remote hosts. Role objects automatically
+back up remote state at test start and restore it when the test ends.
+
+Available roles
+***************
+
+* ``client`` — authselect and SSSD client
+* ``ipa`` — FreeIPA server
+* ``samba`` — Samba AD domain controller
+
+Provider roles
+**************
+
+IPA and Samba implement :class:`~authselect_test_framework.roles.generic.GenericServer`.
+Use the ``server`` fixture for tests that run on both profiles:
+
+.. code-block:: python
+
+    from authselect_test_framework.roles.generic import GenericServer
+    from authselect_test_framework.topology import Profile
+
+
+    @pytest.mark.topology(Profile.SSSD)
+    @pytest.mark.topology(Profile.Winbind)
+    def test_example(server: GenericServer):
+        server.user("user-1").add()
+        server.group("group-1").add().add_member(server.user("user-2").add())
+        server.sudorule("test").add(user="user-1", host="ALL", command="/bin/ls")
+
+Client role
+***********
+
+The client role provides access to authselect, SSSD, authentication and local users:
+
+.. code-block:: python
+
+    from authselect_test_framework.roles.client import Client
+    from authselect_test_framework.topology import Profile
+
+
+    @pytest.mark.topology(Profile.SSSD)
+    def test_example(client: Client):
+        client.authselect.select("sssd", ["with-mkhomedir"])
+        client.sssd.start()
+        client.local.user("local-user").add()
+        assert client.auth.ssh.password("user-1", "Secret123")
+
+Common client utilities:
+
+* ``client.authselect`` — select profiles and features
+* ``client.sssd`` — configure and start SSSD (SSSD profile)
+* ``client.winbind`` — start winbind and refresh caches (Winbind profile)
+* ``client.oddjob`` — start oddjobd (required for with-mkhomedir)
+* ``client.auth`` — test su, ssh and sudo authentication
+* ``client.local`` — manage local users and groups
+* ``client.tools`` — getent, faillock and other CLI tools
+* ``client.fs`` — file system operations with automatic backup/restore
+
+.. seealso::
+
+    :class:`~authselect_test_framework.roles.client.Client`
+    :class:`~authselect_test_framework.roles.ipa.IPA`
+    :class:`~authselect_test_framework.roles.samba.Samba`

@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.hosts.samba &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.misc" href="authselect_test_framework.misc.html" />
+    <link rel="prev" title="authselect_test_framework.hosts.ipa" href="authselect_test_framework.hosts.ipa.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.hosts.base.html">authselect_test_framework.hosts.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.hosts.client.html">authselect_test_framework.hosts.client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.hosts.ipa.html">authselect_test_framework.hosts.ipa</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.hosts.samba</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.hosts.samba.SambaHost"><code class="docutils literal notranslate"><span class="pre">SambaHost</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.hosts.samba</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.hosts.samba.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.hosts.samba">
+<span id="authselect-test-framework-hosts-samba"></span><h1>authselect_test_framework.hosts.samba<a class="headerlink" href="#module-authselect_test_framework.hosts.samba" title="Link to this heading"></a></h1>
+<p>Samba multihost host.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.hosts.samba.SambaHost" title="authselect_test_framework.hosts.samba.SambaHost"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaHost</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Samba host object.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.hosts.samba.</span></span><span class="sig-name descname"><span class="pre">SambaHost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.hosts.base.html#authselect_test_framework.hosts.base.BaseLDAPDomainHost" title="authselect_test_framework.hosts.base.BaseLDAPDomainHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseLDAPDomainHost</span></code></a>, <a class="reference internal" href="authselect_test_framework.hosts.base.html#authselect_test_framework.hosts.base.BaseLinuxHost" title="authselect_test_framework.hosts.base.BaseLinuxHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseLinuxHost</span></code></a></p>
+<p>Samba host object.</p>
+<p>Provides features specific to Samba server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Full backup and restore is supported.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tls</strong> (<em>bool</em><em>, </em><em>optional</em>) – Require TLS connection, defaults to True</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.adminuser">
+<span class="sig-name descname"><span class="pre">adminuser</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.adminuser" title="Link to this definition"></a></dt>
+<dd><p>Username of the admin user, defaults to value of <code class="docutils literal notranslate"><span class="pre">Administrator</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.adminpw">
+<span class="sig-name descname"><span class="pre">adminpw</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.adminpw" title="Link to this definition"></a></dt>
+<dd><p>Password of the admin user, defaults to value of <code class="docutils literal notranslate"><span class="pre">bindpw</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.features">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">features</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.features" title="Link to this definition"></a></dt>
+<dd><p>Features supported by the host.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.setup" title="Link to this definition"></a></dt>
+<dd><p>Back up <code class="docutils literal notranslate"><span class="pre">/home</span></code> before each test so it can be restored in <a class="reference internal" href="#authselect_test_framework.hosts.samba.SambaHost.teardown" title="authselect_test_framework.hosts.samba.SambaHost.teardown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">teardown()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.teardown">
+<span class="sig-name descname"><span class="pre">teardown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.teardown" title="Link to this definition"></a></dt>
+<dd><p>Restore <code class="docutils literal notranslate"><span class="pre">/home</span></code> to its pre-test state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.start" title="Link to this definition"></a></dt>
+<dd><p>Start required services.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If start operation is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.stop" title="Link to this definition"></a></dt>
+<dd><p>Stop required services.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If stop operation is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.backup">
+<span class="sig-name descname"><span class="pre">backup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.backup" title="Link to this definition"></a></dt>
+<dd><p>Backup all Samba server data.</p>
+<p>This is done by creating a backup of Samba database. This operation
+is usually very fast.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backup data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.hosts.samba.SambaHost.restore">
+<span class="sig-name descname"><span class="pre">restore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.hosts.samba.SambaHost.restore" title="Link to this definition"></a></dt>
+<dd><p>Restore all Samba server data to its original value.</p>
+<p>This is done by overriding current database with the backup created
+by <a class="reference internal" href="#authselect_test_framework.hosts.samba.SambaHost.backup" title="authselect_test_framework.hosts.samba.SambaHost.backup"><code class="xref py py-func docutils literal notranslate"><span class="pre">backup()</span></code></a>. This operation is usually very fast.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backup data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.hosts.ipa.html" class="btn btn-neutral float-left" title="authselect_test_framework.hosts.ipa" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.misc.html" class="btn btn-neutral float-right" title="authselect_test_framework.misc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.utils.winbind &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="authselect_test_framework.utils.vfido" href="authselect_test_framework.utils.vfido.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authentication.html">authselect_test_framework.utils.authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authselect.html">authselect_test_framework.utils.authselect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.gdm.html">authselect_test_framework.utils.gdm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.idp.html">authselect_test_framework.utils.idp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.ldap.html">authselect_test_framework.utils.ldap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.local_users.html">authselect_test_framework.utils.local_users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.oddjobd.html">authselect_test_framework.utils.oddjobd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.pam.html">authselect_test_framework.utils.pam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.smartcard.html">authselect_test_framework.utils.smartcard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssctl.html">authselect_test_framework.utils.sssctl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssd.html">authselect_test_framework.utils.sssd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.tools.html">authselect_test_framework.utils.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.vfido.html">authselect_test_framework.utils.vfido</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.utils.winbind</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.winbind.WinbindUtils"><code class="docutils literal notranslate"><span class="pre">WinbindUtils</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.utils.winbind</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.utils.winbind.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.utils.winbind">
+<span id="authselect-test-framework-utils-winbind"></span><h1>authselect_test_framework.utils.winbind<a class="headerlink" href="#module-authselect_test_framework.utils.winbind" title="Link to this heading"></a></h1>
+<p>Manage winbind on the client.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.winbind.WinbindUtils" title="authselect_test_framework.utils.winbind.WinbindUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WinbindUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Management of winbind on the client host.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.winbind.WinbindUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.winbind.</span></span><span class="sig-name descname"><span class="pre">WinbindUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.winbind.WinbindUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a></p>
+<p>Management of winbind on the client host.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">provider</span><span class="p">:</span> <span class="n">GenericProvider</span><span class="p">):</span>
+    <span class="n">provider</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;winbind&quot;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">winbind</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>MultihostHost</em>) – Multihost object.</p></li>
+<li><p><strong>svc</strong> (<em>SystemdServices</em>) – Systemd utils.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.winbind.WinbindUtils.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.winbind.WinbindUtils.start" title="Link to this definition"></a></dt>
+<dd><p>Start winbind and refresh caches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SSH process result.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.winbind.WinbindUtils.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.winbind.WinbindUtils.stop" title="Link to this definition"></a></dt>
+<dd><p>Stop winbind.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SSH process result.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.winbind.WinbindUtils.enable">
+<span class="sig-name descname"><span class="pre">enable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">now</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.winbind.WinbindUtils.enable" title="Link to this definition"></a></dt>
+<dd><p>Enable winbind.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>now</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable and start the unit immediately, defaults to False</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SSH process result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.winbind.WinbindUtils.disable">
+<span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">now</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.winbind.WinbindUtils.disable" title="Link to this definition"></a></dt>
+<dd><p>Disable winbind.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>now</strong> (<em>bool</em><em>, </em><em>optional</em>) – Disable and stop the unit immediately, defaults to False</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SSH process result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.utils.vfido.html" class="btn btn-neutral float-left" title="authselect_test_framework.utils.vfido" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

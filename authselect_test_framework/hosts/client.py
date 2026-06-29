@@ -1,0 +1,218 @@
+"""Client multihost host."""
+
+from __future__ import annotations
+
+from pathlib import PurePosixPath
+from typing import Any
+
+from pytest_mh.conn import ProcessLogLevel
+
+from .base import BaseHost, BaseLinuxHost
+
+__all__ = [
+    "ClientHost",
+]
+
+
+class ClientHost(BaseHost, BaseLinuxHost):
+    """
+    Authselect client host object.
+
+    Provides features specific to the test client.
+
+    .. note::
+
+        Full backup and restore of client identity state is supported,
+        including SSSD and winbind/Samba configuration.
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+        self._features: dict[str, bool] | None = None
+        self.sssd_service_user: str = ""
+        """ SSSD service user configured by default install """
+
+        self.authselect_backup: str | None = None
+        """Authselect backup name created during a test."""
+
+    def authselect_track_backup(self, name: str) -> None:
+        """
+        Remember authselect backup name for per-test restore in :meth:`teardown`.
+        """
+        if self.authselect_backup is None:
+            self.authselect_backup = name
+
+    def stop_identity_services(self) -> None:
+        """
+        Stop identity services configured by tests.
+        """
+        self.svc.stop("sssd.service")
+        self.svc.stop("winbind.service")
+
+    def pytest_setup(self) -> None:
+        super().pytest_setup()
+        self.sssd_service_user = self.svc.get_property("sssd", "User")
+
+    def setup(self) -> None:
+        """
+        Back up ``/home`` before each test so it can be restored in :meth:`teardown`.
+        """
+        self.fs.backup("/home")
+        super().setup()
+
+    def teardown(self) -> None:
+        if self.authselect_backup is not None:
+            self.conn.exec(
+                ["authselect", "backup-restore", self.authselect_backup],
+                raise_on_error=False,
+            )
+            self.conn.exec(
+                ["rm", "-fr", f"/var/lib/authselect/backups/{self.authselect_backup}"],
+                raise_on_error=False,
+            )
+            self.authselect_backup = None
+
+        self.stop_identity_services()
+        self.fs.restore("/home")
+        super().teardown()
+
+    @property
+    def features(self) -> dict[str, bool]:
+        """
+        Features supported by the host.
+        """
+        if self._features is not None:
+            return self._features
+
+        self.logger.info(f"Detecting SSSD's features on {self.hostname}")
+        result = self.conn.run(
+            """
+            set -ex
+
+            [ -f "/usr/lib64/sssd/libsss_files.so" ] && echo "files-provider" || :
+            [ -f "/usr/libexec/sssd/passkey_child" ] && echo "passkey" || :
+            [ -f "/usr/bin/sss_ssh_knownhosts" ] && echo "knownhosts" || :
+            [ -f "/usr/lib64/sssd/libsss_idp.so" ] && echo "idp-provider" || :
+            [ -f /opt/test_venv/bin/scauto ] && /opt/test_venv/bin/scauto gui done 2> /dev/null && echo "gdm" || :
+            systemctl cat sssd.service | grep -q "If service configured to be run under" && echo "non-privileged" || :
+            strings /usr/lib64/sssd/libsss_ldap_common.so | grep ldap_use_ppolicy && echo "ldap_use_ppolicy" || :
+            # enumerate (bool) Feature is only supported for domains with id_provider = ldap or id_provider = proxy.
+            MANWIDTH=10000 man sssd.conf | grep -q "id_provider = ldap or id_provider = proxy" && \
+            echo "limited_enumeration" || :
+            [ -f "/usr/bin/umockdev-run" ] && echo "umockdev" || :
+            [ -f "/opt/test_venv/bin/vfido.py" ] && echo "vfido" || :
+            [ -f "/usr/bin/vicc" ] && echo "virtualsmartcard" || :
+            """,
+            log_level=ProcessLogLevel.Error,
+        )
+
+        # Set default values
+        self._features = {
+            "files-provider": False,
+            "passkey": False,
+            "non-privileged": False,
+            "ldap_use_ppolicy": False,
+            "knownhosts": False,
+            "limited_enumeration": False,
+            "idp-provider": False,
+            "gdm": False,
+            "umockdev": False,
+            "vfido": False,
+            "virtualsmartcard": False,
+        }
+
+        self._features.update({k: True for k in result.stdout_lines})
+        self.logger.info("Detected features:", extra={"data": {"Features": self._features}})
+
+        return self._features
+
+    def start(self) -> None:
+        """
+        Not supported.
+
+        :raises NotImplementedError: _description_
+        """
+        # SSSD might not be configured properly at this time. We start and stop SSSD in tests.
+        raise NotImplementedError("Starting Client service is not implemented.")
+
+    def stop(self) -> None:
+        self.svc.stop("sssd.service")
+
+    def backup(self) -> Any:
+        """
+        Backup client identity and auth configuration.
+
+        :return: Backup data.
+        :rtype: Any
+        """
+        self.logger.info("Creating backup of authselect client")
+
+        result = self.conn.run(
+            """
+            set -ex
+
+            function backup {
+                if [ -d "$1" ] || [ -f "$1" ]; then
+                    cp --force --archive "$1" "$2"
+                fi
+            }
+
+            path=`mktemp -d`
+            backup /etc/krb5.conf "$path/krb5.conf"
+            backup /etc/krb5.keytab "$path/krb5.keytab"
+            backup /etc/samba "$path/samba"
+            backup /var/lib/samba "$path/var-lib-samba"
+            backup /etc/sssd "$path/config"
+            backup /var/log/sssd "$path/logs"
+            backup /var/lib/sss "$path/lib"
+            backup /home "$path/home"
+
+            echo $path
+            """,
+            log_level=ProcessLogLevel.Error,
+        )
+
+        return PurePosixPath(result.stdout_lines[-1].strip())
+
+    def restore(self, backup_data: Any | None) -> None:
+        """
+        Restore client identity and auth configuration.
+
+        :return: Backup data.
+        :rtype: Any
+        """
+        if backup_data is None:
+            return
+
+        if not isinstance(backup_data, PurePosixPath):
+            raise TypeError(f"Expected PurePosixPath, got {type(backup_data)}")
+
+        backup_path = str(backup_data)
+
+        self.logger.info(f"Restoring client data from {backup_path}")
+        self.conn.run(
+            f"""
+            set -ex
+
+            systemctl stop winbind sssd || :
+
+            function restore {{
+                rm --force --recursive "$2"
+                if [ -d "$1" ] || [ -f "$1" ]; then
+                    cp --force --archive "$1" "$2"
+                fi
+            }}
+
+            rm --force --recursive /etc/sssd /var/lib/sss /var/log/sssd /etc/samba /var/lib/samba /home/*
+            restore "{backup_path}/krb5.conf" /etc/krb5.conf
+            restore "{backup_path}/krb5.keytab" /etc/krb5.keytab
+            restore "{backup_path}/samba" /etc/samba
+            restore "{backup_path}/var-lib-samba" /var/lib/samba
+            restore "{backup_path}/config" /etc/sssd
+            restore "{backup_path}/logs" /var/log/sssd
+            restore "{backup_path}/lib" /var/lib/sss
+            cp --force --archive "{backup_path}/home/*" /home/ || :
+            """,
+            log_level=ProcessLogLevel.Error,
+        )

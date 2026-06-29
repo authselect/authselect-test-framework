@@ -1,0 +1,881 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.utils.sssd &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.utils.tools" href="authselect_test_framework.utils.tools.html" />
+    <link rel="prev" title="authselect_test_framework.utils.sssctl" href="authselect_test_framework.utils.sssctl.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authentication.html">authselect_test_framework.utils.authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authselect.html">authselect_test_framework.utils.authselect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.gdm.html">authselect_test_framework.utils.gdm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.idp.html">authselect_test_framework.utils.idp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.ldap.html">authselect_test_framework.utils.ldap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.local_users.html">authselect_test_framework.utils.local_users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.oddjobd.html">authselect_test_framework.utils.oddjobd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.pam.html">authselect_test_framework.utils.pam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.smartcard.html">authselect_test_framework.utils.smartcard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssctl.html">authselect_test_framework.utils.sssctl</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.utils.sssd</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration"><code class="docutils literal notranslate"><span class="pre">SSSDCommonConfiguration</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDLogsPath"><code class="docutils literal notranslate"><span class="pre">SSSDLogsPath</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDUtils"><code class="docutils literal notranslate"><span class="pre">SSSDUtils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.tools.html">authselect_test_framework.utils.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.vfido.html">authselect_test_framework.utils.vfido</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.winbind.html">authselect_test_framework.utils.winbind</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.utils.sssd</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.utils.sssd.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.utils.sssd">
+<span id="authselect-test-framework-utils-sssd"></span><h1>authselect_test_framework.utils.sssd<a class="headerlink" href="#module-authselect_test_framework.utils.sssd" title="Link to this heading"></a></h1>
+<p>Manage and configure SSSD.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration" title="authselect_test_framework.utils.sssd.SSSDCommonConfiguration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSSDCommonConfiguration</span></code></a>(sssd)</p></td>
+<td><p>Setup common SSSD configurations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDLogsPath" title="authselect_test_framework.utils.sssd.SSSDLogsPath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSSDLogsPath</span></code></a>(sssd)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDUtils" title="authselect_test_framework.utils.sssd.SSSDUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSSDUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Manage and configure SSSD.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.sssd.</span></span><span class="sig-name descname"><span class="pre">SSSDCommonConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sssd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDUtils" title="authselect_test_framework.utils.sssd.SSSDUtils"><span class="pre">SSSDUtils</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Setup common SSSD configurations.</p>
+<p>This class provides shortcuts to setup SSSD for common scenarios.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.sssd">
+<span class="sig-name descname"><span class="pre">sssd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDUtils" title="authselect_test_framework.utils.sssd.SSSDUtils"><span class="pre">SSSDUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.sssd" title="Link to this definition"></a></dt>
+<dd><p>SSSD utils.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.local">
+<span class="sig-name descname"><span class="pre">local</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.local" title="Link to this definition"></a></dt>
+<dd><p>Create <code class="docutils literal notranslate"><span class="pre">local</span></code> SSSD domain for local users.</p>
+<p>This is a proxy domain that uses nss_files and PAM system-auth service.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.sudo">
+<span class="sig-name descname"><span class="pre">sudo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.sudo" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD with sudo.</p>
+<ol class="arabic simple">
+<li><p>Select authselect sssd profile with ‘with-sudo’</p></li>
+<li><p>Enable sudo responder</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.gssapi">
+<span class="sig-name descname"><span class="pre">gssapi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.gssapi" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD with gssapi.</p>
+<ol class="arabic simple">
+<li><p>Select authselect sssd profile with “with-gssapi” and “with-sudo”</p></li>
+<li><p>Configure SSSD pam_gssapi_services in SSSD configuration</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.autofs">
+<span class="sig-name descname"><span class="pre">autofs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.autofs" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD with autofs.</p>
+<ol class="arabic simple">
+<li><p>Select authselect sssd profile</p></li>
+<li><p>Enable autofs responder</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.mkhomedir">
+<span class="sig-name descname"><span class="pre">mkhomedir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.mkhomedir" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD with mkhomedir and oddjobd.</p>
+<ol class="arabic simple">
+<li><p>Select authselect sssd profile with ‘with-mkhomedir’</p></li>
+<li><p>Start oddjobd.service</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.smartcard_with_softhsm">
+<span class="sig-name descname"><span class="pre">smartcard_with_softhsm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smartcard</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.utils.smartcard.html#authselect_test_framework.utils.smartcard.SmartCardUtils" title="authselect_test_framework.utils.smartcard.SmartCardUtils"><span class="pre">SmartCardUtils</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.smartcard_with_softhsm" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD for smart card authentication with SoftHSM multi-token support.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>smartcard</strong> (<a class="reference internal" href="authselect_test_framework.utils.smartcard.html#authselect_test_framework.utils.smartcard.SmartCardUtils" title="authselect_test_framework.utils.smartcard.SmartCardUtils"><em>SmartCardUtils</em></a>) – SmartCardUtils instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.ldap_provider">
+<span class="sig-name descname"><span class="pre">ldap_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">naming_context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_user_dn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cacert</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/etc/ipa/ca.crt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tls_reqcert</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'demand'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ssl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.ldap_provider" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD to use the ldap identity backend to connect to IPA or AD.
+This is an alternate configuration and is rarely needed in authselect tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>str</em>) – LDAP server.</p></li>
+<li><p><strong>naming_context</strong> (<em>str</em>) – Naming context</p></li>
+<li><p><strong>bind_user_dn</strong> (<em>str</em>) – Bind user distinguished name.</p></li>
+<li><p><strong>bind_password</strong> (<em>str</em>) – Bind password.</p></li>
+<li><p><strong>subids</strong> (<em>bool</em>) – Enable subids, optional</p></li>
+<li><p><strong>cacert</strong> (<em>str</em>) – CA certificate, defaults to’/etc/ipa/ca.crt’</p></li>
+<li><p><strong>tls_reqcert</strong> (<em>str</em>) – Force TLS, defaults to ‘demand’</p></li>
+<li><p><strong>ssl</strong> (<em>bool</em>) – Enable SSL, defaults to ‘False’</p></li>
+<li><p><strong>config</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>] </em><em>| </em><em>None</em>) – Additional configuration, optional</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.proxy">
+<span class="sig-name descname"><span class="pre">proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proxy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'files'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ldap'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'files'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_pam_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy_pam_stack</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_hostname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.proxy" title="Link to this definition"></a></dt>
+<dd><p>Configure files or ldap proxy domain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>proxy</strong> (<em>Literal</em><em>[</em><em>&quot;files&quot;</em><em>, </em><em>&quot;ldap&quot;</em><em>]</em>) – <code class="docutils literal notranslate"><span class="pre">ldap</span></code> or <code class="docutils literal notranslate"><span class="pre">files</span></code>, defaults to <code class="docutils literal notranslate"><span class="pre">files</span></code></p></li>
+<li><p><strong>provider</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – SSSD providers (<code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">auth</span></code>, <code class="docutils literal notranslate"><span class="pre">chpass</span></code>, …), defaults to <code class="docutils literal notranslate"><span class="pre">id</span></code></p></li>
+<li><p><strong>proxy_pam_target</strong> (<em>str</em><em> | </em><em>None</em>) – SSSD option proxy_pam_target, defaults to
+<code class="docutils literal notranslate"><span class="pre">None</span></code> (= <code class="docutils literal notranslate"><span class="pre">system-auth</span></code> (files), <code class="docutils literal notranslate"><span class="pre">sssdproxyldap</span></code> (ldap))</p></li>
+<li><p><strong>proxy_pam_stack</strong> (<em>str</em><em> | </em><em>None</em>) – Custom PAM stack written to
+<a class="reference external" href="mailto:/etc/pam&#46;d/&#37;&#52;&#48;proxy_pam_target">/etc/pam<span>&#46;</span>d/<span>&#64;</span>proxy_pam_target</a>, defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> (= ignored (files), pam_ldap.so (ldap))</p></li>
+<li><p><strong>server_hostname</strong> (<em>str</em><em> | </em><em>None</em>) – LDAP server hostname for ldap proxy (ldap), ignored (files), defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>domain</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Proxy domain name, defaults to None (= default domain)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.pam">
+<span class="sig-name descname"><span class="pre">pam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.pam" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD with pam.</p>
+<ol class="arabic simple">
+<li><p>Select authselect sssd profile</p></li>
+<li><p>Enable pam responder in sssd profile</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>features</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – list of authselect features</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.socket_responders">
+<span class="sig-name descname"><span class="pre">socket_responders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">responders</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.socket_responders" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD for socket-activated responders.</p>
+<p>Removes specified responders from the services line in sssd.conf
+to enable socket activation, while keeping other services running
+as traditional services.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>responders</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – List of responders to enable via socket activation.
+If None, enables all known socket responders.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If starting a socket unit fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDCommonConfiguration.subid">
+<span class="sig-name descname"><span class="pre">subid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration.subid" title="Link to this definition"></a></dt>
+<dd><p>Configure SSSD for subid.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.sssd.</span></span><span class="sig-name descname"><span class="pre">SSSDLogsPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sssd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDUtils" title="authselect_test_framework.utils.sssd.SSSDUtils"><span class="pre">SSSDUtils</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.monitor">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">monitor</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.monitor" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD monitor logs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.autofs">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">autofs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.autofs" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD autofs logs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.ifp">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ifp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.ifp" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD ifp logs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.kcm">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">kcm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.kcm" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD kcm logs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.nss">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">nss</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.nss" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD nss logs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.pac">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">pac</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.pac" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD pac logs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.pam">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">pam</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.pam" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD pam logs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.ssh">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ssh</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.ssh" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD ssh logs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.sudo">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sudo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.sudo" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD sudo logs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDLogsPath.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDLogsPath.domain" title="Link to this definition"></a></dt>
+<dd><p>Return path to SSSD domain log for given domain. If the domain name is
+not set then <a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDUtils.default_domain" title="authselect_test_framework.utils.sssd.SSSDUtils.default_domain"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SSSDUtils.default_domain</span></code></a> is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Domain name, defaults to None (=:attr:<cite>SSSDUtils.default_domain</cite>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to SSSD domain log.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.sssd.</span></span><span class="sig-name descname"><span class="pre">SSSDUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Manage and configure SSSD.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All changes are automatically reverted when a test is finished.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>MultihostHost</em>) – Multihost host.</p></li>
+<li><p><strong>fs</strong> (<em>LinuxFileSystem</em>) – File system utils.</p></li>
+<li><p><strong>svc</strong> (<em>SystemdServices</em>) – Systemd utils.</p></li>
+<li><p><strong>authselect</strong> (<a class="reference internal" href="authselect_test_framework.utils.authselect.html#authselect_test_framework.utils.authselect.AuthselectUtils" title="authselect_test_framework.utils.authselect.AuthselectUtils"><em>AuthselectUtils</em></a>) – Authselect utils.</p></li>
+<li><p><strong>load_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, existing configuration is loaded to
+<a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDUtils.config" title="authselect_test_framework.utils.sssd.SSSDUtils.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">config</span></code></a>, otherwise default configuration is generated,
+defaults to False</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.authselect">
+<span class="sig-name descname"><span class="pre">authselect</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.authselect.html#authselect_test_framework.utils.authselect.AuthselectUtils" title="authselect_test_framework.utils.authselect.AuthselectUtils"><span class="pre">AuthselectUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.authselect" title="Link to this definition"></a></dt>
+<dd><p>Authselect utils.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.fs">
+<span class="sig-name descname"><span class="pre">fs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">LinuxFileSystem</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.fs" title="Link to this definition"></a></dt>
+<dd><p>Filesystem utils.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.svc">
+<span class="sig-name descname"><span class="pre">svc</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SystemdServices</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.svc" title="Link to this definition"></a></dt>
+<dd><p>Systemd utils.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.config">
+<span class="sig-name descname"><span class="pre">config</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">configparser.ConfigParser</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.config" title="Link to this definition"></a></dt>
+<dd><p>SSSD configuration object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.default_domain">
+<span class="sig-name descname"><span class="pre">default_domain</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.default_domain" title="Link to this definition"></a></dt>
+<dd><p>Default SSSD domain.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.common">
+<span class="sig-name descname"><span class="pre">common</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDCommonConfiguration" title="authselect_test_framework.utils.sssd.SSSDCommonConfiguration"><span class="pre">SSSDCommonConfiguration</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.common" title="Link to this definition"></a></dt>
+<dd><p>Shortcuts to setup common SSSD configurations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.logs">
+<span class="sig-name descname"><span class="pre">logs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDLogsPath" title="authselect_test_framework.utils.sssd.SSSDLogsPath"><span class="pre">SSSDLogsPath</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.logs" title="Link to this definition"></a></dt>
+<dd><p>Shortcuts to SSSD log paths.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.async_start">
+<span class="sig-name descname"><span class="pre">async_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sssd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service_user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sssd'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0xfff0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.Process" title="(in pytest_mh)"><span class="pre">Process</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.async_start" title="Link to this definition"></a></dt>
+<dd><p>Start the SSSD and KCM services. Non-blocking call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service</strong> (<em>str</em><em>, </em><em>optional</em>) – Service to start, defaults to ‘sssd’</p></li>
+<li><p><strong>service_user</strong> (<em>str</em><em>, </em><em>optional</em>) – User used to start the service, defaults to ‘sssd’</p></li>
+<li><p><strong>apply_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply current configuration, defaults to True</p></li>
+<li><p><strong>check_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check configuration for typos, defaults to True</p></li>
+<li><p><strong>debug_level</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Automatically set debug level to the given value, defaults to 0xfff0</p></li>
+<li><p><strong>clean</strong> (<em>bool</em><em>, </em><em>defaults to False</em>) – Does a clean restart, clearing the cache, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Running SSH process.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Process</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sssd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service_user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sssd'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0xfff0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.start" title="Link to this definition"></a></dt>
+<dd><p>Start the SSSD and KCM services. The call will wait until the operation is finished.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service</strong> (<em>str</em><em>, </em><em>optional</em>) – Service to start, defaults to ‘sssd’</p></li>
+<li><p><strong>service_user</strong> (<em>str</em><em>, </em><em>optional</em>) – User used to start the service, defaults to ‘sssd’</p></li>
+<li><p><strong>apply_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply current configuration, defaults to True</p></li>
+<li><p><strong>check_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check configuration for typos, defaults to True</p></li>
+<li><p><strong>debug_level</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Automatically set debug level to the given value, defaults to 0xfff0</p></li>
+<li><p><strong>clean</strong> (<em>bool</em><em>, </em><em>defaults to False</em>) – Does a clean restart, clearing the cache, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SSH process result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.async_stop">
+<span class="sig-name descname"><span class="pre">async_stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sssd'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.Process" title="(in pytest_mh)"><span class="pre">Process</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.async_stop" title="Link to this definition"></a></dt>
+<dd><p>Stop the SSSD and KCM services. Non-blocking call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> (<em>str</em><em>, </em><em>optional</em>) – Service to start, defaults to ‘sssd’</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Running SSH process.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Process</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sssd'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.stop" title="Link to this definition"></a></dt>
+<dd><p>Stop the SSSD and KCM services. The call will wait until the operation is finished.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> (<em>str</em><em>, </em><em>optional</em>) – Service to start, defaults to ‘sssd’</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SSH process result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Process</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.async_restart">
+<span class="sig-name descname"><span class="pre">async_restart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sssd'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0xfff0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.Process" title="(in pytest_mh)"><span class="pre">Process</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.async_restart" title="Link to this definition"></a></dt>
+<dd><p>Restart the SSSD and KCM services. Non-blocking call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service</strong> (<em>str</em><em>, </em><em>optional</em>) – Service to start, defaults to ‘sssd’</p></li>
+<li><p><strong>apply_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply current configuration, defaults to True</p></li>
+<li><p><strong>check_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check configuration for typos, defaults to True</p></li>
+<li><p><strong>debug_level</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Automatically set debug level to the given value, defaults to 0xfff0</p></li>
+<li><p><strong>clean</strong> (<em>bool</em><em>, </em><em>defaults to False</em>) – Does a clean restart, clearing the cache, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Running SSH process.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Process</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.restart">
+<span class="sig-name descname"><span class="pre">restart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sssd'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0xfff0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.restart" title="Link to this definition"></a></dt>
+<dd><p>Restart the SSSD and KCM services. The call will wait until the operation is finished.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service</strong> (<em>str</em><em>, </em><em>optional</em>) – Service to start, defaults to ‘sssd’</p></li>
+<li><p><strong>apply_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Apply current configuration, defaults to True</p></li>
+<li><p><strong>check_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check configuration for typos, defaults to True</p></li>
+<li><p><strong>debug_level</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Automatically set debug level to the given value, defaults to 0xfff0</p></li>
+<li><p><strong>clean</strong> (<em>bool</em><em>, </em><em>defaults to False</em>) – Does a clean restart, clearing the cache, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SSH process result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memcache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.clear" title="Link to this definition"></a></dt>
+<dd><p>Clear SSSD data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db</strong> (<em>bool</em><em>, </em><em>optional</em>) – Remove cache and database, defaults to True</p></li>
+<li><p><strong>memcache</strong> (<em>bool</em><em>, </em><em>optional</em>) – Remove in-memory cache, defaults to True</p></li>
+<li><p><strong>config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Remove configuration files, defaults to False</p></li>
+<li><p><strong>logs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Remove logs, defaults to False</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.set_service_user">
+<span class="sig-name descname"><span class="pre">set_service_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.set_service_user" title="Link to this definition"></a></dt>
+<dd><p>Reconfigures ‘sssd.service’ systemd service description
+to run SSSD service under ‘user’ (only ‘root’ or ‘sssd’
+are supported by SSSD).
+Take a note, this currently doesn’t handle reconfiguration
+of socket activated services.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>str</em>) – Option value to set.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – in case error happens.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.set_provider">
+<span class="sig-name descname"><span class="pre">set_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericProvider" title="authselect_test_framework.roles.generic.GenericProvider"><span class="pre">GenericProvider</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.set_provider" title="Link to this definition"></a></dt>
+<dd><p>Set the correct ‘ldap_server | ipa_server | ad_server’ parameter and value for the role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>provider</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericProvider" title="authselect_test_framework.roles.generic.GenericProvider"><em>GenericProvider</em></a>) – Generic provider fixture object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.set_invalid_primary_provider">
+<span class="sig-name descname"><span class="pre">set_invalid_primary_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericProvider" title="authselect_test_framework.roles.generic.GenericProvider"><span class="pre">GenericProvider</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.set_invalid_primary_provider" title="Link to this definition"></a></dt>
+<dd><p>Sets an non working server  value for ‘ldap_server | ipa_server | ad_server’ parameter and
+a working server  value for ‘ldap_backup_server | ipa_backup_server | ad_backup_server’
+for failover testing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>provider</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericProvider" title="authselect_test_framework.roles.generic.GenericProvider"><em>GenericProvider</em></a>) – Generic provider fixture object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.enable_responder">
+<span class="sig-name descname"><span class="pre">enable_responder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">responder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.enable_responder" title="Link to this definition"></a></dt>
+<dd><p>Include the responder in the [sssd]/service option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>responder</strong> (<em>str</em>) – Responder to enable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.import_domain">
+<span class="sig-name descname"><span class="pre">import_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostRole" title="(in pytest_mh)"><span class="pre">MultihostRole</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.import_domain" title="Link to this definition"></a></dt>
+<dd><p>Import SSSD domain from role object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – SSSD domain name.</p></li>
+<li><p><strong>role</strong> (<em>MultihostRole</em>) – Provider role object to use for import.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If unsupported provider role is given.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.merge_domain">
+<span class="sig-name descname"><span class="pre">merge_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.BaseRole" title="authselect_test_framework.roles.base.BaseRole"><span class="pre">BaseRole</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.merge_domain" title="Link to this definition"></a></dt>
+<dd><p>Merge SSSD domain configuration from role object into the domain.</p>
+<p>If domain name is not provided then the default domain is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Target SSSD domain name</p></li>
+<li><p><strong>role</strong> (<a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.BaseRole" title="authselect_test_framework.roles.base.BaseRole"><em>BaseRole</em></a>) – Provider role object to use for import.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If unsupported provider role is given.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.config_dumps">
+<span class="sig-name descname"><span class="pre">config_dumps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.config_dumps" title="Link to this definition"></a></dt>
+<dd><p>Get current SSSD configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SSSD configuration.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.config_load">
+<span class="sig-name descname"><span class="pre">config_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.config_load" title="Link to this definition"></a></dt>
+<dd><p>Load remote SSSD configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.config_apply">
+<span class="sig-name descname"><span class="pre">config_apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'0xfff0'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.config_apply" title="Link to this definition"></a></dt>
+<dd><p>Apply current configuration on remote host.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>check_config</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check configuration for typos, defaults to True</p></li>
+<li><p><strong>debug_level</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Automatically set debug level to the given value, defaults to 0xfff0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.genconf">
+<span class="sig-name descname"><span class="pre">genconf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.genconf" title="Link to this definition"></a></dt>
+<dd><p>Exec <code class="docutils literal notranslate"><span class="pre">sssd</span> <span class="pre">--genconf</span></code> or <code class="docutils literal notranslate"><span class="pre">sssd</span> <span class="pre">--genconf-section=section</span></code> if <code class="docutils literal notranslate"><span class="pre">section</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>section</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Section that will be refreshed. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of the ran command.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.bring_offline">
+<span class="sig-name descname"><span class="pre">bring_offline</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.bring_offline" title="Link to this definition"></a></dt>
+<dd><p>Send SIGUSR1 to SSSD process in order to bring it offline and terminate
+existing connections.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.bring_online">
+<span class="sig-name descname"><span class="pre">bring_online</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.bring_online" title="Link to this definition"></a></dt>
+<dd><p>Send SIGUSR2 to SSSD process in order to bring it back online.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.section">
+<span class="sig-name descname"><span class="pre">section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SectionProxy</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.section" title="Link to this definition"></a></dt>
+<dd><p>Get sssd.conf section.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Section name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Section configuration object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>configparser.SectionProxy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.dom">
+<span class="sig-name descname"><span class="pre">dom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SectionProxy</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.dom" title="Link to this definition"></a></dt>
+<dd><p>Get sssd.conf domain section.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Domain name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Section configuration object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>configparser.SectionProxy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.subdom">
+<span class="sig-name descname"><span class="pre">subdom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdomain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SectionProxy</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.subdom" title="Link to this definition"></a></dt>
+<dd><p>Get sssd.conf subdomain section.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> (<em>str</em>) – Domain name.</p></li>
+<li><p><strong>subdomain</strong> (<em>str</em>) – Subdomain name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Section configuration object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>configparser.SectionProxy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.domain">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">domain</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.domain" title="Link to this definition"></a></dt>
+<dd><p>Default domain section configuration object.</p>
+<p>Default domain is the first domain imported by <a class="reference internal" href="#authselect_test_framework.utils.sssd.SSSDUtils.import_domain" title="authselect_test_framework.utils.sssd.SSSDUtils.import_domain"><code class="xref py py-func docutils literal notranslate"><span class="pre">import_domain()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If no default domain is set.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Section configuration object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>configparser.SectionProxy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.sssd">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sssd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.sssd" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the sssd section of sssd.conf.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.autofs">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">autofs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.autofs" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the autofs section of sssd.conf.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.ifp">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ifp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.ifp" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the ifp section of sssd.conf.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.kcm">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">kcm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.kcm" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the kcm section of sssd.conf.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.nss">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">nss</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.nss" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the nss section of sssd.conf.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.pac">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">pac</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.pac" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the pac section of sssd.conf.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.pam">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">pam</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.pam" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the pam section of sssd.conf.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.ssh">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ssh</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.ssh" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the ssh section of sssd.conf.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.sssd.SSSDUtils.sudo">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sudo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SectionProxy</span></span><a class="headerlink" href="#authselect_test_framework.utils.sssd.SSSDUtils.sudo" title="Link to this definition"></a></dt>
+<dd><p>Configuration of the sudo section of sssd.conf.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.utils.sssctl.html" class="btn btn-neutral float-left" title="authselect_test_framework.utils.sssctl" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.utils.tools.html" class="btn btn-neutral float-right" title="authselect_test_framework.utils.tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

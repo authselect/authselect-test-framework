@@ -1,0 +1,258 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multihost configuration &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profile test guides" href="guides/index.html" />
+    <link rel="prev" title="Additional markers and metadata" href="marks.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Multihost configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-definition">Basic definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-roles">Available roles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#client">client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ipa">ipa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#samba">samba</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-configuration">Example configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Multihost configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/config.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="multihost-configuration">
+<h1>Multihost configuration<a class="headerlink" href="#multihost-configuration" title="Link to this heading"></a></h1>
+<p>The multihost configuration file defines domains, hosts and roles available to
+run authselect system tests. It uses <a class="reference external" href="https://en.wikipedia.org/wiki/YAML">YAML</a>.</p>
+<section id="basic-definition">
+<h2>Basic definition<a class="headerlink" href="#basic-definition" title="Link to this heading"></a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">provisioned_topologies</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;list-of-profiles&gt;</span>
+<span class="nt">domains</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;domain id&gt;</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;dns host name&gt;</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;host role&gt;</span>
+<span class="w">    </span><span class="nt">conn</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh</span>
+<span class="w">      </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;ssh host&gt; (optional, defaults to host name)</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;ssh port&gt; (optional, defaults to 22)</span>
+<span class="w">      </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;ssh username&gt; (optional, defaults to &quot;root&quot;)</span>
+<span class="w">      </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;ssh password&gt; (optional, defaults to &quot;Secret123&quot;)</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;additional configuration&gt; (optional, defaults to {})</span>
+<span class="w">    </span><span class="nt">artifacts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;list of produced artifacts&gt; (optional, defaults to {})</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">provisioned_topologies</span></code> field lists profile names that are already
+provisioned in the container images (for example, domain membership). If a
+profile is listed, heavy provisioning steps such as <code class="docutils literal notranslate"><span class="pre">realm</span> <span class="pre">join</span></code> are skipped.
+The topology controller still applies per-run configuration (hostname, DNS,
+<code class="docutils literal notranslate"><span class="pre">smb.conf</span></code>, file backups) before tests run.</p>
+</section>
+<section id="available-roles">
+<span id="id1"></span><h2>Available roles<a class="headerlink" href="#available-roles" title="Link to this heading"></a></h2>
+<p>The authselect test framework supports three roles:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">client</span></code> — host running authselect and SSSD</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ipa</span></code> — FreeIPA server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">samba</span></code> — Samba AD domain controller</p></li>
+</ul>
+<section id="client">
+<h3>client<a class="headerlink" href="#client" title="Link to this heading"></a></h3>
+<p>Authselect test client. Runs authselect and identity services (SSSD and/or
+winbind, depending on the active profile).</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Client role example</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">client.test</span>
+<span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">client</span>
+<span class="w">  </span><span class="nt">artifacts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/sssd/*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/sssd/*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/sss/db/*</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="ipa">
+<h3>ipa<a class="headerlink" href="#ipa" title="Link to this heading"></a></h3>
+<p>FreeIPA server. The client is enrolled into the IPA domain by the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">SSSDController</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">IPA role example</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master.ipa.test</span>
+<span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipa</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">client</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ipa_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipa.test</span>
+<span class="w">      </span><span class="nt">krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/enrollment/ipa.test.keytab</span>
+<span class="w">      </span><span class="nt">ldap_krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/enrollment/ipa.test.keytab</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="samba">
+<h3>samba<a class="headerlink" href="#samba" title="Link to this heading"></a></h3>
+<p>Samba AD domain controller. The
+<code class="xref py py-class docutils literal notranslate"><span class="pre">WinbindController</span></code>
+configures the client for winbind (hostname, <code class="docutils literal notranslate"><span class="pre">smb.conf</span></code>, disables SSSD) and
+fixes Samba DC DNS when needed. Client DNS is left to container provisioning.
+Domain membership is expected from provisioned containers; the controller does
+not run <code class="docutils literal notranslate"><span class="pre">realm</span> <span class="pre">join</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Samba role example</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc.samba.test</span>
+<span class="w">  </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">samba</span>
+<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">binddn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CN=Administrator,CN=Users,DC=samba,DC=test</span>
+<span class="w">    </span><span class="nt">bindpw</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret123</span>
+<span class="w">    </span><span class="nt">client</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">ad_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">samba.test</span>
+<span class="w">      </span><span class="nt">krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/enrollment/samba.test.keytab</span>
+<span class="w">      </span><span class="nt">ldap_krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/enrollment/samba.test.keytab</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="example-configuration">
+<h2>Example configuration<a class="headerlink" href="#example-configuration" title="Link to this heading"></a></h2>
+<p>A minimal configuration for all authselect profiles:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">provisioned_topologies</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sssd</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">winbind</span>
+<span class="nt">domains</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sssd</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">client.test</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">client</span>
+<span class="w">    </span><span class="nt">artifacts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/sssd/*</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/sssd/*</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/sss/db/*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master.ipa.test</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipa</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">client</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">ipa_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipa.test</span>
+<span class="w">        </span><span class="nt">krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/enrollment/ipa.test.keytab</span>
+<span class="w">        </span><span class="nt">ldap_krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/enrollment/ipa.test.keytab</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dc.samba.test</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">samba</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">binddn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CN=Administrator,CN=Users,DC=samba,DC=test</span>
+<span class="w">      </span><span class="nt">bindpw</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret123</span>
+<span class="w">      </span><span class="nt">client</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">ad_domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">samba.test</span>
+<span class="w">        </span><span class="nt">krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/enrollment/samba.test.keytab</span>
+<span class="w">        </span><span class="nt">ldap_krb5_keytab</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/enrollment/samba.test.keytab</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>The bundled example is in the authselect repository at
+<code class="docutils literal notranslate"><span class="pre">src/tests/system/mhc.yaml</span></code>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="marks.html" class="btn btn-neutral float-left" title="Additional markers and metadata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="guides/index.html" class="btn btn-neutral float-right" title="Profile test guides" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

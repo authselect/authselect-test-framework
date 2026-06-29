@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.roles.client &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.roles.generic" href="authselect_test_framework.roles.generic.html" />
+    <link rel="prev" title="authselect_test_framework.roles.base" href="authselect_test_framework.roles.base.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.base.html">authselect_test_framework.roles.base</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.roles.client</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.client.Client"><code class="docutils literal notranslate"><span class="pre">Client</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.generic.html">authselect_test_framework.roles.generic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.ipa.html">authselect_test_framework.roles.ipa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.samba.html">authselect_test_framework.roles.samba</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.roles.client</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.roles.client.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.roles.client">
+<span id="authselect-test-framework-roles-client"></span><h1>authselect_test_framework.roles.client<a class="headerlink" href="#module-authselect_test_framework.roles.client" title="Link to this heading"></a></h1>
+<p>Client multihost role.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.client.Client" title="authselect_test_framework.roles.client.Client"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Client</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Authselect client role.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.client.Client" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.BaseLinuxRole" title="authselect_test_framework.roles.base.BaseLinuxRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseLinuxRole</span></code></a>[<a class="reference internal" href="authselect_test_framework.hosts.client.html#authselect_test_framework.hosts.client.ClientHost" title="authselect_test_framework.hosts.client.ClientHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClientHost</span></code></a>], <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericProvider" title="authselect_test_framework.roles.generic.GenericProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericProvider</span></code></a></p>
+<p>Authselect client role.</p>
+<p>Provides unified Python API for managing authselect, SSSD, winbind and
+related client-side test utilities.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Starting SSSD</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Local</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The role object is instantiated automatically as a dynamic pytest
+fixture by the multihost plugin. You should not create the object
+manually.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.sssd">
+<span class="sig-name descname"><span class="pre">sssd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.sssd.html#authselect_test_framework.utils.sssd.SSSDUtils" title="authselect_test_framework.utils.sssd.SSSDUtils"><span class="pre">SSSDUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.sssd" title="Link to this definition"></a></dt>
+<dd><p>Managing and configuring SSSD.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.sssctl">
+<span class="sig-name descname"><span class="pre">sssctl</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.sssctl.html#authselect_test_framework.utils.sssctl.SSSCTLUtils" title="authselect_test_framework.utils.sssctl.SSSCTLUtils"><span class="pre">SSSCTLUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.sssctl" title="Link to this definition"></a></dt>
+<dd><p>Call commands from sssctl.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.winbind">
+<span class="sig-name descname"><span class="pre">winbind</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.winbind.html#authselect_test_framework.utils.winbind.WinbindUtils" title="authselect_test_framework.utils.winbind.WinbindUtils"><span class="pre">WinbindUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.winbind" title="Link to this definition"></a></dt>
+<dd><p>Managing winbind.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.oddjob">
+<span class="sig-name descname"><span class="pre">oddjob</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.oddjobd.html#authselect_test_framework.utils.oddjobd.OddjobUtils" title="authselect_test_framework.utils.oddjobd.OddjobUtils"><span class="pre">OddjobUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.oddjob" title="Link to this definition"></a></dt>
+<dd><p>Managing oddjobd.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.smartcard">
+<span class="sig-name descname"><span class="pre">smartcard</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.smartcard.html#authselect_test_framework.utils.smartcard.SmartCardUtils" title="authselect_test_framework.utils.smartcard.SmartCardUtils"><span class="pre">SmartCardUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.smartcard" title="Link to this definition"></a></dt>
+<dd><p>Utility class for managing smart card operations using SoftHSM and PKCS#11.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.gdm">
+<span class="sig-name descname"><span class="pre">gdm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.gdm.html#authselect_test_framework.utils.gdm.GDM" title="authselect_test_framework.utils.gdm.GDM"><span class="pre">GDM</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.gdm" title="Link to this definition"></a></dt>
+<dd><p>Managing GDM interface from SCAutolib</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.vfido">
+<span class="sig-name descname"><span class="pre">vfido</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.vfido.html#authselect_test_framework.utils.vfido.Vfido" title="authselect_test_framework.utils.vfido.Vfido"><span class="pre">Vfido</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.vfido" title="Link to this definition"></a></dt>
+<dd><p>Managing virtual passkey device and service</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.local">
+<span class="sig-name descname"><span class="pre">local</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.local_users.html#authselect_test_framework.utils.local_users.LocalUsersUtils" title="authselect_test_framework.utils.local_users.LocalUsersUtils"><span class="pre">LocalUsersUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.local" title="Link to this definition"></a></dt>
+<dd><p>Managing local users and groups.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.domain" title="Link to this definition"></a></dt>
+<dd><p>Local provider domain name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.realm">
+<span class="sig-name descname"><span class="pre">realm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.realm" title="Link to this definition"></a></dt>
+<dd><p>Local provider Kerberos realm.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.name" title="Link to this definition"></a></dt>
+<dd><p>Provider role identifier (<code class="docutils literal notranslate"><span class="pre">local</span></code>).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.hostname">
+<span class="sig-name descname"><span class="pre">hostname</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.hostname" title="Link to this definition"></a></dt>
+<dd><p>Provider hostname.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.naming_context">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">naming_context</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.naming_context" title="Link to this definition"></a></dt>
+<dd><p>Naming context (not available on the local provider).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.password_policy">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">password_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericPasswordPolicy" title="authselect_test_framework.roles.generic.GenericPasswordPolicy"><span class="pre">GenericPasswordPolicy</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.password_policy" title="Link to this definition"></a></dt>
+<dd><p>Domain password policy management (not available on the local provider).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.ca">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ca</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericCertificateAuthority" title="authselect_test_framework.roles.generic.GenericCertificateAuthority"><span class="pre">GenericCertificateAuthority</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.ca" title="Link to this definition"></a></dt>
+<dd><p>Certificate Authority management (not available on the local provider).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.fqn">
+<span class="sig-name descname"><span class="pre">fqn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.fqn" title="Link to this definition"></a></dt>
+<dd><p>Return fully qualified name (local users are not domain-qualified).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.setup" title="Link to this definition"></a></dt>
+<dd><p>Called before execution of each test.</p>
+<p>Setup client host:</p>
+<ol class="arabic simple">
+<li><p>stop identity services</p></li>
+<li><p>on SSSD topologies, clear sssd cache, logs and configuration</p></li>
+<li><p>on SSSD topologies, import implicit domains from topology marker</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.sss_ssh_knownhosts">
+<span class="sig-name descname"><span class="pre">sss_ssh_knownhosts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.sss_ssh_knownhosts" title="Link to this definition"></a></dt>
+<dd><p>Execute sss_ssh_knownhosts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>*args</strong> (<em>str</em>) – Command arguments.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.sss_ssh_authorizedkeys">
+<span class="sig-name descname"><span class="pre">sss_ssh_authorizedkeys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.conn.html#pytest_mh.conn.ProcessResult" title="(in pytest_mh)"><span class="pre">ProcessResult</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.sss_ssh_authorizedkeys" title="Link to this definition"></a></dt>
+<dd><p>Execute sss_ssh_authorizedkeys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>*args</strong> (<em>str</em>) – Command arguments.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Command result.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ProcessResult</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.user">
+<span class="sig-name descname"><span class="pre">user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="authselect_test_framework.utils.local_users.html#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser"><span class="pre">LocalUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.user" title="Link to this definition"></a></dt>
+<dd><p>Get user object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – User name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New user object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="authselect_test_framework.utils.local_users.html#authselect_test_framework.utils.local_users.LocalUser" title="authselect_test_framework.utils.local_users.LocalUser">LocalUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="authselect_test_framework.utils.local_users.html#authselect_test_framework.utils.local_users.LocalGroup" title="authselect_test_framework.utils.local_users.LocalGroup"><span class="pre">LocalGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.group" title="Link to this definition"></a></dt>
+<dd><p>Get group object.
+:param name: Group name.
+:type name: str
+:return: New group object.
+:rtype: LocalGroup</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.sudoalias">
+<span class="sig-name descname"><span class="pre">sudoalias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'user'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'runas'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'host'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'command'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="authselect_test_framework.utils.local_users.html#authselect_test_framework.utils.local_users.LocalSudoAlias" title="authselect_test_framework.utils.local_users.LocalSudoAlias"><span class="pre">LocalSudoAlias</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.sudoalias" title="Link to this definition"></a></dt>
+<dd><p>Get sudo alias object.
+:param name: Sudo alias name.
+:type name: str
+:param kind: Alias kind.
+:type kind: LocalSudoAliasKind
+:return: New sudo alias object.
+:rtype: LocalSudoAlias</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.netgroup">
+<span class="sig-name descname"><span class="pre">netgroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="authselect_test_framework.utils.local_users.html#authselect_test_framework.utils.local_users.LocalNetgroup" title="authselect_test_framework.utils.local_users.LocalNetgroup"><span class="pre">LocalNetgroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.netgroup" title="Link to this definition"></a></dt>
+<dd><p>Get netgroup object.
+:param name: Netgroup name.
+:type name: str
+:return: New netgroup object.
+:rtype: LocalNetgroup</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.client.Client.sudorule">
+<span class="sig-name descname"><span class="pre">sudorule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="authselect_test_framework.utils.local_users.html#authselect_test_framework.utils.local_users.LocalSudoRule" title="authselect_test_framework.utils.local_users.LocalSudoRule"><span class="pre">LocalSudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.client.Client.sudorule" title="Link to this definition"></a></dt>
+<dd><p>Get sudo rule object.
+:param name: Sudo rule name.
+:type name: str
+:return: New sudo rule object.
+:rtype: LocalSudoRule</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.roles.base.html" class="btn btn-neutral float-left" title="authselect_test_framework.roles.base" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.roles.generic.html" class="btn btn-neutral float-right" title="authselect_test_framework.roles.generic" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

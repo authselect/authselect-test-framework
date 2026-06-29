@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.utils.smartcard &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.utils.sssctl" href="authselect_test_framework.utils.sssctl.html" />
+    <link rel="prev" title="authselect_test_framework.utils.pam" href="authselect_test_framework.utils.pam.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authentication.html">authselect_test_framework.utils.authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.authselect.html">authselect_test_framework.utils.authselect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.gdm.html">authselect_test_framework.utils.gdm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.idp.html">authselect_test_framework.utils.idp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.ldap.html">authselect_test_framework.utils.ldap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.local_users.html">authselect_test_framework.utils.local_users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.oddjobd.html">authselect_test_framework.utils.oddjobd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.pam.html">authselect_test_framework.utils.pam</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.utils.smartcard</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.utils.smartcard.SmartCardUtils"><code class="docutils literal notranslate"><span class="pre">SmartCardUtils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssctl.html">authselect_test_framework.utils.sssctl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.sssd.html">authselect_test_framework.utils.sssd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.tools.html">authselect_test_framework.utils.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.vfido.html">authselect_test_framework.utils.vfido</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.utils.winbind.html">authselect_test_framework.utils.winbind</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.utils.smartcard</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.utils.smartcard.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.utils.smartcard">
+<span id="authselect-test-framework-utils-smartcard"></span><h1>authselect_test_framework.utils.smartcard<a class="headerlink" href="#module-authselect_test_framework.utils.smartcard" title="Link to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.utils.smartcard.SmartCardUtils" title="authselect_test_framework.utils.smartcard.SmartCardUtils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SmartCardUtils</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Utility class for managing smart card operations using SoftHSM and PKCS#11.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.utils.smartcard.</span></span><span class="sig-name descname"><span class="pre">SmartCardUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostUtility" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostUtility</span></code></a>[<a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultihostHost</span></code></a>]</p>
+<p>Utility class for managing smart card operations using SoftHSM and PKCS#11.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>MultihostHost</em>) – Multihost object.</p></li>
+<li><p><strong>fs</strong> (<em>LinuxFileSystem</em>) – Filesystem utility object.</p></li>
+<li><p><strong>svc</strong> (<em>SystemdServices</em>) – Systemd svc utility object.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.SOFTHSM2_CONF_PATH">
+<span class="sig-name descname"><span class="pre">SOFTHSM2_CONF_PATH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/opt/test_ca/softhsm2.conf'</span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.SOFTHSM2_CONF_PATH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.TOKEN_STORAGE_PATH">
+<span class="sig-name descname"><span class="pre">TOKEN_STORAGE_PATH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/opt/test_ca/tokens'</span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.TOKEN_STORAGE_PATH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.OPENSC_CACHE_PATHS">
+<span class="sig-name descname"><span class="pre">OPENSC_CACHE_PATHS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['$HOME/.cache/opensc/',</span> <span class="pre">'/run/sssd/.cache/opensc/']</span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.OPENSC_CACHE_PATHS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.cli">
+<span class="sig-name descname"><span class="pre">cli</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.cli.html#pytest_mh.cli.CLIBuilder" title="(in pytest_mh)"><span class="pre">CLIBuilder</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.cli" title="Link to this definition"></a></dt>
+<dd><p>CLI builder utility for command construction.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.fs">
+<span class="sig-name descname"><span class="pre">fs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.utils.fs.html#pytest_mh.utils.fs.LinuxFileSystem" title="(in pytest_mh)"><span class="pre">LinuxFileSystem</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.fs" title="Link to this definition"></a></dt>
+<dd><p>Filesystem utility used to handle file operations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.svc">
+<span class="sig-name descname"><span class="pre">svc</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.utils.services.html#pytest_mh.utils.services.SystemdServices" title="(in pytest_mh)"><span class="pre">SystemdServices</span></a></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.svc" title="Link to this definition"></a></dt>
+<dd><p>Systemd utility to manage and interact with svc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.initialize_card">
+<span class="sig-name descname"><span class="pre">initialize_card</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sc_test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">so_pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'12345678'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'123456'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.initialize_card" title="Link to this definition"></a></dt>
+<dd><p>Initialize a SoftHSM token with the given label and PINs.</p>
+<p>When <em>reset</em> is <code class="docutils literal notranslate"><span class="pre">True</span></code> (default), existing token storage and OpenSC
+caches are removed first.  Pass <code class="docutils literal notranslate"><span class="pre">False</span></code> to add a token alongside
+existing ones (multi-token / multi-card setup).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<em>str</em><em>, </em><em>optional</em>) – Token label, defaults to “sc_test”</p></li>
+<li><p><strong>so_pin</strong> (<em>str</em><em>, </em><em>optional</em>) – Security Officer PIN, defaults to “12345678”</p></li>
+<li><p><strong>user_pin</strong> (<em>str</em><em>, </em><em>optional</em>) – User PIN, defaults to “123456”</p></li>
+<li><p><strong>reset</strong> (<em>bool</em><em>, </em><em>optional</em>) – Remove existing tokens before initializing, defaults to True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.add_cert">
+<span class="sig-name descname"><span class="pre">add_cert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cert_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'01'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'123456'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.add_cert" title="Link to this definition"></a></dt>
+<dd><p>Adds a certificate or private key to the smart card.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cert_path</strong> (<em>str</em>) – Path to the certificate or key file.</p></li>
+<li><p><strong>cert_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Object ID, defaults to “01”</p></li>
+<li><p><strong>pin</strong> (<em>str</em><em>, </em><em>optional</em>) – User PIN, defaults to “123456”</p></li>
+<li><p><strong>private</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether the object is a private key. Defaults to False.</p></li>
+<li><p><strong>token_label</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Label of the target token. When <code class="docutils literal notranslate"><span class="pre">None</span></code> (the
+default) <code class="docutils literal notranslate"><span class="pre">pkcs11-tool</span></code> writes to the first available token.
+Set this when multiple tokens exist to target a specific one.</p></li>
+<li><p><strong>label</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Label for the PKCS#11 object being written.  Required
+when <code class="docutils literal notranslate"><span class="pre">p11_child</span></code> accesses the token directly (i.e. without
+<code class="docutils literal notranslate"><span class="pre">virt_cacard</span></code>), because the response parser expects a
+non-empty label.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.add_key">
+<span class="sig-name descname"><span class="pre">add_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'01'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'123456'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.add_key" title="Link to this definition"></a></dt>
+<dd><p>Adds a private key to the smart card.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key_path</strong> (<em>str</em>) – Path to the private key.</p></li>
+<li><p><strong>key_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Key ID, defaults to “01”</p></li>
+<li><p><strong>pin</strong> (<em>str</em><em>, </em><em>optional</em>) – User PIN, defaults to “123456”</p></li>
+<li><p><strong>token_label</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Label of the target token (see <a class="reference internal" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.add_cert" title="authselect_test_framework.utils.smartcard.SmartCardUtils.add_cert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_cert()</span></code></a>).</p></li>
+<li><p><strong>label</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Label for the PKCS#11 object (see <a class="reference internal" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.add_cert" title="authselect_test_framework.utils.smartcard.SmartCardUtils.add_cert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_cert()</span></code></a>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.generate_cert">
+<span class="sig-name descname"><span class="pre">generate_cert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/tmp/selfsigned.key'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/tmp/selfsigned.crt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/CN=Test</span> <span class="pre">Cert'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'RSA'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.generate_cert" title="Link to this definition"></a></dt>
+<dd><p>Generates a self-signed certificate and private key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Output path for the private key, defaults to “/tmp/selfsigned.key”</p></li>
+<li><p><strong>cert_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Output path for the certificate, defaults to “/tmp/selfsigned.crt”</p></li>
+<li><p><strong>subj</strong> (<em>str</em><em>, </em><em>optional</em>) – Subject for the certificate, defaults to “/CN=Test Cert”</p></li>
+<li><p><strong>key_type</strong> (<em>str</em><em>, </em><em>optional</em>) – key type (RSA or EC) of the public-private key pair, defaults to “RSA”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (key_path, cert_path)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.insert_card">
+<span class="sig-name descname"><span class="pre">insert_card</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.insert_card" title="Link to this definition"></a></dt>
+<dd><p>Simulates card insertion by starting the smart card service.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.remove_card">
+<span class="sig-name descname"><span class="pre">remove_card</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.remove_card" title="Link to this definition"></a></dt>
+<dd><p>Simulates card removal by stopping the smart card service.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.setup_local_card">
+<span class="sig-name descname"><span class="pre">setup_local_card</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.client.html#authselect_test_framework.roles.client.Client" title="authselect_test_framework.roles.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.setup_local_card" title="Link to this definition"></a></dt>
+<dd><p>Setup local system for smart card authentication.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Local</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">smartcard</span><span class="o">.</span><span class="n">setup_local_card</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;localuser1&#39;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;su - localuser1 -c &#39;su - localuser1 -c whoami&#39;&quot;</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;123456&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">&quot;PIN&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">stderr</span>
+    <span class="k">assert</span> <span class="s2">&quot;localuser1&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.utils.smartcard.SmartCardUtils.enroll_to_token">
+<span class="sig-name descname"><span class="pre">enroll_to_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.client.html#authselect_test_framework.roles.client.Client" title="authselect_test_framework.roles.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ipa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.ipa.html#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><span class="pre">IPA</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sc_test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'01'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'123456'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.enroll_to_token" title="Link to this definition"></a></dt>
+<dd><p>Request an IPA-signed certificate for <em>username</em> and store it on <em>token_label</em>.</p>
+<p>When <em>init</em> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, the token is first initialized via
+<a class="reference internal" href="#authselect_test_framework.utils.smartcard.SmartCardUtils.initialize_card" title="authselect_test_framework.utils.smartcard.SmartCardUtils.initialize_card"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initialize_card()</span></code></a> (resetting any existing token storage).
+Pass <code class="docutils literal notranslate"><span class="pre">False</span></code> when the card has already been initialized or when
+adding a second certificate to an existing token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="authselect_test_framework.roles.client.html#authselect_test_framework.roles.client.Client" title="authselect_test_framework.roles.client.Client"><em>Client</em></a>) – Client role object.</p></li>
+<li><p><strong>ipa</strong> (<a class="reference internal" href="authselect_test_framework.roles.ipa.html#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><em>IPA</em></a>) – IPA role object whose CA issues the certificate.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – IPA principal to issue the certificate for.</p></li>
+<li><p><strong>token_label</strong> (<em>str</em><em>, </em><em>optional</em>) – SoftHSM token label to write the objects to,
+defaults to “sc_test”.</p></li>
+<li><p><strong>cert_id</strong> (<em>str</em><em>, </em><em>optional</em>) – PKCS#11 object ID, defaults to “01”.</p></li>
+<li><p><strong>pin</strong> (<em>str</em><em>, </em><em>optional</em>) – User PIN for the token, defaults to “123456”.</p></li>
+<li><p><strong>init</strong> (<em>bool</em><em>, </em><em>optional</em>) – Initialize (and reset) the token before enrolling,
+defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.utils.pam.html" class="btn btn-neutral float-left" title="authselect_test_framework.utils.pam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.utils.sssctl.html" class="btn btn-neutral float-right" title="authselect_test_framework.utils.sssctl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

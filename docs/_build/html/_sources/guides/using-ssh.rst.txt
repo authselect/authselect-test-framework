@@ -1,0 +1,19 @@
+Using SSH
+#########
+
+The client role provides ``client.ssh()`` for interactive SSH sessions, used for
+example in GSSAPI sudo tests:
+
+.. code-block:: python
+
+    with client.ssh("user-1", "Secret123") as ssh:
+        assert ssh.run(f"kinit user-1@{server.realm}", input="Secret123")
+        assert "(root) /bin/ls" in ssh.run("sudo -l").stdout
+        assert ssh.run("sudo /bin/ls /root")
+
+The base role also implements ``client.ssh()`` for opening connections from any
+Linux role.
+
+.. seealso::
+
+    :meth:`~authselect_test_framework.roles.base.BaseRole.ssh`

@@ -1,0 +1,1424 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.roles.ipa &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.roles.samba" href="authselect_test_framework.roles.samba.html" />
+    <link rel="prev" title="authselect_test_framework.roles.generic" href="authselect_test_framework.roles.generic.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.base.html">authselect_test_framework.roles.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.client.html">authselect_test_framework.roles.client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.generic.html">authselect_test_framework.roles.generic</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.roles.ipa</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA"><code class="docutils literal notranslate"><span class="pre">IPA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject"><code class="docutils literal notranslate"><span class="pre">IPAObject</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy"><code class="docutils literal notranslate"><span class="pre">IPAPasswordPolicy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser"><code class="docutils literal notranslate"><span class="pre">IPAUser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASubID"><code class="docutils literal notranslate"><span class="pre">IPASubID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup"><code class="docutils literal notranslate"><span class="pre">IPAGroup</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule"><code class="docutils literal notranslate"><span class="pre">IPASudoRule</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority"><code class="docutils literal notranslate"><span class="pre">IPACertificateAuthority</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.samba.html">authselect_test_framework.roles.samba</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.roles.ipa</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.roles.ipa.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.roles.ipa">
+<span id="authselect-test-framework-roles-ipa"></span><h1>authselect_test_framework.roles.ipa<a class="headerlink" href="#module-authselect_test_framework.roles.ipa" title="Link to this heading"></a></h1>
+<p>IPA multihost role.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">IDGroupOverride</span></code>(group)</p></td>
+<td><p>IPA group ID override.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">IDUserOverride</span></code>(user)</p></td>
+<td><p>IPA ID override for users.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPA</span></code></a>(*args, **kwargs)</p></td>
+<td><p>IPA role.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority" title="authselect_test_framework.roles.ipa.IPACertificateAuthority"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPACertificateAuthority</span></code></a>(host, fs)</p></td>
+<td><p>FreeIPA Certificate Authority operations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPAGroup</span></code></a>(role, name)</p></td>
+<td><p>IPA group management.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPAHostAccount</span></code>(role, name)</p></td>
+<td><p>IPA host management.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPAIDView</span></code>(role, name)</p></td>
+<td><p>IPA ID view management.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPANetgroup</span></code>(role, name)</p></td>
+<td><p>IPA netgroup management.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPANetgroupMember</span></code>(*[, host, user, group, ...])</p></td>
+<td><p>IPA netgroup member.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject" title="authselect_test_framework.roles.ipa.IPAObject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPAObject</span></code></a>(role, name, command_group)</p></td>
+<td><p>Base class for IPA object management.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy" title="authselect_test_framework.roles.ipa.IPAPasswordPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPAPasswordPolicy</span></code></a>(role[, name])</p></td>
+<td><p>IPA password policy management.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASubID" title="authselect_test_framework.roles.ipa.IPASubID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPASubID</span></code></a>(role, user)</p></td>
+<td><p>IPA sub id management.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="authselect_test_framework.roles.ipa.IPASudoRule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPASudoRule</span></code></a>(role, name)</p></td>
+<td><p>IPA sudo rule management.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IPAUser</span></code></a>(role, name)</p></td>
+<td><p>IPA user management.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.ipa.</span></span><span class="sig-name descname"><span class="pre">IPA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.BaseLinuxRole" title="authselect_test_framework.roles.base.BaseLinuxRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseLinuxRole</span></code></a>[<a class="reference internal" href="authselect_test_framework.hosts.ipa.html#authselect_test_framework.hosts.ipa.IPAHost" title="authselect_test_framework.hosts.ipa.IPAHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAHost</span></code></a>], <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericProvider" title="authselect_test_framework.roles.generic.GenericProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericProvider</span></code></a></p>
+<p>IPA role.</p>
+<p>Provides unified Python API for managing objects in the IPA server.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Creating user and group</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;tgroup&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The role object is instantiated automatically as a dynamic pytest
+fixture by the multihost plugin. You should not create the object
+manually.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.domain" title="Link to this definition"></a></dt>
+<dd><p>IPA domain name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.realm">
+<span class="sig-name descname"><span class="pre">realm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.realm" title="Link to this definition"></a></dt>
+<dd><p>Kerberos realm.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.name" title="Link to this definition"></a></dt>
+<dd><p>Provider role identifier (<code class="docutils literal notranslate"><span class="pre">ipa</span></code>).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.hostname">
+<span class="sig-name descname"><span class="pre">hostname</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.hostname" title="Link to this definition"></a></dt>
+<dd><p>Provider hostname.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.sssd">
+<span class="sig-name descname"><span class="pre">sssd</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.utils.sssd.html#authselect_test_framework.utils.sssd.SSSDUtils" title="authselect_test_framework.utils.sssd.SSSDUtils"><span class="pre">SSSDUtils</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.sssd" title="Link to this definition"></a></dt>
+<dd><p>Managing and configuring SSSD.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.password_policy">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">password_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy" title="authselect_test_framework.roles.ipa.IPAPasswordPolicy"><span class="pre">IPAPasswordPolicy</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.password_policy" title="Link to this definition"></a></dt>
+<dd><p>Domain password policy management.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="c1"># Enable password complexity</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">password_policy</span><span class="o">.</span><span class="n">complexity</span><span class="p">(</span><span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Set 3 login attempts and 30 lockout duration</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">password_policy</span><span class="o">.</span><span class="n">lockout</span><span class="p">(</span><span class="n">attempts</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.ca">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ca</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority" title="authselect_test_framework.roles.ipa.IPACertificateAuthority"><span class="pre">IPACertificateAuthority</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.ca" title="Link to this definition"></a></dt>
+<dd><p>IPA Certificate Authority management.</p>
+<p>Provides certificate operations:
+- Request certificates for services/users
+- Revoke certificates with configurable reasons
+- Manage certificate holds
+- Retrieve certificate details</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="c1"># Request certificate</span>
+    <span class="n">cert</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">csr</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">ca</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">principal</span><span class="o">=</span><span class="s2">&quot;HTTP/client.ipa.test&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Revoke certificate</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">ca</span><span class="o">.</span><span class="n">revoke</span><span class="p">(</span><span class="n">cert</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;key_compromise&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Place on hold</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">ca</span><span class="o">.</span><span class="n">revoke_hold</span><span class="p">(</span><span class="n">cert</span><span class="p">)</span>
+
+    <span class="c1"># Remove hold</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">ca</span><span class="o">.</span><span class="n">revoke_hold_remove</span><span class="p">(</span><span class="n">cert</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.naming_context">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">naming_context</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.naming_context" title="Link to this definition"></a></dt>
+<dd><p>Naming context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.setup" title="Link to this definition"></a></dt>
+<dd><p>Obtain IPA admin Kerberos TGT.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.fqn">
+<span class="sig-name descname"><span class="pre">fqn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.fqn" title="Link to this definition"></a></dt>
+<dd><p>Return fully qualified name in form <a class="reference external" href="mailto:name&#37;&#52;&#48;domain">name<span>&#64;</span>domain</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Username.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fully qualified name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.ipa_search">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ipa_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><span class="pre">IPA</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criteria</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cn'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.ipa_search" title="Link to this definition"></a></dt>
+<dd><p>Perform a generic IPA search command and extract attribute values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><em>IPA</em></a>) – IPA role object.</p></li>
+<li><p><strong>command</strong> (<em>str</em>) – IPA command to run (e.g., ‘hostgroup-find’).</p></li>
+<li><p><strong>criteria</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Optional search filter string.</p></li>
+<li><p><strong>attr</strong> (<em>str</em><em>, </em><em>optional</em>) – Attribute name to extract from each entry.</p></li>
+<li><p><strong>all</strong> (<em>bool</em><em>, </em><em>optional</em>) – Prints all attributes, default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of extracted attribute values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.user">
+<span class="sig-name descname"><span class="pre">user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><span class="pre">IPAUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.user" title="Link to this definition"></a></dt>
+<dd><p>Get user object.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="c1"># Create user</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="c1"># Start SSSD</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Call `id user-1` and assert the result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Username.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New user object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser">IPAUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><span class="pre">IPAGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.group" title="Link to this definition"></a></dt>
+<dd><p>Get group object.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example_group</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="c1"># Create user</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="c1"># Create secondary group and add user as a member</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;group-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="c1"># Start SSSD</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Call `id user-1` and assert the result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">memberof</span><span class="p">(</span><span class="s1">&#39;group-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Group name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New group object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup">IPAGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.netgroup">
+<span class="sig-name descname"><span class="pre">netgroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">IPANetgroup</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.netgroup" title="Link to this definition"></a></dt>
+<dd><p>Get netgroup object.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example_netgroup</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="c1"># Create user</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="c1"># Create two netgroups</span>
+    <span class="n">ng1</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">netgroup</span><span class="p">(</span><span class="s2">&quot;ng-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">ng2</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">netgroup</span><span class="p">(</span><span class="s2">&quot;ng-2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="c1"># Add user and ng2 as members to ng1</span>
+    <span class="n">ng1</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+    <span class="n">ng1</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">ng</span><span class="o">=</span><span class="n">ng2</span><span class="p">)</span>
+
+    <span class="c1"># Add host as member to ng2</span>
+    <span class="n">ng2</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;client&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Start SSSD</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Call `getent netgroup ng-1` and assert the results</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">getent</span><span class="o">.</span><span class="n">netgroup</span><span class="p">(</span><span class="s2">&quot;ng-1&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;ng-1&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">members</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="s2">&quot;(-,user-1,ipa.test)&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">members</span>
+    <span class="k">assert</span> <span class="s2">&quot;(client.test,-,ipa.test)&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">members</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Netgroup name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New netgroup object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>IPANetgroup</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.host_account">
+<span class="sig-name descname"><span class="pre">host_account</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">IPAHostAccount</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.host_account" title="Link to this definition"></a></dt>
+<dd><p>Get host object.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id7" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="c1"># Create host</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">host_account</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;myhost.</span><span class="si">{</span><span class="n">ipa</span><span class="o">.</span><span class="n">domain</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="s2">&quot;10.255.251.10&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Hostname.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New host account object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>IPAHostAccount</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.sudorule">
+<span class="sig-name descname"><span class="pre">sudorule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="authselect_test_framework.roles.ipa.IPASudoRule"><span class="pre">IPASudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.sudorule" title="Link to this definition"></a></dt>
+<dd><p>Get sudo rule object.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">sudorule</span><span class="p">(</span><span class="s1">&#39;testrule&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;ALL&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;/bin/ls&#39;</span><span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">sudo</span><span class="p">()</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Test that user can run /bin/ls</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">sudo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;/bin/ls&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Sudo rule name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New sudo rule object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="authselect_test_framework.roles.ipa.IPASudoRule">IPASudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPA.idview">
+<span class="sig-name descname"><span class="pre">idview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">IPAIDView</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPA.idview" title="Link to this definition"></a></dt>
+<dd><p>IPA ID View object.</p>
+<p>Here, we only add the IPA ID view, that can be used
+while creating a new User ID override.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">idview</span><span class="p">(</span><span class="s2">&quot;newview&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;This is a new view&quot;</span><span class="p">)</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">idview</span><span class="p">(</span><span class="s2">&quot;newview&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="s2">&quot;client.test&quot;</span><span class="p">)</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">idview</span><span class="p">(</span><span class="s2">&quot;newview&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – ID View name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New ID View object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAObject">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.ipa.</span></span><span class="sig-name descname"><span class="pre">IPAObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><span class="pre">IPA</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command_group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAObject" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.BaseObject" title="authselect_test_framework.roles.base.BaseObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseObject</span></code></a>[<a class="reference internal" href="authselect_test_framework.hosts.ipa.html#authselect_test_framework.hosts.ipa.IPAHost" title="authselect_test_framework.hosts.ipa.IPAHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAHost</span></code></a>, <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPA</span></code></a>]</p>
+<p>Base class for IPA object management.</p>
+<p>Provides shortcuts for command execution and implementation of <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject.get" title="authselect_test_framework.roles.ipa.IPAObject.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a>
+and <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject.delete" title="authselect_test_framework.roles.ipa.IPAObject.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete()</span></code></a> methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><em>IPA</em></a>) – IPA role object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Object name.</p></li>
+<li><p><strong>command_group</strong> (<em>str</em>) – IPA command group.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAObject.command_group">
+<span class="sig-name descname"><span class="pre">command_group</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAObject.command_group" title="Link to this definition"></a></dt>
+<dd><p>IPA cli command group.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAObject.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAObject.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAObject.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAObject.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete IPA object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>SSHProcessError</strong> – If the object does not exist or deletion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAObject.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAObject.discard" title="Link to this definition"></a></dt>
+<dd><p>Delete IPA object if it exists.</p>
+<p>Does not raise when the object is already absent. Use <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject.delete" title="authselect_test_framework.roles.ipa.IPAObject.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete()</span></code></a> when removal must succeed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAObject.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAObject.get" title="Link to this definition"></a></dt>
+<dd><p>Get IPA object attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for generic entity API compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key or None if no such attribute is found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAPasswordPolicy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.ipa.</span></span><span class="sig-name descname"><span class="pre">IPAPasswordPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><span class="pre">IPA</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ipausers'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject" title="authselect_test_framework.roles.ipa.IPAObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAObject</span></code></a>, <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericPasswordPolicy" title="authselect_test_framework.roles.generic.GenericPasswordPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericPasswordPolicy</span></code></a></p>
+<p>IPA password policy management.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy" title="authselect_test_framework.roles.ipa.IPAPasswordPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAPasswordPolicy</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericPasswordPolicy</span></code> for static typing
+and provider-agnostic tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><em>IPA</em></a>) – IPA role object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Name of target object, defaults to ‘ipausers’.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAPasswordPolicy.complexity">
+<span class="sig-name descname"><span class="pre">complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy" title="authselect_test_framework.roles.ipa.IPAPasswordPolicy"><span class="pre">IPAPasswordPolicy</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy.complexity" title="Link to this definition"></a></dt>
+<dd><p>Enable or disable password complexity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>enable</strong> (<em>bool</em>) – Enable or disable password complexity.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy" title="authselect_test_framework.roles.ipa.IPAPasswordPolicy">IPAPasswordPolicy</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAPasswordPolicy.lockout">
+<span class="sig-name descname"><span class="pre">lockout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attempts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy" title="authselect_test_framework.roles.ipa.IPAPasswordPolicy"><span class="pre">IPAPasswordPolicy</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy.lockout" title="Link to this definition"></a></dt>
+<dd><p>Set lockout duration and login attempts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>int</em>) – Duration of lockout in seconds.</p></li>
+<li><p><strong>attempts</strong> (<em>int</em>) – Number of login attempts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAPasswordPolicy" title="authselect_test_framework.roles.ipa.IPAPasswordPolicy">IPAPasswordPolicy</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.ipa.</span></span><span class="sig-name descname"><span class="pre">IPAUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><span class="pre">IPA</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject" title="authselect_test_framework.roles.ipa.IPAObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAObject</span></code></a>, <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code></a></p>
+<p>IPA user management.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAUser</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code> for static typing and provider-agnostic tests.
+IPA-specific keyword arguments on <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser.add" title="authselect_test_framework.roles.ipa.IPAUser.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code></a> and <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser.modify" title="authselect_test_framework.roles.ipa.IPAUser.modify"><code class="xref py py-meth docutils literal notranslate"><span class="pre">modify()</span></code></a> are in addition to the generic API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><em>IPA</em></a>) – IPA role object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Username.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gecos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_password_reset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_auth_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sshpubkey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><span class="pre">IPAUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.add" title="Link to this definition"></a></dt>
+<dd><p>Create new IPA user.</p>
+<p>Parameters that are not set are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – User id, defaults to None</p></li>
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Primary group id, defaults to None</p></li>
+<li><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – Password, defaults to ‘Secret123’ (use empty string to skip setting a password)</p></li>
+<li><p><strong>home</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Home directory, defaults to None</p></li>
+<li><p><strong>gecos</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – GECOS, defaults to None</p></li>
+<li><p><strong>shell</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Login shell, defaults to None</p></li>
+<li><p><strong>require_password_reset</strong> (<em>bool</em><em>, </em><em>optional</em>) – Require password reset on first login, defaults to False</p></li>
+<li><p><strong>user_auth_type</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Types of supported user authentication, defaults to None</p></li>
+<li><p><strong>sshpubkey</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – SSH public key, defaults to None</p></li>
+<li><p><strong>email</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – email attribute, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser">IPAUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete the IPA user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>SSHProcessError</strong> – If the user does not exist or deletion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.discard" title="Link to this definition"></a></dt>
+<dd><p>Remove the IPA user if they exist.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">first</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gecos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_auth_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idp_user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_expiration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sshpubkey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><span class="pre">IPAUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing IPA user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>first</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – First name of user.</p></li>
+<li><p><strong>last</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Last name of user.</p></li>
+<li><p><strong>uid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – User id, defaults to None</p></li>
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Primary group id, defaults to None</p></li>
+<li><p><strong>password</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Password, defaults to ‘Secret123’</p></li>
+<li><p><strong>home</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Home directory, defaults to None</p></li>
+<li><p><strong>gecos</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – GECOS, defaults to None</p></li>
+<li><p><strong>shell</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Login shell, defaults to None</p></li>
+<li><p><strong>user_auth_type</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Types of supported user authentication, defaults to None</p></li>
+<li><p><strong>idp</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Name of external IdP configured in IPA for user.</p></li>
+<li><p><strong>idp_user_id</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – User ID used to map IPA user to external IdP user.</p></li>
+<li><p><strong>password_expiration</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Date and time stamp for password expiration.</p></li>
+<li><p><strong>sshpubkey</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – SSH public key, defaults to None</p></li>
+<li><p><strong>email</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – email attribute, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser">IPAUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.get" title="Link to this definition"></a></dt>
+<dd><p>Get user attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code> API compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key (empty if the user does not exist).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><span class="pre">IPAUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.reset" title="Link to this definition"></a></dt>
+<dd><p>Reset user password.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – Password, defaults to ‘Secret123’</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser">IPAUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.expire">
+<span class="sig-name descname"><span class="pre">expire</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expiration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'19700101000000Z'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><span class="pre">IPAUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.expire" title="Link to this definition"></a></dt>
+<dd><p>Set user password expiration date and time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>expiration</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time for user password expiration, defaults to 19700101000000</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser">IPAUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.password_change_at_logon">
+<span class="sig-name descname"><span class="pre">password_change_at_logon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><span class="pre">IPAUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.password_change_at_logon" title="Link to this definition"></a></dt>
+<dd><p>Force user to change password next logon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser">IPAUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.passkey_add">
+<span class="sig-name descname"><span class="pre">passkey_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">passkey_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><span class="pre">IPAUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.passkey_add" title="Link to this definition"></a></dt>
+<dd><p>Add passkey mapping to the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>passkey_mapping</strong> (<em>str</em>) – Passkey mapping generated by <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">passkey-register</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser">IPAUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.passkey_add_register">
+<span class="sig-name descname"><span class="pre">passkey_add_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.passkey_add_register" title="Link to this definition"></a></dt>
+<dd><p>wrapper for passkey_add_register methods</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.umockdev_passkey_add_register">
+<span class="sig-name descname"><span class="pre">umockdev_passkey_add_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ioctl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">script</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.umockdev_passkey_add_register" title="Link to this definition"></a></dt>
+<dd><p>Register passkey with the user (run ipa user-add-passkey –register).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pin</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>None</em>) – Passkey PIN.</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – Path to local umockdev device file.</p></li>
+<li><p><strong>ioctl</strong> (<em>str</em>) – Path to local umockdev ioctl file.</p></li>
+<li><p><strong>script</strong> (<em>str</em>) – Path to local umockdev script file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated passkey mapping string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.passkey_remove">
+<span class="sig-name descname"><span class="pre">passkey_remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">passkey_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser"><span class="pre">IPAUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.passkey_remove" title="Link to this definition"></a></dt>
+<dd><p>Remove passkey mapping from the user.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericUser.passkey_remove()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>passkey_mapping</strong> (<em>str</em>) – Passkey mapping generated by <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">passkey-register</span></code></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAUser" title="authselect_test_framework.roles.ipa.IPAUser">IPAUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.vfido_passkey_add_register">
+<span class="sig-name descname"><span class="pre">vfido_passkey_add_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.client.html#authselect_test_framework.roles.client.Client" title="authselect_test_framework.roles.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.vfido_passkey_add_register" title="Link to this definition"></a></dt>
+<dd><p>Register user passkey when using virtual-fido</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.iduseroverride">
+<span class="sig-name descname"><span class="pre">iduseroverride</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">IDUserOverride</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.iduseroverride" title="Link to this definition"></a></dt>
+<dd><p>Add override to the IPA user.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id10" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">idview</span><span class="p">(</span><span class="s2">&quot;newview1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;This is a new view&quot;</span><span class="p">)</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">idview</span><span class="p">(</span><span class="s2">&quot;newview1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">hostname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span><span class="o">.</span><span class="n">iduseroverride</span><span class="p">()</span><span class="o">.</span><span class="n">add_override</span><span class="p">(</span><span class="s2">&quot;newview1&quot;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="mi">1344567</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">restart</span><span class="p">()</span>
+    <span class="n">lookup1</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">lookup1</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1344567</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>New IDOverride object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>IDOverride</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAUser.subid">
+<span class="sig-name descname"><span class="pre">subid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASubID" title="authselect_test_framework.roles.ipa.IPASubID"><span class="pre">IPASubID</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAUser.subid" title="Link to this definition"></a></dt>
+<dd><p>IPA subid management.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id11" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_ipa__subids_configured</span><span class="p">(</span><span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">user</span><span class="o">.</span><span class="n">subid</span><span class="p">()</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASubID">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.ipa.</span></span><span class="sig-name descname"><span class="pre">IPASubID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><span class="pre">IPA</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASubID" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.BaseObject" title="authselect_test_framework.roles.base.BaseObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseObject</span></code></a>[<a class="reference internal" href="authselect_test_framework.hosts.ipa.html#authselect_test_framework.hosts.ipa.IPAHost" title="authselect_test_framework.hosts.ipa.IPAHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAHost</span></code></a>, <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPA</span></code></a>]</p>
+<p>IPA sub id management.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>str</em>) – Username.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASubID.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASubID.name" title="Link to this definition"></a></dt>
+<dd><p>Owner name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASubID.uid_start">
+<span class="sig-name descname"><span class="pre">uid_start</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASubID.uid_start" title="Link to this definition"></a></dt>
+<dd><p>SubUID range start</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASubID.uid_size">
+<span class="sig-name descname"><span class="pre">uid_size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASubID.uid_size" title="Link to this definition"></a></dt>
+<dd><p>SubUID range size.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASubID.gid_start">
+<span class="sig-name descname"><span class="pre">gid_start</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASubID.gid_start" title="Link to this definition"></a></dt>
+<dd><p>SubGID range start.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASubID.gid_size">
+<span class="sig-name descname"><span class="pre">gid_size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASubID.gid_size" title="Link to this definition"></a></dt>
+<dd><p>SubGID range size.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASubID.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASubID" title="authselect_test_framework.roles.ipa.IPASubID"><span class="pre">IPASubID</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASubID.generate" title="Link to this definition"></a></dt>
+<dd><p>Generate subordinate id.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.ipa.</span></span><span class="sig-name descname"><span class="pre">IPAGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><span class="pre">IPA</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject" title="authselect_test_framework.roles.ipa.IPAObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAObject</span></code></a>, <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code></a></p>
+<p>IPA group management.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAGroup</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code> for static typing and provider-agnostic tests.
+IPA-specific keyword arguments on <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup.add" title="authselect_test_framework.roles.ipa.IPAGroup.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code></a> and external members (<code class="docutils literal notranslate"><span class="pre">str</span></code>) on membership
+methods are in addition to the generic API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><em>IPA</em></a>) – IPA role object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Group name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonposix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><span class="pre">IPAGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.add" title="Link to this definition"></a></dt>
+<dd><p>Create new IPA group.</p>
+<p>Parameters that are not set are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Group id, defaults to None</p></li>
+<li><p><strong>description</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Description, defaults to None</p></li>
+<li><p><strong>nonposix</strong> (<em>bool</em><em>, </em><em>optional</em>) – Group is non-posix group, defaults to False</p></li>
+<li><p><strong>external</strong> (<em>bool</em><em>, </em><em>optional</em>) – Group is external group, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup">IPAGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete the IPA group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>SSHProcessError</strong> – If the group does not exist or deletion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.discard" title="Link to this definition"></a></dt>
+<dd><p>Remove the IPA group if it exists.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><span class="pre">IPAGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing IPA group.</p>
+<p>Parameters that are not set are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Group id, defaults to None</p></li>
+<li><p><strong>description</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Description, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup">IPAGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.get" title="Link to this definition"></a></dt>
+<dd><p>Get group attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code> API compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key (empty if the group does not exist).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.add_member">
+<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><span class="pre">IPAGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.add_member" title="Link to this definition"></a></dt>
+<dd><p>Add group member.</p>
+<p>Member can be a <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code>, or a string in which case it
+is added as an external member.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>member</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a>) – User or group to add as a member.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup">IPAGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.add_members">
+<span class="sig-name descname"><span class="pre">add_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><span class="pre">IPAGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.add_members" title="Link to this definition"></a></dt>
+<dd><p>Add multiple group members.</p>
+<p>Members can be <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code>, or strings (external members).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>members</strong> (<em>list</em><em>[</em><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a><em>]</em>) – List of users or groups to add as members.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup">IPAGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.remove_member">
+<span class="sig-name descname"><span class="pre">remove_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><span class="pre">IPAGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.remove_member" title="Link to this definition"></a></dt>
+<dd><p>Remove group member.</p>
+<p>Member can be a <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code>, or a string (external member).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>member</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a>) – User or group to remove from the group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup">IPAGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.remove_members">
+<span class="sig-name descname"><span class="pre">remove_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup"><span class="pre">IPAGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.remove_members" title="Link to this definition"></a></dt>
+<dd><p>Remove multiple group members.</p>
+<p>Members can be <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code>, or strings (external members).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>members</strong> (<em>list</em><em>[</em><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a><em>]</em>) – List of users or groups to remove from the group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAGroup" title="authselect_test_framework.roles.ipa.IPAGroup">IPAGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPAGroup.idgroupoverride">
+<span class="sig-name descname"><span class="pre">idgroupoverride</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">IDGroupOverride</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPAGroup.idgroupoverride" title="Link to this definition"></a></dt>
+<dd><p>Add override to the IPA Group.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">idview</span><span class="p">(</span><span class="s2">&quot;newview1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;This is a new view&quot;</span><span class="p">)</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">idview</span><span class="p">(</span><span class="s2">&quot;newview1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">hostname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;group-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span><span class="o">.</span><span class="n">idgroupoverride</span><span class="p">()</span><span class="o">.</span><span class="n">add_override</span><span class="p">(</span><span class="s2">&quot;newview1&quot;</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1344567</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">restart</span><span class="p">()</span>
+    <span class="n">g_lookup</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">getent</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;group-1&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">g_lookup</span><span class="o">.</span><span class="n">gid</span> <span class="o">==</span> <span class="mi">1344567</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>New IDOverride object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>IDOverride</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASudoRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.ipa.</span></span><span class="sig-name descname"><span class="pre">IPASudoRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><span class="pre">IPA</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.ipa.IPAObject" title="authselect_test_framework.roles.ipa.IPAObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPAObject</span></code></a>, <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericSudoRule" title="authselect_test_framework.roles.generic.GenericSudoRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericSudoRule</span></code></a></p>
+<p>IPA sudo rule management.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="authselect_test_framework.roles.ipa.IPASudoRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPASudoRule</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericSudoRule</span></code> for static typing and
+provider-agnostic tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><em>IPA</em></a>) – IPA role object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Sudo rule name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASudoRule.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasuser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopasswd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="authselect_test_framework.roles.ipa.IPASudoRule"><span class="pre">IPASudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASudoRule.add" title="Link to this definition"></a></dt>
+<dd><p>Create new sudo rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>SudoRuleUserField</em><em>, </em><em>optional</em>) – sudoUser attribute, defaults to None</p></li>
+<li><p><strong>host</strong> (<em>SudoRuleHostField</em><em>, </em><em>optional</em>) – sudoHost attribute, defaults to None</p></li>
+<li><p><strong>command</strong> (<em>SudoRuleCommandField</em><em>, </em><em>optional</em>) – sudoCommand attribute, defaults to None</p></li>
+<li><p><strong>option</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – sudoOption attribute, defaults to None</p></li>
+<li><p><strong>runasuser</strong> (<em>SudoRuleRunAsUserField</em><em>, </em><em>optional</em>) – sudoRunAsUser attribute, defaults to None</p></li>
+<li><p><strong>runasgroup</strong> (<em>SudoRuleRunAsGroupField</em><em>, </em><em>optional</em>) – sudoRunAsGroup attribute, defaults to None</p></li>
+<li><p><strong>order</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – sudoOrder attribute, defaults to None</p></li>
+<li><p><strong>nopasswd</strong> (<em>bool</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – If true, no authentication is required (NOPASSWD), defaults to None (no change)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="authselect_test_framework.roles.ipa.IPASudoRule">IPASudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASudoRule.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasuser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopasswd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="authselect_test_framework.roles.ipa.IPASudoRule"><span class="pre">IPASudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASudoRule.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing IPA sudo rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>SudoRuleUserField</em><em>, </em><em>optional</em>) – sudoUser attribute, defaults to None</p></li>
+<li><p><strong>host</strong> (<em>SudoRuleHostField</em><em>, </em><em>optional</em>) – sudoHost attribute, defaults to None</p></li>
+<li><p><strong>command</strong> (<em>SudoRuleCommandField</em><em>, </em><em>optional</em>) – sudoCommand attribute, defaults to None</p></li>
+<li><p><strong>option</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – sudoOption attribute, defaults to None</p></li>
+<li><p><strong>runasuser</strong> (<em>SudoRuleRunAsUserField</em><em>, </em><em>optional</em>) – sudoRunAsUser attribute, defaults to None</p></li>
+<li><p><strong>runasgroup</strong> (<em>SudoRuleRunAsGroupField</em><em>, </em><em>optional</em>) – sudoRunAsGroup attribute, defaults to None</p></li>
+<li><p><strong>order</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – sudoOrder attribute, defaults to None</p></li>
+<li><p><strong>nopasswd</strong> (<em>bool</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – If true, no authentication is required (NOPASSWD), defaults to None (no change)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPASudoRule" title="authselect_test_framework.roles.ipa.IPASudoRule">IPASudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASudoRule.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASudoRule.get" title="Link to this definition"></a></dt>
+<dd><p>Get sudo rule attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericSudoRule</span></code> API compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key (empty if the rule does not exist).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPASudoRule.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPASudoRule.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete sudo rule from IPA.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPACertificateAuthority">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.ipa.</span></span><span class="sig-name descname"><span class="pre">IPACertificateAuthority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.html#pytest_mh.MultihostHost" title="(in pytest_mh)"><span class="pre">MultihostHost</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.utils.fs.html#pytest_mh.utils.fs.LinuxFileSystem" title="(in pytest_mh)"><span class="pre">LinuxFileSystem</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericCertificateAuthority" title="authselect_test_framework.roles.generic.GenericCertificateAuthority"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericCertificateAuthority</span></code></a></p>
+<p>FreeIPA Certificate Authority operations.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority" title="authselect_test_framework.roles.ipa.IPACertificateAuthority"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPACertificateAuthority</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericCertificateAuthority</span></code> for
+static typing and provider-agnostic tests. It requests, revokes, places/removes
+certificate holds, and retrieves certificate information via the <code class="docutils literal notranslate"><span class="pre">ipa</span></code> CLI.
+<a class="reference internal" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority.request" title="authselect_test_framework.roles.ipa.IPACertificateAuthority.request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">request()</span></code></a> accepts IPA-specific keyword arguments in addition to the generic API.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id13" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.roles.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.roles.ipa</span><span class="w"> </span><span class="kn">import</span> <span class="n">IPA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.topology</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_sssd__with_smartcard</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">ipa</span><span class="p">:</span> <span class="n">IPA</span><span class="p">):</span>
+    <span class="n">ipa</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;ipacertuser1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">cert</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ipa</span><span class="o">.</span><span class="n">ca</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;ipacertuser1&quot;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;sssd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;with-smartcard&quot;</span><span class="p">])</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Initialize the IPA Certificate Authority helper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>MultihostHost</em>) – Remote test host.</p></li>
+<li><p><strong>fs</strong> (<em>LinuxFileSystem</em>) – Filesystem helper for remote file operations.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPACertificateAuthority.cli">
+<span class="sig-name descname"><span class="pre">cli</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pytest-mh.readthedocs.io/en/latest/api/pytest_mh.cli.html#pytest_mh.cli.CLIBuilder" title="(in pytest_mh)"><span class="pre">CLIBuilder</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority.cli" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPACertificateAuthority.request">
+<span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">principal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2048</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority.request" title="Link to this definition"></a></dt>
+<dd><p>Request a certificate from the IPA CA.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericCertificateAuthority.request()</span></code>; <code class="docutils literal notranslate"><span class="pre">principal</span></code> is passed
+positionally or as the first argument. Extra <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>principal</strong> (<em>str</em>) – The principal (user or service) name.</p></li>
+<li><p><strong>subject</strong> (<em>str</em><em> | </em><em>None</em>) – Optional OpenSSL subject (e.g., /CN=example). If omitted, derived from principal.</p></li>
+<li><p><strong>add_service</strong> (<em>bool</em>) – Whether to add the principal as an IPA service.</p></li>
+<li><p><strong>key_size</strong> (<em>int</em>) – RSA key size in bits.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple of (certificate_path, key_path, csr_path).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[str, str, str]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If subject cannot be derived from principal.</p></li>
+<li><p><strong>RuntimeError</strong> – If CSR generation fails.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPACertificateAuthority.revoke">
+<span class="sig-name descname"><span class="pre">revoke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cert_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'unspecified'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority.revoke" title="Link to this definition"></a></dt>
+<dd><p>Revoke a certificate in IPA.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericCertificateAuthority.revoke()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cert_path</strong> (<em>str</em>) – Path to the certificate file.</p></li>
+<li><p><strong>reason</strong> (<em>str</em>) – Reason for revocation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If revocation fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPACertificateAuthority.revoke_hold">
+<span class="sig-name descname"><span class="pre">revoke_hold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cert_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority.revoke_hold" title="Link to this definition"></a></dt>
+<dd><p>Place a certificate on hold.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericCertificateAuthority.revoke_hold()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cert_path</strong> (<em>str</em>) – Path to the certificate file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPACertificateAuthority.revoke_hold_remove">
+<span class="sig-name descname"><span class="pre">revoke_hold_remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cert_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority.revoke_hold_remove" title="Link to this definition"></a></dt>
+<dd><p>Remove hold from a certificate.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericCertificateAuthority.revoke_hold_remove()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cert_path</strong> (<em>str</em>) – Path to the certificate file.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If hold removal fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.ipa.IPACertificateAuthority.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cert_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.roles.ipa.IPACertificateAuthority.get" title="Link to this definition"></a></dt>
+<dd><p>Retrieve certificate details from IPA.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericCertificateAuthority.get()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cert_path</strong> (<em>str</em>) – Path to the certificate file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary of certificate attributes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the certificate is not found in IPA.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.roles.generic.html" class="btn btn-neutral float-left" title="authselect_test_framework.roles.generic" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.roles.samba.html" class="btn btn-neutral float-right" title="authselect_test_framework.roles.samba" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

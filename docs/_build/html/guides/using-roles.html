@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Roles &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Testing Authentication and Sudo" href="testing-authentication.html" />
+    <link rel="prev" title="How-To Guides" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">How-To Guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using Roles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#available-roles">Available roles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#provider-roles">Provider roles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#client-role">Client role</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="testing-authentication.html">Testing Authentication and Sudo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing-pam.html">Testing PAM Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing-local-users.html">Testing Local Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using-ssh.html">Using SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skipping-conditional-tests.html">Skipping Conditional Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">How-To Guides</a></li>
+      <li class="breadcrumb-item active">Using Roles</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guides/using-roles.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-roles">
+<h1>Using Roles<a class="headerlink" href="#using-roles" title="Link to this heading"></a></h1>
+<p>Multihost roles are the main interface to remote hosts. Role objects automatically
+back up remote state at test start and restore it when the test ends.</p>
+<section id="available-roles">
+<h2>Available roles<a class="headerlink" href="#available-roles" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">client</span></code> — authselect and SSSD client</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ipa</span></code> — FreeIPA server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">samba</span></code> — Samba AD domain controller</p></li>
+</ul>
+</section>
+<section id="provider-roles">
+<h2>Provider roles<a class="headerlink" href="#provider-roles" title="Link to this heading"></a></h2>
+<p>IPA and Samba implement <a class="reference internal" href="../api/authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericServer" title="authselect_test_framework.roles.generic.GenericServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericServer</span></code></a>.
+Use the <code class="docutils literal notranslate"><span class="pre">server</span></code> fixture for tests that run on both profiles:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.roles.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericServer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.topology</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">server</span><span class="p">:</span> <span class="n">GenericServer</span><span class="p">):</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;group-1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;user-2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">())</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">sudorule</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;ALL&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s2">&quot;/bin/ls&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="client-role">
+<h2>Client role<a class="headerlink" href="#client-role" title="Link to this heading"></a></h2>
+<p>The client role provides access to authselect, SSSD, authentication and local users:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.roles.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">authselect_test_framework.topology</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">SSSD</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">):</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">authselect</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;sssd&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;with-mkhomedir&quot;</span><span class="p">])</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">local</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s2">&quot;local-user&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="s2">&quot;user-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Secret123&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Common client utilities:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">client.authselect</span></code> — select profiles and features</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client.sssd</span></code> — configure and start SSSD (SSSD profile)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client.winbind</span></code> — start winbind and refresh caches (Winbind profile)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client.oddjob</span></code> — start oddjobd (required for with-mkhomedir)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client.auth</span></code> — test su, ssh and sudo authentication</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client.local</span></code> — manage local users and groups</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client.tools</span></code> — getent, faillock and other CLI tools</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client.fs</span></code> — file system operations with automatic backup/restore</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../api/authselect_test_framework.roles.client.html#authselect_test_framework.roles.client.Client" title="authselect_test_framework.roles.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a>
+<a class="reference internal" href="../api/authselect_test_framework.roles.ipa.html#authselect_test_framework.roles.ipa.IPA" title="authselect_test_framework.roles.ipa.IPA"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPA</span></code></a>
+<a class="reference internal" href="../api/authselect_test_framework.roles.samba.html#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><code class="xref py py-class docutils literal notranslate"><span class="pre">Samba</span></code></a></p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="How-To Guides" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="testing-authentication.html" class="btn btn-neutral float-right" title="Testing Authentication and Sudo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

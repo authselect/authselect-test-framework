@@ -1,0 +1,1167 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>authselect_test_framework.roles.samba &mdash; authselect-test-framework  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="authselect_test_framework.topology" href="authselect_test_framework.topology.html" />
+    <link rel="prev" title="authselect_test_framework.roles.ipa" href="authselect_test_framework.roles.ipa.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            authselect-test-framework
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../running-tests.html">Running tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-tests.html">Writing new tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../marks.html">Additional markers and metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Multihost configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Profile test guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.fixtures.html">authselect_test_framework.fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.hosts.html">authselect_test_framework.hosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.misc.html">authselect_test_framework.misc</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="authselect_test_framework.roles.html">authselect_test_framework.roles</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.base.html">authselect_test_framework.roles.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.client.html">authselect_test_framework.roles.client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.generic.html">authselect_test_framework.roles.generic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authselect_test_framework.roles.ipa.html">authselect_test_framework.roles.ipa</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">authselect_test_framework.roles.samba</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba"><code class="docutils literal notranslate"><span class="pre">Samba</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject"><code class="docutils literal notranslate"><span class="pre">SambaObject</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaComputer"><code class="docutils literal notranslate"><span class="pre">SambaComputer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy"><code class="docutils literal notranslate"><span class="pre">SambaPasswordPolicy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser"><code class="docutils literal notranslate"><span class="pre">SambaUser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup"><code class="docutils literal notranslate"><span class="pre">SambaGroup</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaOrganizationalUnit"><code class="docutils literal notranslate"><span class="pre">SambaOrganizationalUnit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaSudoRule"><code class="docutils literal notranslate"><span class="pre">SambaSudoRule</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.topology.html">authselect_test_framework.topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authselect_test_framework.utils.html">authselect_test_framework.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">authselect-test-framework</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="authselect_test_framework.roles.html">authselect_test_framework.roles</a></li>
+      <li class="breadcrumb-item active">authselect_test_framework.roles.samba</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/authselect_test_framework.roles.samba.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-authselect_test_framework.roles.samba">
+<span id="authselect-test-framework-roles-samba"></span><h1>authselect_test_framework.roles.samba<a class="headerlink" href="#module-authselect_test_framework.roles.samba" title="Link to this heading"></a></h1>
+<p>Samba multihost role.</p>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Samba</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Samba role.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaComputer" title="authselect_test_framework.roles.samba.SambaComputer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaComputer</span></code></a>(role, name)</p></td>
+<td><p>Samba computer management.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaGroup</span></code></a>(role, name)</p></td>
+<td><p>Samba group management.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject" title="authselect_test_framework.roles.samba.SambaObject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaObject</span></code></a>(role, command, name)</p></td>
+<td><p>Base class for Samba DC object management.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaOrganizationalUnit" title="authselect_test_framework.roles.samba.SambaOrganizationalUnit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaOrganizationalUnit</span></code></a>(role, name[, basedn])</p></td>
+<td><p>Samba organizational unit management.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy" title="authselect_test_framework.roles.samba.SambaPasswordPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaPasswordPolicy</span></code></a>(role)</p></td>
+<td><p>Samba domain password policy management.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaSite</span></code>(role, name)</p></td>
+<td><p>Samba site management.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaSudoRule" title="authselect_test_framework.roles.samba.SambaSudoRule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaSudoRule</span></code></a>(role, name[, basedn])</p></td>
+<td><p>Samba sudo rule management via LDAP sudoRole objects.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SambaUser</span></code></a>(role, name)</p></td>
+<td><p>Samba user management.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.samba.</span></span><span class="sig-name descname"><span class="pre">Samba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.BaseLinuxLDAPRole" title="authselect_test_framework.roles.base.BaseLinuxLDAPRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseLinuxLDAPRole</span></code></a>[<a class="reference internal" href="authselect_test_framework.hosts.samba.html#authselect_test_framework.hosts.samba.SambaHost" title="authselect_test_framework.hosts.samba.SambaHost"><code class="xref py py-class docutils literal notranslate"><span class="pre">SambaHost</span></code></a>], <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericProvider" title="authselect_test_framework.roles.generic.GenericProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericProvider</span></code></a></p>
+<p>Samba role.</p>
+<p>Provides unified Python API for managing objects in the Samba domain controller.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Creating user and group</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">samba</span><span class="p">:</span> <span class="n">Samba</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">samba</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;tuser&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">samba</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;tgroup&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The role object is instantiated automatically as a dynamic pytest
+fixture by the multihost plugin. You should not create the object
+manually.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.domain" title="Link to this definition"></a></dt>
+<dd><p>Samba domain name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.realm">
+<span class="sig-name descname"><span class="pre">realm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.realm" title="Link to this definition"></a></dt>
+<dd><p>Kerberos realm.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.name" title="Link to this definition"></a></dt>
+<dd><p>Provider role identifier. Samba is a community-developed AD clone; SSSD has no
+dedicated Samba backend, so this role reports <code class="docutils literal notranslate"><span class="pre">ad</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.hostname">
+<span class="sig-name descname"><span class="pre">hostname</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.hostname" title="Link to this definition"></a></dt>
+<dd><p>Provider hostname.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.password_policy">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">password_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy" title="authselect_test_framework.roles.samba.SambaPasswordPolicy"><span class="pre">SambaPasswordPolicy</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.password_policy" title="Link to this definition"></a></dt>
+<dd><p>Domain password policy management.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">samba</span><span class="p">:</span> <span class="n">Samba</span><span class="p">):</span>
+    <span class="c1"># Enable password complexity</span>
+    <span class="n">samba</span><span class="o">.</span><span class="n">password_policy</span><span class="o">.</span><span class="n">complexity</span><span class="p">(</span><span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Set 3 login attempts and 30 lockout duration</span>
+    <span class="n">samba</span><span class="o">.</span><span class="n">password_policy</span><span class="o">.</span><span class="n">lockout</span><span class="p">(</span><span class="n">attempts</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.naming_context">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">naming_context</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.naming_context" title="Link to this definition"></a></dt>
+<dd><p>Samba naming context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.fqn">
+<span class="sig-name descname"><span class="pre">fqn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.fqn" title="Link to this definition"></a></dt>
+<dd><p>Return fully qualified name in form <a class="reference external" href="mailto:name&#37;&#52;&#48;domain">name<span>&#64;</span>domain</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Username.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fully qualified name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.user">
+<span class="sig-name descname"><span class="pre">user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><span class="pre">SambaUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.user" title="Link to this definition"></a></dt>
+<dd><p>Get user object.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">samba</span><span class="p">:</span> <span class="n">Samba</span><span class="p">):</span>
+    <span class="c1"># Create user</span>
+    <span class="n">samba</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="c1"># Start SSSD</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Call `id user-1` and assert the result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;domain users&#39;</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Username.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New user object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser">SambaUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><span class="pre">SambaGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.group" title="Link to this definition"></a></dt>
+<dd><p>Get group object.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">samba</span><span class="p">:</span> <span class="n">Samba</span><span class="p">):</span>
+    <span class="c1"># Create user</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">samba</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="c1"># Create secondary group and add user as a member</span>
+    <span class="n">samba</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;group-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span><span class="o">.</span><span class="n">add_member</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="c1"># Start SSSD</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Call `id user-1` and assert the result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;user-1&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;domain users&#39;</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">memberof</span><span class="p">(</span><span class="s1">&#39;group-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Group name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New group object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup">SambaGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.computer">
+<span class="sig-name descname"><span class="pre">computer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaComputer" title="authselect_test_framework.roles.samba.SambaComputer"><span class="pre">SambaComputer</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.computer" title="Link to this definition"></a></dt>
+<dd><p>Get computer object.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">samba</span><span class="p">:</span> <span class="n">Samba</span><span class="p">):</span>
+    <span class="c1"># Create OU</span>
+    <span class="n">ou</span> <span class="o">=</span> <span class="n">samba</span><span class="o">.</span><span class="n">ou</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span><span class="o">.</span><span class="n">dn</span>
+    <span class="c1"># Move computer object</span>
+    <span class="n">samba</span><span class="o">.</span><span class="n">computer</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">hostname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">ou</span><span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Computer name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New computer object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaComputer" title="authselect_test_framework.roles.samba.SambaComputer">SambaComputer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.ou">
+<span class="sig-name descname"><span class="pre">ou</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basedn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaOrganizationalUnit" title="authselect_test_framework.roles.samba.SambaOrganizationalUnit"><span class="pre">SambaOrganizationalUnit</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.ou" title="Link to this definition"></a></dt>
+<dd><p>Get organizational unit object.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">samba</span><span class="p">:</span> <span class="n">Samba</span><span class="p">):</span>
+    <span class="c1"># Create organizational unit for sudo rules</span>
+    <span class="n">ou</span> <span class="o">=</span> <span class="n">samba</span><span class="o">.</span><span class="n">ou</span><span class="p">(</span><span class="s1">&#39;mysudoers&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="c1"># Create user</span>
+    <span class="n">samba</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+
+    <span class="c1"># Create sudo rule</span>
+    <span class="n">samba</span><span class="o">.</span><span class="n">sudorule</span><span class="p">(</span><span class="s1">&#39;testrule&#39;</span><span class="p">,</span> <span class="n">basedn</span><span class="o">=</span><span class="n">ou</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s1">&#39;ALL&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;ALL&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;/bin/ls&#39;</span><span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">sudo</span><span class="p">()</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Test that user can run /bin/ls</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">sudo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;/bin/ls&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Unit name.</p></li>
+<li><p><strong>basedn</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Base dn, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New organizational unit object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaOrganizationalUnit" title="authselect_test_framework.roles.samba.SambaOrganizationalUnit">SambaOrganizationalUnit</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.site">
+<span class="sig-name descname"><span class="pre">site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SambaSite</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.site" title="Link to this definition"></a></dt>
+<dd><p>Get site object.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id7" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">samba</span><span class="p">:</span> <span class="n">Samba</span><span class="p">):</span>
+    <span class="c1"># Create New Site, this name cannot contain spaces</span>
+    <span class="n">site</span> <span class="o">=</span> <span class="n">samba</span><span class="o">.</span><span class="n">site</span><span class="p">(</span><span class="s1">&#39;New-Site&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em><em>, </em><em>cannot contain spaces</em>) – Site name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New site object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SambaSite</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.sudorule">
+<span class="sig-name descname"><span class="pre">sudorule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basedn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ou=sudoers'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaSudoRule" title="authselect_test_framework.roles.samba.SambaSudoRule"><span class="pre">SambaSudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.sudorule" title="Link to this definition"></a></dt>
+<dd><p>Get sudo rule object.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Example usage</span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">topology</span><span class="p">(</span><span class="n">Profile</span><span class="o">.</span><span class="n">Winbind</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_example</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">samba</span><span class="p">:</span> <span class="n">Samba</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">samba</span><span class="o">.</span><span class="n">user</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+    <span class="n">samba</span><span class="o">.</span><span class="n">sudorule</span><span class="p">(</span><span class="s1">&#39;testrule&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;ALL&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;/bin/ls&#39;</span><span class="p">)</span>
+
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">common</span><span class="o">.</span><span class="n">sudo</span><span class="p">()</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sssd</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Test that user can run /bin/ls</span>
+    <span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">sudo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;user-1&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;/bin/ls&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Rule name.</p></li>
+<li><p><strong>basedn</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Base dn, defaults to <code class="docutils literal notranslate"><span class="pre">ou=sudoers</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New sudo rule object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaSudoRule" title="authselect_test_framework.roles.samba.SambaSudoRule">SambaSudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.netgroup">
+<span class="sig-name descname"><span class="pre">netgroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericNetgroup" title="authselect_test_framework.roles.generic.GenericNetgroup"><span class="pre">GenericNetgroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.netgroup" title="Link to this definition"></a></dt>
+<dd><p>Netgroup management (not supported on the Samba provider).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.Samba.ca">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ca</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericCertificateAuthority" title="authselect_test_framework.roles.generic.GenericCertificateAuthority"><span class="pre">GenericCertificateAuthority</span></a></span><a class="headerlink" href="#authselect_test_framework.roles.samba.Samba.ca" title="Link to this definition"></a></dt>
+<dd><p>Certificate Authority management (not supported on the Samba provider).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.samba.</span></span><span class="sig-name descname"><span class="pre">SambaObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><span class="pre">Samba</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.BaseObject" title="authselect_test_framework.roles.base.BaseObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseObject</span></code></a></p>
+<p>Base class for Samba DC object management.</p>
+<p>Provides shortcuts for command execution and implementation of <code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code>,
+<a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject.get_attrs" title="authselect_test_framework.roles.samba.SambaObject.get_attrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_attrs()</span></code></a>, and <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject.delete" title="authselect_test_framework.roles.samba.SambaObject.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete()</span></code></a> methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><em>Samba</em></a>) – Samba role object.</p></li>
+<li><p><strong>command</strong> (<em>str</em>) – Samba command group.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Object name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject.command">
+<span class="sig-name descname"><span class="pre">command</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject.command" title="Link to this definition"></a></dt>
+<dd><p>Samba-tool command.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject.name" title="Link to this definition"></a></dt>
+<dd><p>Object name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject.naming_context">
+<span class="sig-name descname"><span class="pre">naming_context</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject.naming_context" title="Link to this definition"></a></dt>
+<dd><p>Domain naming context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete Samba object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>SSHProcessError</strong> – If the object does not exist or deletion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject.discard" title="Link to this definition"></a></dt>
+<dd><p>Delete Samba object if it exists.</p>
+<p>Does not raise when the object is already absent. Use <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject.delete" title="authselect_test_framework.roles.samba.SambaObject.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete()</span></code></a> when removal must succeed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject.get_attrs">
+<span class="sig-name descname"><span class="pre">get_attrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject.get_attrs" title="Link to this definition"></a></dt>
+<dd><p>Get Samba object attributes from LDAP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject.dn">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">dn</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject.dn" title="Link to this definition"></a></dt>
+<dd><p>Object’s distinguished name.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaObject.sid">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaObject.sid" title="Link to this definition"></a></dt>
+<dd><p>Object’s security identifier.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaComputer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.samba.</span></span><span class="sig-name descname"><span class="pre">SambaComputer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><span class="pre">Samba</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaComputer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject" title="authselect_test_framework.roles.samba.SambaObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">SambaObject</span></code></a>, <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericComputer" title="authselect_test_framework.roles.generic.GenericComputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericComputer</span></code></a></p>
+<p>Samba computer management.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaComputer" title="authselect_test_framework.roles.samba.SambaComputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SambaComputer</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericComputer</span></code> for static typing and
+provider-agnostic tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><em>Samba</em></a>) – Samba role object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Computer name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaComputer.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaComputer.name" title="Link to this definition"></a></dt>
+<dd><p>Computer name.</p>
+<p>Implements <code class="xref py py-attr docutils literal notranslate"><span class="pre">GenericComputer.name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaComputer.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaComputer" title="authselect_test_framework.roles.samba.SambaComputer"><span class="pre">SambaComputer</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaComputer.move" title="Link to this definition"></a></dt>
+<dd><p>Move a computer object.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericComputer.move()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target</strong> (<em>str</em>) – Target path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaComputer" title="authselect_test_framework.roles.samba.SambaComputer">SambaComputer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaPasswordPolicy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.samba.</span></span><span class="sig-name descname"><span class="pre">SambaPasswordPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><span class="pre">Samba</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericPasswordPolicy" title="authselect_test_framework.roles.generic.GenericPasswordPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericPasswordPolicy</span></code></a></p>
+<p>Samba domain password policy management.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy" title="authselect_test_framework.roles.samba.SambaPasswordPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">SambaPasswordPolicy</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericPasswordPolicy</span></code> for static
+typing and provider-agnostic tests. Settings apply via <code class="docutils literal notranslate"><span class="pre">samba-tool</span> <span class="pre">domain</span>
+<span class="pre">passwordsettings</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><em>Samba</em></a>) – Samba role object.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaPasswordPolicy.complexity">
+<span class="sig-name descname"><span class="pre">complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy" title="authselect_test_framework.roles.samba.SambaPasswordPolicy"><span class="pre">SambaPasswordPolicy</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy.complexity" title="Link to this definition"></a></dt>
+<dd><p>Enable or disable password complexity.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericPasswordPolicy.complexity()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>enable</strong> (<em>bool</em>) – Enable or disable password complexity.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy" title="authselect_test_framework.roles.samba.SambaPasswordPolicy">SambaPasswordPolicy</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaPasswordPolicy.lockout">
+<span class="sig-name descname"><span class="pre">lockout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attempts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy" title="authselect_test_framework.roles.samba.SambaPasswordPolicy"><span class="pre">SambaPasswordPolicy</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy.lockout" title="Link to this definition"></a></dt>
+<dd><p>Set lockout duration and login attempts.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericPasswordPolicy.lockout()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>int</em>) – Duration of lockout in seconds, converted to minutes.</p></li>
+<li><p><strong>attempts</strong> (<em>int</em>) – Number of login attempts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaPasswordPolicy" title="authselect_test_framework.roles.samba.SambaPasswordPolicy">SambaPasswordPolicy</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.samba.</span></span><span class="sig-name descname"><span class="pre">SambaUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><span class="pre">Samba</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject" title="authselect_test_framework.roles.samba.SambaObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">SambaObject</span></code></a>, <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code></a></p>
+<p>Samba user management.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">SambaUser</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code> for static typing and
+provider-agnostic tests. Samba-specific keyword arguments on <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser.modify" title="authselect_test_framework.roles.samba.SambaUser.modify"><code class="xref py py-meth docutils literal notranslate"><span class="pre">modify()</span></code></a> are in
+addition to the generic API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><em>Samba</em></a>) – Samba role object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – User name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.name" title="Link to this definition"></a></dt>
+<dd><p>User name.</p>
+<p>Implements <code class="xref py py-attr docutils literal notranslate"><span class="pre">GenericUser.name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.get" title="Link to this definition"></a></dt>
+<dd><p>Get user attributes.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericUser.get()</span></code>. Use <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject.get_attrs" title="authselect_test_framework.roles.samba.SambaObject.get_attrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SambaObject.get_attrs()</span></code></a> when a
+non-optional attribute dictionary is required. LDAP <code class="docutils literal notranslate"><span class="pre">opattrs</span></code> is ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericUser</span></code> API compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gecos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><span class="pre">SambaUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.add" title="Link to this definition"></a></dt>
+<dd><p>Create new Samba user.</p>
+<p>Parameters that are not set are ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – POSIX <code class="docutils literal notranslate"><span class="pre">uidNumber</span></code> attribute (<code class="docutils literal notranslate"><span class="pre">uid-number</span></code>), defaults to None</p></li>
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – POSIX <code class="docutils literal notranslate"><span class="pre">gidNumber</span></code> attribute (<code class="docutils literal notranslate"><span class="pre">gid-number</span></code>), defaults to None</p></li>
+<li><p><strong>password</strong> (<em>str</em><em>, </em><em>optional</em>) – Password, defaults to ‘Secret123’</p></li>
+<li><p><strong>home</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Home directory, defaults to None</p></li>
+<li><p><strong>gecos</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – GECOS, defaults to None</p></li>
+<li><p><strong>shell</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Login shell, defaults to None</p></li>
+<li><p><strong>email</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Email, defaults to None (= <a class="reference external" href="mailto:user&#37;&#52;&#48;domain">user<span>&#64;</span>domain</a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser">SambaUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete the Samba user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>SSHProcessError</strong> – If the user does not exist or deletion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.discard" title="Link to this definition"></a></dt>
+<dd><p>Remove the Samba user if they exist.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">home</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gecos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><span class="pre">SambaUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing Samba user.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericUser.modify()</span></code>. Parameters that are not set are ignored.
+If needed, you can delete an attribute by setting the value to <code class="xref py py-attr docutils literal notranslate"><span class="pre">Delete</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uid</strong> (<em>int</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – POSIX <code class="docutils literal notranslate"><span class="pre">uidNumber</span></code> attribute (<code class="docutils literal notranslate"><span class="pre">uid-number</span></code>), defaults to None</p></li>
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – POSIX <code class="docutils literal notranslate"><span class="pre">gidNumber</span></code> attribute (<code class="docutils literal notranslate"><span class="pre">gid-number</span></code>), defaults to None</p></li>
+<li><p><strong>password</strong> (<em>str</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Password, defaults to None</p></li>
+<li><p><strong>home</strong> (<em>str</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Home directory, defaults to None</p></li>
+<li><p><strong>gecos</strong> (<em>str</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – GECOS, defaults to None</p></li>
+<li><p><strong>shell</strong> (<em>str</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Login shell, defaults to None</p></li>
+<li><p><strong>email</strong> (<em>str</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Email, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser">SambaUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Secret123'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><span class="pre">SambaUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.reset" title="Link to this definition"></a></dt>
+<dd><p>Reset user password.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericUser.reset()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Password, defaults to ‘Secret123’</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser">SambaUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.expire">
+<span class="sig-name descname"><span class="pre">expire</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expiration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'19700101000000'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><span class="pre">SambaUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.expire" title="Link to this definition"></a></dt>
+<dd><p>Set user password expiration date and time.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericUser.expire()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>expiration</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Date and time for user password expiration, defaults to 19700101000000</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser">SambaUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.password_change_at_logon">
+<span class="sig-name descname"><span class="pre">password_change_at_logon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><span class="pre">SambaUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.password_change_at_logon" title="Link to this definition"></a></dt>
+<dd><p>Force user to change password next logon.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericUser.password_change_at_logon()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Self.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser">SambaUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.passkey_add">
+<span class="sig-name descname"><span class="pre">passkey_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">passkey_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><span class="pre">SambaUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.passkey_add" title="Link to this definition"></a></dt>
+<dd><p>Add passkey mapping to the user.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericUser.passkey_add()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>passkey_mapping</strong> (<em>str</em>) – Passkey mapping generated by <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">passkey-register</span></code></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser">SambaUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaUser.passkey_remove">
+<span class="sig-name descname"><span class="pre">passkey_remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">passkey_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser"><span class="pre">SambaUser</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaUser.passkey_remove" title="Link to this definition"></a></dt>
+<dd><p>Remove passkey mapping from the user.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericUser.passkey_remove()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>passkey_mapping</strong> (<em>str</em>) – Passkey mapping generated by <code class="docutils literal notranslate"><span class="pre">sssctl</span> <span class="pre">passkey-register</span></code></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaUser" title="authselect_test_framework.roles.samba.SambaUser">SambaUser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.samba.</span></span><span class="sig-name descname"><span class="pre">SambaGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><span class="pre">Samba</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject" title="authselect_test_framework.roles.samba.SambaObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">SambaObject</span></code></a>, <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code></a></p>
+<p>Samba group management.</p>
+<p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">SambaGroup</span></code></a> implements <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code> for static typing and
+provider-agnostic tests. Samba-specific keyword arguments on <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup.add" title="authselect_test_framework.roles.samba.SambaGroup.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code></a> are in
+addition to the generic API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> (<a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><em>Samba</em></a>) – Samba role object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Group name.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.name" title="Link to this definition"></a></dt>
+<dd><p>Group name.</p>
+<p>Implements <code class="xref py py-attr docutils literal notranslate"><span class="pre">GenericGroup.name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.get" title="Link to this definition"></a></dt>
+<dd><p>Get group attributes.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericGroup.get()</span></code>. Use <a class="reference internal" href="#authselect_test_framework.roles.samba.SambaObject.get_attrs" title="authselect_test_framework.roles.samba.SambaObject.get_attrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SambaObject.get_attrs()</span></code></a> when a
+non-optional attribute dictionary is required. LDAP <code class="docutils literal notranslate"><span class="pre">opattrs</span></code> is ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ignored (LDAP-only); present for <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericGroup</span></code> API compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Global'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Security'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><span class="pre">SambaGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.add" title="Link to this definition"></a></dt>
+<dd><p>Create new Samba group.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericGroup.add()</span></code>; <code class="docutils literal notranslate"><span class="pre">scope</span></code> and <code class="docutils literal notranslate"><span class="pre">category</span></code> are Samba-specific.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Group id, defaults to None</p></li>
+<li><p><strong>description</strong> (<em>str</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – Description, defaults to None</p></li>
+<li><p><strong>scope</strong> (<em>str</em><em>, </em><em>optional</em>) – Scope (‘Global’, ‘Universal’, ‘DomainLocal’), defaults to ‘Global’</p></li>
+<li><p><strong>category</strong> (<em>str</em><em>, </em><em>optional</em>) – Category (‘Distribution’, ‘Security’), defaults to ‘Security’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup">SambaGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete the Samba group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>SSHProcessError</strong> – If the group does not exist or deletion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.discard" title="Link to this definition"></a></dt>
+<dd><p>Remove the Samba group if it exists.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><span class="pre">DeleteAttribute</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><span class="pre">SambaGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing Samba group.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericGroup.modify()</span></code>. Parameters that are not set are ignored.
+If needed, you can delete an attribute by setting the value to <code class="xref py py-attr docutils literal notranslate"><span class="pre">Delete</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gid</strong> (<em>int</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Group id, defaults to None</p></li>
+<li><p><strong>description</strong> (<em>str</em><em> | </em><a class="reference internal" href="authselect_test_framework.roles.base.html#authselect_test_framework.roles.base.DeleteAttribute" title="authselect_test_framework.roles.base.DeleteAttribute"><em>DeleteAttribute</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – Description, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup">SambaGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.add_member">
+<span class="sig-name descname"><span class="pre">add_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><span class="pre">SambaGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.add_member" title="Link to this definition"></a></dt>
+<dd><p>Add group member.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericGroup.add_member()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>member</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a>) – User or group to add as a member.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup">SambaGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.add_members">
+<span class="sig-name descname"><span class="pre">add_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><span class="pre">SambaGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.add_members" title="Link to this definition"></a></dt>
+<dd><p>Add multiple group members.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericGroup.add_members()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>members</strong> (<em>list</em><em>[</em><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a><em>]</em>) – List of users or groups to add as members.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup">SambaGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.remove_member">
+<span class="sig-name descname"><span class="pre">remove_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><span class="pre">SambaGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.remove_member" title="Link to this definition"></a></dt>
+<dd><p>Remove group member.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericGroup.remove_member()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>member</strong> (<a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a>) – User or group to remove from the group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup">SambaGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaGroup.remove_members">
+<span class="sig-name descname"><span class="pre">remove_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">members</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup"><span class="pre">SambaGroup</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaGroup.remove_members" title="Link to this definition"></a></dt>
+<dd><p>Remove multiple group members.</p>
+<p>Implements <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenericGroup.remove_members()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>members</strong> (<em>list</em><em>[</em><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GroupMemberField" title="authselect_test_framework.roles.generic.GroupMemberField"><em>GroupMemberField</em></a><em>]</em>) – List of users or groups to remove from the group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaGroup" title="authselect_test_framework.roles.samba.SambaGroup">SambaGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaOrganizationalUnit">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.samba.</span></span><span class="sig-name descname"><span class="pre">SambaOrganizationalUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><span class="pre">Samba</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basedn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaOrganizationalUnit" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericOrganizationalUnit" title="authselect_test_framework.roles.generic.GenericOrganizationalUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericOrganizationalUnit</span></code></a></p>
+<p>Samba organizational unit management.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaOrganizationalUnit.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaOrganizationalUnit.name" title="Link to this definition"></a></dt>
+<dd><p>OU name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaOrganizationalUnit.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaOrganizationalUnit" title="authselect_test_framework.roles.samba.SambaOrganizationalUnit"><span class="pre">SambaOrganizationalUnit</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaOrganizationalUnit.add" title="Link to this definition"></a></dt>
+<dd><p>Create a new OU.
+:param name:
+:type name: str
+:return: self
+:rtype: GenericOrganizationalUnit</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaSudoRule">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">authselect_test_framework.roles.samba.</span></span><span class="sig-name descname"><span class="pre">SambaSudoRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#authselect_test_framework.roles.samba.Samba" title="authselect_test_framework.roles.samba.Samba"><span class="pre">Samba</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basedn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ou=sudoers'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaSudoRule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericSudoRule" title="authselect_test_framework.roles.generic.GenericSudoRule"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericSudoRule</span></code></a></p>
+<p>Samba sudo rule management via LDAP sudoRole objects.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaSudoRule.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaSudoRule.name" title="Link to this definition"></a></dt>
+<dd><p>Sudo rule name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaSudoRule.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasuser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopasswd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaSudoRule" title="authselect_test_framework.roles.samba.SambaSudoRule"><span class="pre">SambaSudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaSudoRule.add" title="Link to this definition"></a></dt>
+<dd><p>Create new sudo rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>SudoRuleUserField</em><em>, </em><em>optional</em>) – sudoUser attribute, defaults to None</p></li>
+<li><p><strong>host</strong> (<em>SudoRuleHostField</em><em>, </em><em>optional</em>) – sudoHost attribute, defaults to None</p></li>
+<li><p><strong>command</strong> (<em>SudoRuleCommandField</em><em>, </em><em>optional</em>) – sudoCommand attribute, defaults to None</p></li>
+<li><p><strong>option</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – sudoOption attribute, defaults to None</p></li>
+<li><p><strong>runasuser</strong> (<em>SudoRuleRunAsUserField</em><em>, </em><em>optional</em>) – sudoRunAsUser attribute, defaults to None</p></li>
+<li><p><strong>runasgroup</strong> (<em>SudoRuleRunAsGroupField</em><em>, </em><em>optional</em>) – sudoRunAsGroup attribute, defaults to None</p></li>
+<li><p><strong>order</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – sudoOrder attribute, defaults to None</p></li>
+<li><p><strong>nopasswd</strong> (<em>bool</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – If true, no authentication is required (NOPASSWD), defaults to None (no change)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericSudoRule" title="authselect_test_framework.roles.generic.GenericSudoRule">GenericSudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaSudoRule.modify">
+<span class="sig-name descname"><span class="pre">modify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasuser</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericUser" title="authselect_test_framework.roles.generic.GenericUser"><span class="pre">GenericUser</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runasgroup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericGroup" title="authselect_test_framework.roles.generic.GenericGroup"><span class="pre">GenericGroup</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopasswd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#authselect_test_framework.roles.samba.SambaSudoRule" title="authselect_test_framework.roles.samba.SambaSudoRule"><span class="pre">SambaSudoRule</span></a></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaSudoRule.modify" title="Link to this definition"></a></dt>
+<dd><p>Modify existing sudo rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>SudoRuleUserField</em><em>, </em><em>optional</em>) – sudoUser attribute, defaults to None</p></li>
+<li><p><strong>host</strong> (<em>SudoRuleHostField</em><em>, </em><em>optional</em>) – sudoHost attribute, defaults to None</p></li>
+<li><p><strong>command</strong> (<em>SudoRuleCommandField</em><em>, </em><em>optional</em>) – sudoCommand attribute, defaults to None</p></li>
+<li><p><strong>option</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – sudoOption attribute, defaults to None</p></li>
+<li><p><strong>runasuser</strong> (<em>SudoRuleRunAsUserField</em><em>, </em><em>optional</em>) – sudoRunAsUser attribute, defaults to None</p></li>
+<li><p><strong>runasgroup</strong> (<em>SudoRuleRunAsGroupField</em><em>, </em><em>optional</em>) – sudoRunAsGroup attribute, defaults to None</p></li>
+<li><p><strong>order</strong> (<em>int</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – sudoOrder attribute, defaults to None</p></li>
+<li><p><strong>nopasswd</strong> (<em>bool</em><em> | </em><em>None</em><em>, </em><em>optional</em>) – If true, no authentication is required (NOPASSWD), defaults to None (no change)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="authselect_test_framework.roles.generic.html#authselect_test_framework.roles.generic.GenericSudoRule" title="authselect_test_framework.roles.generic.GenericSudoRule">GenericSudoRule</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaSudoRule.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaSudoRule.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete the sudo rule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="authselect_test_framework.roles.samba.SambaSudoRule.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">opattrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#authselect_test_framework.roles.samba.SambaSudoRule.get" title="Link to this definition"></a></dt>
+<dd><p>Get sudo rule attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attrs</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – If set, only requested attributes are returned, defaults to None</p></li>
+<li><p><strong>opattrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, include operational attributes (LDAP only), defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with attribute name as a key, or None if not found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authselect_test_framework.roles.ipa.html" class="btn btn-neutral float-left" title="authselect_test_framework.roles.ipa" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authselect_test_framework.topology.html" class="btn btn-neutral float-right" title="authselect_test_framework.topology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
