@@ -336,12 +336,24 @@ class SambaObject(BaseObject):
         self.name: str = name
         """Object name."""
 
-        self.naming_context: str = role.ldap.naming_context
-        """Domain naming context."""
+        self.__naming_context: str | None = None
 
         self.__dn: str | None = None
 
         self.__sid: str | None = None
+
+    @property
+    def naming_context(self) -> str:
+        """
+        Domain naming context.
+
+        Resolved lazily on first access to avoid an eager LDAP connection when
+        the object is merely instantiated.
+        """
+        if self.__naming_context is None:
+            self.__naming_context = self.role.ldap.naming_context
+
+        return self.__naming_context
 
     def _exec(self, op: str, args: list[str] | None = None, **kwargs) -> ProcessResult:
         """
